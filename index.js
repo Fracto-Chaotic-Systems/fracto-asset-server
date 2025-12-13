@@ -1,6 +1,6 @@
 import express from 'express'
 import chalk from "chalk";
-import {FRACTO_ASSET_PORT, FRACTO_DATA_PORT} from "../../constants.js";
+import {FRACTO_ASSET_PORT} from "../../constants.js";
 
 import {handle_main_status} from "./handlers/status.js";
 import {handle_tile} from "./handlers/tile.js";
@@ -15,8 +15,8 @@ app.use((req, res, next) => {
 });
 
 // Start the server and listen for incoming requests
-app.listen(FRACTO_DATA_PORT, () => {
-   console.log(chalk.green(`Server is running on http://localhost:${FRACTO_ASSET_PORT}`));
+app.listen(FRACTO_ASSET_PORT, () => {
+   console.log(chalk.green(`fracto-asset-server is running on http://localhost:${FRACTO_ASSET_PORT}`));
 });
 
 app.get('/', handle_main_status)
