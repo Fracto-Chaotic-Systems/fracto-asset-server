@@ -1,5 +1,10 @@
 import express from 'express'
 import chalk from "chalk";
+import fs from "fs";
+import path from "path";
+
+const SEPARATOR = path.sep;
+
 import {FRACTO_ASSET_PORT} from "../../constants.js";
 
 import {handle_main_status} from "./handlers/status.js";
@@ -14,6 +19,11 @@ app.use((req, res, next) => {
    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With'); // Specify allowed headers
    next();
 });
+
+if (!fs.existsSync(`.${SEPARATOR}images`)) {
+   console.log(chalk.cyan(`creating images directory`))
+   fs.mkdirSync(`.${SEPARATOR}images`)
+}
 
 // Start the server and listen for incoming requests
 app.listen(FRACTO_ASSET_PORT, () => {
