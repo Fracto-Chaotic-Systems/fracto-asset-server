@@ -10,6 +10,7 @@ import {FRACTO_ASSET_PORT} from "../../constants.js";
 import {handle_main_status} from "./handlers/status.js";
 import {handle_logs} from "./handlers/logs.js";
 import {handle_render_image} from "./handlers/render_image.js";
+import { initialize_videos_table } from "./handlers/initialize_videos.js";
 
 const app = express();
 
@@ -24,6 +25,8 @@ if (!fs.existsSync(`.${SEPARATOR}images`)) {
    console.log(chalk.cyan(`creating images directory`))
    fs.mkdirSync(`.${SEPARATOR}images`)
 }
+
+await initialize_videos_table();
 
 // Start the server and listen for incoming requests
 app.listen(FRACTO_ASSET_PORT, () => {
