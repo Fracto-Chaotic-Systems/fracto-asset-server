@@ -11,6 +11,7 @@ import {handle_main_status} from "./handlers/status.js";
 import {handle_logs} from "./handlers/logs.js";
 import {handle_render_image} from "./handlers/render_image.js";
 import { initialize_asset_tables } from "./handlers/initialize_videos.js";
+import { handle_new_video } from "./handlers/new_video.js";
 
 const app = express();
 
@@ -36,3 +37,4 @@ app.listen(FRACTO_ASSET_PORT, () => {
 app.get('/', handle_main_status)
 app.get('/logs', handle_logs)
 app.get('/render_image', handle_render_image)
+app.post('/new_video', handle_new_video)
