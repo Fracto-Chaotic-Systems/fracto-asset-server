@@ -16,7 +16,7 @@ export const handle_new_video = async (req, res) => {
   const video = {
     title,
     meta: {
-      description: "",
+      description: title,
       frame_size: 1024,
       frame_rate: 30,
       format: null,

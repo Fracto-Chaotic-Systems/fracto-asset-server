@@ -12,6 +12,7 @@ import {handle_logs} from "./handlers/logs.js";
 import {handle_render_image} from "./handlers/render_image.js";
 import { initialize_asset_tables } from "./handlers/initialize_videos.js";
 import { handle_new_video } from "./handlers/new_video.js";
+import { handle_update_video } from "./handlers/update_video.js";
 
 const app = express();
 
@@ -21,6 +22,8 @@ app.use((req, res, next) => {
    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With'); // Specify allowed headers
    next();
 });
+
+app.use(express.json());
 
 if (!fs.existsSync(`.${SEPARATOR}images`)) {
    console.log(chalk.cyan(`creating images directory`))
@@ -38,3 +41,4 @@ app.get('/', handle_main_status)
 app.get('/logs', handle_logs)
 app.get('/render_image', handle_render_image)
 app.post('/new_video', handle_new_video)
+app.put('/video/:id', handle_update_video)
