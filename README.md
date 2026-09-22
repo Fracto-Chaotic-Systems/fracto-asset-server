@@ -12,12 +12,22 @@ Commit service files from this repository. Commit shared SDK, configuration, and
 
 - Node 22, the validated runtime.
 - Native build support required by the `canvas` package.
+- FFmpeg available on `PATH` (the Docker image installs it); set
+  `FRACTO_FFMPEG_BIN` when a non-default binary path is required.
 - The Fracto tile server available on port 3004 for rendering.
 - AWS CLI installed, authenticated, and available on `PATH` for uploads/imports.
 - Permission to read and write the configured S3 bucket.
 - ExifTool support supplied by `exiftool-vendored`.
 
 The current implementation contains a fixed S3 bucket, public URL, and ACL policy in source. Review those values before using the service in another environment.
+
+Video rendering stores numbered intermediate PNG frames in
+`FRACTO_VIDEO_RENDER_DIR` (default `video-renders/`) and final encoded files in
+`FRACTO_VIDEO_OUTPUT_DIR` (default `videos/`). Docker mounts the latter as a
+persistent volume. `FRACTO_VIDEO_RENDER_TIMEOUT_MS` limits the ffmpeg stage;
+`FRACTO_VIDEO_RENDER_CONCURRENCY` controls concurrent tile/frame requests, and
+`FRACTO_VIDEO_FRAME_RETRIES` controls bounded retries for transient tile-server
+timeouts (default `4`).
 
 ## Installation
 
@@ -73,7 +83,7 @@ Large images consume significant CPU and memory. The HTTP request remains open w
 
 ## HTTP endpoints
 
-All routes currently use `GET`.
+The service uses `GET` for reads and `POST` for video render actions.
 
 ### `GET /`
 
@@ -102,6 +112,25 @@ GET /render_image?width_px=1200&aspect_ratio=1&focal_point_x=-0.75&focal_point_y
 Response fields include the generated asset ID and JPEG filename, viewport parameters, public S3 URL, and timings for rendering, local writing, EXIF operations, upload, and total duration.
 
 The handler currently returns HTTP 200 even when rendering, metadata, or upload steps log an error. Callers should verify the returned file/URL until error responses are standardized.
+
+### Video render endpoints
+
+- `GET /video/:id/render` returns the persisted render state and progress.
+- `POST /video/:id/render` generates canvas-buffer PNG frames and then invokes
+  ffmpeg automatically.
+- `POST /video/:id/render/cancel` requests cancellation of frame generation or
+  encoding.
+- `POST /video/:id/render/retry` starts a new render after `failed` or
+  `cancelled`.
+- `POST /video/:id/render/assemble` retries only the ffmpeg assembly when a
+  server restart leaves a video in `frames_ready`.
+- `GET /video/:id/render/output` streams the completed video without exposing
+  arbitrary filesystem paths.
+
+The lifecycle is `queued` → `running` → `frames_ready` → `encoding` →
+`completed`; failures and cancellation are recorded on the video row. The
+numbered frame workspace is removed only after successful encoding, so a failed
+assembly can be diagnosed or retried.
 
 ### `GET /logs`
 

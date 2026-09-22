@@ -13,6 +13,14 @@ import {handle_render_image} from "./handlers/render_image.js";
 import { initialize_asset_tables } from "./handlers/initialize_videos.js";
 import { handle_new_video } from "./handlers/new_video.js";
 import { handle_update_video } from "./handlers/update_video.js";
+import {
+   handle_render_status,
+   handle_render_create,
+   handle_render_cancel,
+   handle_render_retry,
+   handle_render_assemble,
+   handle_render_output,
+} from "./handlers/render_video.js";
 
 const app = express();
 
@@ -42,3 +50,9 @@ app.get('/logs', handle_logs)
 app.get('/render_image', handle_render_image)
 app.post('/new_video', handle_new_video)
 app.put('/video/:id', handle_update_video)
+app.get('/video/:id/render', handle_render_status)
+app.post('/video/:id/render', handle_render_create)
+app.post('/video/:id/render/cancel', handle_render_cancel)
+app.post('/video/:id/render/retry', handle_render_retry)
+app.post('/video/:id/render/assemble', handle_render_assemble)
+app.get('/video/:id/render/output', handle_render_output)

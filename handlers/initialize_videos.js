@@ -44,6 +44,13 @@ export const VIDEO_TABLE_DEFINITION = {
     { name: "script", type: "JSON", nullable: false },
     { name: "meta_version", type: "INT UNSIGNED", nullable: false, default_value: 1 },
     { name: "script_version", type: "INT UNSIGNED", nullable: false, default_value: 1 },
+    { name: "render_state", type: "VARCHAR(16)", nullable: false, default_value: "idle" },
+    { name: "render_progress", type: "INT UNSIGNED", nullable: false, default_value: 0 },
+    { name: "render_error", type: "VARCHAR(4096)", nullable: true },
+    { name: "render_started_at", type: "DATETIME", nullable: true },
+    { name: "render_completed_at", type: "DATETIME", nullable: true },
+    { name: "render_output_uri", type: "VARCHAR(1024)", nullable: true },
+    { name: "render_frame_count", type: "INT UNSIGNED", nullable: true },
   ],
 };
 
