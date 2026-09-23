@@ -19,6 +19,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@fracto/sdk": "file:../../sdk",
     "canvas": "^3.2.2",
     "chalk": "^5.6.2",
     "exiftool-vendored": "^35.14.0",

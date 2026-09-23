@@ -3,7 +3,7 @@ import path from "path";
 import { createCanvas } from "canvas";
 
 import { FRACTO_DATA_PORT, FRACTO_TILES_PORT } from "../../../constants.js";
-import FractoColors from "../../../sdk/FractoColors.js";
+import FractoColors from "@fracto/sdk/FractoColors.js";
 import { start_video_encoding } from "./video_encoder.js";
 
 const data_host = process.env.FRACTO_DATA_HOST || "127.0.0.1";

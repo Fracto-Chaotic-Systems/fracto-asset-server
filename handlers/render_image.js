@@ -4,7 +4,7 @@ import {exiftool} from "exiftool-vendored";
 import {createCanvas} from "canvas";
 
 import {FRACTO_TILES_PORT} from "../../../constants.js";
-import FractoColors from "../../../sdk/FractoColors.js";
+import FractoColors from "@fracto/sdk/FractoColors.js";
 
 const get_canvas_buffer = async (resolution, scope, focal_point, aspect_ratio) => {
    const all_params = [
