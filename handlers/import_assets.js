@@ -2,7 +2,7 @@ import fs from "fs";
 import {execSync} from "child_process";
 import path from "path";
 import {exiftool} from "exiftool-vendored";
-import {FRACTO_DATA_PORT} from "../../../constants.js";
+const FRACTO_DATA_PORT = Number(process.env.FRACTO_DATA_PORT || 3002);
 
 import assets from './AssetImages.json' with {type: 'json'};
 

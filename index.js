@@ -5,7 +5,7 @@ import path from "path";
 
 const SEPARATOR = path.sep;
 
-import {FRACTO_ASSET_PORT} from "../../constants.js";
+const FRACTO_ASSET_PORT = Number(process.env.FRACTO_ASSET_PORT || 3003);
 
 import {handle_main_status} from "./handlers/status.js";
 import {handle_logs} from "./handlers/logs.js";

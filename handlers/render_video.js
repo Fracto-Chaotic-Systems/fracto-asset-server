@@ -1,4 +1,4 @@
-import { FRACTO_DATA_PORT } from "../../../constants.js";
+const FRACTO_DATA_PORT = Number(process.env.FRACTO_DATA_PORT || 3002);
 import {
   cancel_video_frame_render,
   start_video_frame_render,

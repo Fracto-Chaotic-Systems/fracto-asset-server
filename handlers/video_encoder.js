@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import { spawn } from "child_process";
 
-import { FRACTO_DATA_PORT } from "../../../constants.js";
+const FRACTO_DATA_PORT = Number(process.env.FRACTO_DATA_PORT || 3002);
 
 const data_host = process.env.FRACTO_DATA_HOST || "127.0.0.1";
 const ffmpeg_binary = process.env.FRACTO_FFMPEG_BIN || "ffmpeg";

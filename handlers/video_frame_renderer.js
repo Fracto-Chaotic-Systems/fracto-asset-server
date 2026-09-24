@@ -2,7 +2,8 @@ import fs from "fs/promises";
 import path from "path";
 import { createCanvas } from "canvas";
 
-import { FRACTO_DATA_PORT, FRACTO_TILES_PORT } from "../../../constants.js";
+const FRACTO_DATA_PORT = Number(process.env.FRACTO_DATA_PORT || 3002);
+const FRACTO_TILES_PORT = Number(process.env.FRACTO_TILES_PORT || 3004);
 import FractoColors from "@fracto/sdk/FractoColors.js";
 import { start_video_encoding } from "./video_encoder.js";
 

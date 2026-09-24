@@ -3,7 +3,7 @@ import {execSync} from "child_process";
 import {exiftool} from "exiftool-vendored";
 import {createCanvas} from "canvas";
 
-import {FRACTO_TILES_PORT} from "../../../constants.js";
+const FRACTO_TILES_PORT = Number(process.env.FRACTO_TILES_PORT || 3004);
 import FractoColors from "@fracto/sdk/FractoColors.js";
 
 const get_canvas_buffer = async (resolution, scope, focal_point, aspect_ratio) => {
