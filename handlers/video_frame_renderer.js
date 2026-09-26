@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { createCanvas } from "canvas";
+import { internal_service_headers } from "../../../utils/service_authorization.js";
 
 const FRACTO_DATA_PORT = Number(process.env.FRACTO_DATA_PORT || 3002);
 const FRACTO_TILES_PORT = Number(process.env.FRACTO_TILES_PORT || 3004);
@@ -124,7 +125,7 @@ const update_video_render = async (id, values) => {
     `http://${data_host}:${FRACTO_DATA_PORT}/video/${id}`,
     {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: internal_service_headers({ "Content-Type": "application/json" }),
       body: JSON.stringify(values),
       signal: AbortSignal.timeout(RENDER_REQUEST_TIMEOUT_MS),
     },
@@ -192,6 +193,7 @@ const request_canvas_buffer = async ({
     if (context?.cancel_requested) throw new Error("Render cancelled");
     try {
       const response = await fetch(url, {
+        headers: internal_service_headers(),
         signal: AbortSignal.timeout(RENDER_REQUEST_TIMEOUT_MS),
       });
       const result = await response.json().catch(() => ({}));

@@ -2,6 +2,7 @@ import express from 'express'
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
+import { require_enabled_user_if_configured } from "../../utils/service_authorization.js";
 
 const SEPARATOR = path.sep;
 
@@ -25,9 +26,15 @@ import {
 const app = express();
 
 app.use((req, res, next) => {
-   res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins
+   const origin = req.headers.origin;
+   const ui_origin = process.env.FRACTO_UI_ORIGIN || `http://localhost:${process.env.FRACTO_UI_PORT || 3006}`;
+   const credentialed = Boolean(origin && (origin === ui_origin || process.env.FRACTO_ALLOW_CORS_ALL === 'true'));
+   res.setHeader('Access-Control-Allow-Origin', credentialed ? origin : '*');
+   res.vary('Origin');
+   if (credentialed) res.setHeader('Access-Control-Allow-Credentials', 'true');
    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Specify allowed methods
-   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With'); // Specify allowed headers
+   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, X-Fracto-Service-Token');
+   if (req.method === 'OPTIONS') return res.status(204).end();
    next();
 });
 
@@ -46,6 +53,7 @@ app.listen(FRACTO_ASSET_PORT, () => {
 });
 
 app.get('/', handle_main_status)
+app.use((req, res, next) => req.path === '/' ? next() : require_enabled_user_if_configured(req, res, next))
 app.get('/logs', handle_logs)
 app.get('/render_image', handle_render_image)
 app.post('/new_video', handle_new_video)

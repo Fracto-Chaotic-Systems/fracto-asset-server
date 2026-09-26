@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { internal_service_headers } from "../../../utils/service_authorization.js";
 
 const FRACTO_DATA_PORT = Number(process.env.FRACTO_DATA_PORT || 3002);
 
@@ -65,7 +66,7 @@ export const initialize_asset_table = async (table_definition) => {
     `http://${data_host}:${FRACTO_DATA_PORT}/ensure_table`,
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: internal_service_headers({ "Content-Type": "application/json" }),
       body: JSON.stringify(table_definition),
       signal: AbortSignal.timeout(DATA_REQUEST_TIMEOUT_MS),
     },

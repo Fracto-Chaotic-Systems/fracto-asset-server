@@ -1,4 +1,5 @@
 const FRACTO_DATA_PORT = Number(process.env.FRACTO_DATA_PORT || 3002);
+import { internal_service_headers } from "../../../utils/service_authorization.js";
 
 const data_host = process.env.FRACTO_DATA_HOST || "127.0.0.1";
 const data_origin = `http://${data_host}:${FRACTO_DATA_PORT}`;
@@ -20,7 +21,7 @@ export const handle_update_video = async (req, res) => {
   try {
     const response = await fetch(`${data_origin}/video/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: internal_service_headers({ "Content-Type": "application/json" }),
       body: JSON.stringify(body),
     });
     const result = await response.json().catch(() => ({}));

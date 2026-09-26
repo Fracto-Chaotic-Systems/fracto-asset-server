@@ -1,4 +1,5 @@
 const FRACTO_DATA_PORT = Number(process.env.FRACTO_DATA_PORT || 3002);
+import { internal_service_headers } from "../../../utils/service_authorization.js";
 import {
   cancel_video_frame_render,
   start_video_frame_render,
@@ -33,7 +34,7 @@ const get_id = (req, res) => {
 };
 
 const request_video = async (id) => {
-  const response = await fetch(`${data_origin}/video/${id}`);
+  const response = await fetch(`${data_origin}/video/${id}`, { headers: internal_service_headers() });
   const result = await response.json().catch(() => ({}));
   if (!response.ok) {
     const error = new Error(
@@ -51,7 +52,7 @@ const format_datetime = (date = new Date()) =>
 const update_render = async (id, values) => {
   const response = await fetch(`${data_origin}/video/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: internal_service_headers({ "Content-Type": "application/json" }),
     body: JSON.stringify(values),
   });
   const result = await response.json().catch(() => ({}));

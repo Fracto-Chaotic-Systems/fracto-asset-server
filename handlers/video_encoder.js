@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { spawn } from "child_process";
+import { internal_service_headers } from "../../../utils/service_authorization.js";
 
 const FRACTO_DATA_PORT = Number(process.env.FRACTO_DATA_PORT || 3002);
 
@@ -34,7 +35,7 @@ const format_datetime = (date = new Date()) =>
 const update_video_render = async (id, values) => {
   const response = await fetch(`http://${data_host}:${FRACTO_DATA_PORT}/video/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: internal_service_headers({ "Content-Type": "application/json" }),
     body: JSON.stringify(values),
     signal: AbortSignal.timeout(render_timeout_ms),
   });
