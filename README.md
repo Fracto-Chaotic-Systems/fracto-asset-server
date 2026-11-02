@@ -8,6 +8,17 @@ This is an independent Git repository expected at `fracto/servers/fracto-asset-s
 
 Commit service files from this repository. Commit shared SDK, configuration, and supervisor changes from the root repository.
 
+## Instrument library
+
+The initial instrument catalog and binary-safe recovery commands are documented
+in [instruments/README.md](instruments/README.md). The seed recovers historical
+recordings into local storage. Offline pitch indexing is verified and bounded
+mono playback assets are prepared. The catalog and registered audio endpoints
+are available and connected to the All Music engine and instrument selector.
+All prepared sources remain disabled; see
+[instruments/MIGRATION_VERIFICATION.md](instruments/MIGRATION_VERIFICATION.md)
+for verification scope and operational setup.
+
 ## Requirements
 
 - Node 22, the validated runtime.
@@ -88,6 +99,24 @@ The service uses `GET` for reads and `POST` for video render actions.
 ### `GET /`
 
 Basic health endpoint used by the root supervisor. Returns a plain-text welcome message.
+
+### Instrument endpoints
+
+- `GET /instruments` returns all 21 library entries, availability/readiness flags,
+  pitch coverage and versioned URLs for original MP3s and bounded playback WAVs.
+- `GET /instruments/:id/audio/:asset?v=<sha256>` streams only registered audio.
+  HEAD, single byte ranges, ETags and conditional reads are supported.
+
+Both routes follow the existing enabled-user/service-token authorization policy
+when `FRACTO_AUTH_REQUIRED=true`. Missing audio returns 404; unavailable or invalid
+catalog/integrity data returns 503. Instruments remain disabled for player use
+until later verification; authorized inventory and preview reads are available.
+
+Set `FRACTO_INSTRUMENT_DIR` for an alternate library root. Optional
+`FRACTO_ASSET_PUBLIC_URL` supplies an HTTP(S) public origin/path prefix; otherwise
+URLs are service-root-relative and must be resolved against the catalog response
+URL. See [instruments/HTTP_API.md](instruments/HTTP_API.md) for the full contract,
+CORS/caching behavior, configuration and verification commands.
 
 ### `GET /render_image`
 
@@ -210,6 +239,6 @@ Common failures:
 - **Shared import fails:** restore this repository to `fracto/servers/fracto-asset-server/`.
 - **Startup update is blocked:** commit, stash, or revert tracked changes in this repository.
 
-The service currently has permissive CORS, no authentication, synchronous external commands, and hardcoded publication settings. Keep it behind a trusted boundary until those areas are hardened.
+The service retains its configurable CORS policy and uses enabled-user or internal-service authorization when `FRACTO_AUTH_REQUIRED=true`. Image rendering still uses synchronous external commands and hardcoded publication settings.
 
 `tiles.csv` is a local runtime export and should not be committed.

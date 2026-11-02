@@ -23,20 +23,12 @@ import {
    handle_render_output,
 } from "./handlers/render_video.js";
 
+import { asset_cors } from "./middleware/cors.js";
+import { create_instrument_router } from "./handlers/instruments.js";
+
 const app = express();
 
-app.use((req, res, next) => {
-   const origin = req.headers.origin;
-   const ui_origin = process.env.FRACTO_UI_ORIGIN || `http://localhost:${process.env.FRACTO_UI_PORT || 3006}`;
-   const credentialed = Boolean(origin && (origin === ui_origin || process.env.FRACTO_ALLOW_CORS_ALL === 'true'));
-   res.setHeader('Access-Control-Allow-Origin', credentialed ? origin : '*');
-   res.vary('Origin');
-   if (credentialed) res.setHeader('Access-Control-Allow-Credentials', 'true');
-   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Specify allowed methods
-   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, X-Fracto-Service-Token');
-   if (req.method === 'OPTIONS') return res.status(204).end();
-   next();
-});
+app.use(asset_cors);
 
 app.use(express.json());
 
@@ -54,6 +46,7 @@ app.listen(FRACTO_ASSET_PORT, () => {
 
 app.get('/', handle_main_status)
 app.use((req, res, next) => req.path === '/' ? next() : require_enabled_user_if_configured(req, res, next))
+app.use("/instruments", create_instrument_router());
 app.get('/logs', handle_logs)
 app.get('/render_image', handle_render_image)
 app.post('/new_video', handle_new_video)

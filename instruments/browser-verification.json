@@ -1,0 +1,641 @@
+{
+  "verified_date": "2026-11-02",
+  "source_catalog_sha256": "e929b2703edbf3e657861fd38e6b17f73a588c372cfb3c62b818deffc213c99d",
+  "pass": true,
+  "sample_rate": 48000,
+  "verification": "Chromium native offline decode/render through sample cache and voice engine; low/middle/high pitches of every recording layer. Not a subjective listening review.",
+  "instruments": 21,
+  "probes": 75,
+  "results": [
+    {
+      "id": "grandb",
+      "probes": [
+        {
+          "layer": "p",
+          "pitch": 21,
+          "velocity": 1,
+          "rms": 0.0002417683706165023,
+          "peak": 0.0013909604167565703
+        },
+        {
+          "layer": "p",
+          "pitch": 65,
+          "velocity": 1,
+          "rms": 0.0003667608738597967,
+          "peak": 0.0012050424702465534
+        },
+        {
+          "layer": "p",
+          "pitch": 108,
+          "velocity": 1,
+          "rms": 9.185138776194491e-05,
+          "peak": 0.001819015946239233
+        },
+        {
+          "layer": "mp",
+          "pitch": 21,
+          "velocity": 32,
+          "rms": 0.007242628368853776,
+          "peak": 0.040109146386384964
+        },
+        {
+          "layer": "mp",
+          "pitch": 65,
+          "velocity": 32,
+          "rms": 0.012417224138147666,
+          "peak": 0.05123661085963249
+        },
+        {
+          "layer": "mp",
+          "pitch": 108,
+          "velocity": 32,
+          "rms": 0.0007769890143696451,
+          "peak": 0.014457659795880318
+        },
+        {
+          "layer": "mf",
+          "pitch": 21,
+          "velocity": 64,
+          "rms": 0.014356701831053188,
+          "peak": 0.07998953759670258
+        },
+        {
+          "layer": "mf",
+          "pitch": 65,
+          "velocity": 64,
+          "rms": 0.019665644678262213,
+          "peak": 0.08057789504528046
+        },
+        {
+          "layer": "mf",
+          "pitch": 108,
+          "velocity": 64,
+          "rms": 0.002293553378678581,
+          "peak": 0.046590790152549744
+        },
+        {
+          "layer": "f",
+          "pitch": 21,
+          "velocity": 96,
+          "rms": 0.016242667789243954,
+          "peak": 0.0896759033203125
+        },
+        {
+          "layer": "f",
+          "pitch": 65,
+          "velocity": 96,
+          "rms": 0.02036476959580799,
+          "peak": 0.0876438245177269
+        },
+        {
+          "layer": "f",
+          "pitch": 108,
+          "velocity": 96,
+          "rms": 0.0019472843952653101,
+          "peak": 0.03644552826881409
+        },
+        {
+          "layer": "ff",
+          "pitch": 21,
+          "velocity": 127,
+          "rms": 0.024603740073916774,
+          "peak": 0.17529600858688354
+        },
+        {
+          "layer": "ff",
+          "pitch": 65,
+          "velocity": 127,
+          "rms": 0.026917929920838215,
+          "peak": 0.11881092935800552
+        },
+        {
+          "layer": "ff",
+          "pitch": 108,
+          "velocity": 127,
+          "rms": 0.0021928878714213033,
+          "peak": 0.03574289381504059
+        }
+      ]
+    },
+    {
+      "id": "acoustic-bass",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.02447277814165387,
+          "peak": 0.07195364683866501
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.015862730922367948,
+          "peak": 0.10879199206829071
+        },
+        {
+          "layer": null,
+          "pitch": 103,
+          "velocity": 100,
+          "rms": 0.0101492332444414,
+          "peak": 0.09776581078767776
+        }
+      ]
+    },
+    {
+      "id": "blown-bottle",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.007713613788051263,
+          "peak": 0.027309013530611992
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.008507044426448056,
+          "peak": 0.032806187868118286
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.008374327948727526,
+          "peak": 0.026837298646569252
+        }
+      ]
+    },
+    {
+      "id": "cello",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.012022688903211839,
+          "peak": 0.04544566199183464
+        },
+        {
+          "layer": null,
+          "pitch": 63,
+          "velocity": 100,
+          "rms": 0.03003351028110005,
+          "peak": 0.08483181148767471
+        },
+        {
+          "layer": null,
+          "pitch": 102,
+          "velocity": 100,
+          "rms": 0.010847203037808725,
+          "peak": 0.042077578604221344
+        }
+      ]
+    },
+    {
+      "id": "chromatics-piano",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 21,
+          "velocity": 100,
+          "rms": 0.042263178494623896,
+          "peak": 0.1948796510696411
+        },
+        {
+          "layer": null,
+          "pitch": 63,
+          "velocity": 100,
+          "rms": 0.050715159269067264,
+          "peak": 0.19297926127910614
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.01555165103713206,
+          "peak": 0.1922387331724167
+        }
+      ]
+    },
+    {
+      "id": "distortion-guitar",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.013008490545894048,
+          "peak": 0.04365740343928337
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.01763523549160253,
+          "peak": 0.058931730687618256
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.013947121050115283,
+          "peak": 0.04735911265015602
+        }
+      ]
+    },
+    {
+      "id": "flute",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.002599950016376758,
+          "peak": 0.009200388565659523
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.021419436734974068,
+          "peak": 0.08114156126976013
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.03638047250572407,
+          "peak": 0.08537480980157852
+        }
+      ]
+    },
+    {
+      "id": "harmonica",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.005612369869222139,
+          "peak": 0.027167923748493195
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.010020183122115077,
+          "peak": 0.04250825569033623
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.009792495005676836,
+          "peak": 0.03427305445075035
+        }
+      ]
+    },
+    {
+      "id": "harpsichord",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.035373177135536366,
+          "peak": 0.16775216162204742
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.03283809862983658,
+          "peak": 0.1885160505771637
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.017514066451309623,
+          "peak": 0.14367853105068207
+        }
+      ]
+    },
+    {
+      "id": "piano",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 21,
+          "velocity": 100,
+          "rms": 0.04215949224003578,
+          "peak": 0.19458244740962982
+        },
+        {
+          "layer": null,
+          "pitch": 63,
+          "velocity": 100,
+          "rms": 0.05064089817803244,
+          "peak": 0.19182012975215912
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.015499503239976878,
+          "peak": 0.19549526274204254
+        }
+      ]
+    },
+    {
+      "id": "pipe-organ",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.024225241027896083,
+          "peak": 0.10780029743909836
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.0420745989229672,
+          "peak": 0.15777404606342316
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.03844787501104921,
+          "peak": 0.1410924345254898
+        }
+      ]
+    },
+    {
+      "id": "vibraphone",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.04307721176024556,
+          "peak": 0.1435694545507431
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.049783750490635784,
+          "peak": 0.17830906808376312
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.022724983809461276,
+          "peak": 0.13047105073928833
+        }
+      ]
+    },
+    {
+      "id": "violin-10-loud",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 55,
+          "velocity": 100,
+          "rms": 0.02386137463244799,
+          "peak": 0.0858989879488945
+        },
+        {
+          "layer": null,
+          "pitch": 79,
+          "velocity": 100,
+          "rms": 0.020649978717771984,
+          "peak": 0.08503743261098862
+        },
+        {
+          "layer": null,
+          "pitch": 103,
+          "velocity": 100,
+          "rms": 0.0031035166739735195,
+          "peak": 0.016871504485607147
+        }
+      ]
+    },
+    {
+      "id": "violin-15-loud",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 55,
+          "velocity": 100,
+          "rms": 0.019427485232808066,
+          "peak": 0.06786764413118362
+        },
+        {
+          "layer": null,
+          "pitch": 79,
+          "velocity": 100,
+          "rms": 0.020418105113302876,
+          "peak": 0.07037068158388138
+        },
+        {
+          "layer": null,
+          "pitch": 103,
+          "velocity": 100,
+          "rms": 0.0027231523904995996,
+          "peak": 0.010727748274803162
+        }
+      ]
+    },
+    {
+      "id": "acoustic-bass2-distortion-guitar1-pipe-organ1",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.013357737650472698,
+          "peak": 0.0395771861076355
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.01191444168398937,
+          "peak": 0.058925651013851166
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.009243193544411667,
+          "peak": 0.035617560148239136
+        }
+      ]
+    },
+    {
+      "id": "cello4-vibraphone3-harpsichord1",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.013582888799430466,
+          "peak": 0.05410713329911232
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.021908356492565412,
+          "peak": 0.05901612341403961
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.007942577481063938,
+          "peak": 0.03984208032488823
+        }
+      ]
+    },
+    {
+      "id": "distortion-guitar-pipe-organ",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.012460428278988078,
+          "peak": 0.05501528084278107
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.0217445146095701,
+          "peak": 0.07863352447748184
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.019461022155373216,
+          "peak": 0.07540301978588104
+        }
+      ]
+    },
+    {
+      "id": "flute4-vibraphone3-harpsichord1",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.013198532761234854,
+          "peak": 0.04036489874124527
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.017647116900569852,
+          "peak": 0.05907502770423889
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.019699955124567604,
+          "peak": 0.06012400612235069
+        }
+      ]
+    },
+    {
+      "id": "vibraphone-harpsichord",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.019655882375982307,
+          "peak": 0.0890592634677887
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.022529009830656564,
+          "peak": 0.14303550124168396
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.01422713362924925,
+          "peak": 0.06859210133552551
+        }
+      ]
+    },
+    {
+      "id": "vibraphone2-distortion-guitar1-pipe-organ1",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.019660746744843676,
+          "peak": 0.07219815999269485
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.021801758551340897,
+          "peak": 0.07980210334062576
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.015219895970174925,
+          "peak": 0.07286413758993149
+        }
+      ]
+    },
+    {
+      "id": "vibraphone3-harpsichord1",
+      "probes": [
+        {
+          "layer": null,
+          "pitch": 24,
+          "velocity": 100,
+          "rms": 0.027453864044752405,
+          "peak": 0.08446827530860901
+        },
+        {
+          "layer": null,
+          "pitch": 64,
+          "velocity": 100,
+          "rms": 0.032559376109576224,
+          "peak": 0.12621811032295227
+        },
+        {
+          "layer": null,
+          "pitch": 104,
+          "velocity": 100,
+          "rms": 0.01670265216013489,
+          "peak": 0.08327542990446091
+        }
+      ]
+    }
+  ]
+}

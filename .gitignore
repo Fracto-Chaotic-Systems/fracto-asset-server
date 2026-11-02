@@ -142,3 +142,13 @@ images
 video
 video-renders
 videos
+
+# Original instrument recordings are local asset storage; rebuild from Git provenance.
+/instruments/originals/
+
+# Offline Python audio-analysis environments/cache
+.venv/
+__pycache__/
+
+# Generated bounded instrument playback assets (rebuild from verified indexes)
+/instruments/playback/
