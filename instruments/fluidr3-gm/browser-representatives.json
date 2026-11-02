@@ -1,0 +1,601 @@
+{
+  "pass": true,
+  "source_catalog_revision": "4dcdff2a8a9ddff5ffa79a0fb2550deca2f4409abcf98c1dd396316ff04f4140",
+  "native_sample_rate": 48000,
+  "test_only_prepared_source_opt_in": true,
+  "comparisons": [
+    {
+      "name": "Piano",
+      "legacy": {
+        "initial": {
+          "rms": 0.018597224821017493,
+          "peak": 0.09082827717065811,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0.0007867944773718534,
+          "peak": 0.0017929611494764686,
+          "samples": 76800
+        },
+        "duration": 14.19,
+        "decoded_bytes": 34250880
+      },
+      "fluidr3-gm": {
+        "initial": {
+          "rms": 0.003996528622740358,
+          "peak": 0.013058752752840519,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0,
+          "peak": 0,
+          "samples": 76800
+        },
+        "duration": 3.128888889,
+        "decoded_bytes": 7314560
+      }
+    },
+    {
+      "name": "Flute",
+      "legacy": {
+        "initial": {
+          "rms": 0.02073389576497731,
+          "peak": 0.06706260144710541,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0.03369605426535124,
+          "peak": 0.0932232216000557,
+          "samples": 76800
+        },
+        "duration": 7.87,
+        "decoded_bytes": 18249600
+      },
+      "fluidr3-gm": {
+        "initial": {
+          "rms": 0.008845491432720632,
+          "peak": 0.02316349931061268,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0,
+          "peak": 0,
+          "samples": 76800
+        },
+        "duration": 3.128888889,
+        "decoded_bytes": 7314560
+      }
+    },
+    {
+      "name": "Violin",
+      "legacy": {
+        "initial": {
+          "rms": 0.029439517982136974,
+          "peak": 0.08571339398622513,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0,
+          "peak": 0,
+          "samples": 76800
+        },
+        "duration": 1.18,
+        "decoded_bytes": 3108480
+      },
+      "fluidr3-gm": {
+        "initial": {
+          "rms": 0.008987042368632969,
+          "peak": 0.02585476264357567,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0,
+          "peak": 0,
+          "samples": 76800
+        },
+        "duration": 3.128888889,
+        "decoded_bytes": 7314560
+      }
+    },
+    {
+      "name": "Bass",
+      "legacy": {
+        "initial": {
+          "rms": 0.015381174976883311,
+          "peak": 0.055740032345056534,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0.0006454443397015243,
+          "peak": 0.0015126278158277273,
+          "samples": 76800
+        },
+        "duration": 7.82,
+        "decoded_bytes": 18145920
+      },
+      "fluidr3-gm": {
+        "initial": {
+          "rms": 0.005448649324003703,
+          "peak": 0.019150851294398308,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0,
+          "peak": 0,
+          "samples": 76800
+        },
+        "duration": 3.128888889,
+        "decoded_bytes": 7314560
+      }
+    },
+    {
+      "name": "Guitar",
+      "legacy": {
+        "initial": {
+          "rms": 0.018926464297697895,
+          "peak": 0.04777156189084053,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0.0020461035250611977,
+          "peak": 0.005245186388492584,
+          "samples": 76800
+        },
+        "duration": 7.58,
+        "decoded_bytes": 17579520
+      },
+      "fluidr3-gm": {
+        "initial": {
+          "rms": 0.012360835158714027,
+          "peak": 0.041994672268629074,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0,
+          "peak": 0,
+          "samples": 76800
+        },
+        "duration": 3.128888889,
+        "decoded_bytes": 7314560
+      }
+    },
+    {
+      "name": "Organ",
+      "legacy": {
+        "initial": {
+          "rms": 0.050788766385573454,
+          "peak": 0.15554285049438477,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0.049352684139919174,
+          "peak": 0.150216743350029,
+          "samples": 76800
+        },
+        "duration": 8.61,
+        "decoded_bytes": 19509120
+      },
+      "fluidr3-gm": {
+        "initial": {
+          "rms": 0.008879598939551186,
+          "peak": 0.02806449495255947,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0,
+          "peak": 0,
+          "samples": 76800
+        },
+        "duration": 3.128888889,
+        "decoded_bytes": 7314560
+      }
+    },
+    {
+      "name": "Vibraphone",
+      "legacy": {
+        "initial": {
+          "rms": 0.05735027299005924,
+          "peak": 0.17527075111865997,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0.000941105014897406,
+          "peak": 0.002489965409040451,
+          "samples": 76800
+        },
+        "duration": 7.61,
+        "decoded_bytes": 17614080
+      },
+      "fluidr3-gm": {
+        "initial": {
+          "rms": 0.004213090002562069,
+          "peak": 0.012996255420148373,
+          "samples": 67200
+        },
+        "late": {
+          "rms": 0,
+          "peak": 0,
+          "samples": 76800
+        },
+        "duration": 3.128888889,
+        "decoded_bytes": 7314560
+      }
+    }
+  ],
+  "lifecycle": [
+    {
+      "pass": true,
+      "server_entries": 149,
+      "test_only_prepared_source_opt_in": true,
+      "instrument_id": "fluidr3-gm-acoustic-grand-piano",
+      "first_load_ms": 153,
+      "decoded_bytes": 7314560,
+      "enabled_sources": 21,
+      "native_sample_rate": 48000,
+      "native_decoded_sample_rate": 48000,
+      "shared_native_buffers": 1,
+      "simultaneous_voices": 4,
+      "chunk_fetches": 1,
+      "active": {
+        "rms": 0.010168251203252184,
+        "peak": 0.030356958508491516,
+        "samples": 19200
+      },
+      "after_stop": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 15360
+      },
+      "after_note_boundary": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 17280
+      },
+      "bounded_note_seconds": 3.128888889,
+      "hardware_duration_seconds": 3.1288888889999997,
+      "next_pitch_bleed": false,
+      "natural_completion": true,
+      "replay": true,
+      "cleanup": {
+        "pending_frames": 0,
+        "pending_intervals": 0,
+        "open_contexts": 0,
+        "connected_product_nodes": 0,
+        "source_callbacks": 0
+      }
+    },
+    {
+      "pass": true,
+      "server_entries": 149,
+      "test_only_prepared_source_opt_in": true,
+      "instrument_id": "fluidr3-gm-flute",
+      "first_load_ms": 65.30000001192093,
+      "decoded_bytes": 7314560,
+      "enabled_sources": 21,
+      "native_sample_rate": 48000,
+      "native_decoded_sample_rate": 48000,
+      "shared_native_buffers": 1,
+      "simultaneous_voices": 4,
+      "chunk_fetches": 1,
+      "active": {
+        "rms": 0.01527393495572641,
+        "peak": 0.047654807567596436,
+        "samples": 19200
+      },
+      "after_stop": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 15358
+      },
+      "after_note_boundary": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 17280
+      },
+      "bounded_note_seconds": 3.128888889,
+      "hardware_duration_seconds": 3.128888889,
+      "next_pitch_bleed": false,
+      "natural_completion": true,
+      "replay": true,
+      "cleanup": {
+        "pending_frames": 0,
+        "pending_intervals": 0,
+        "open_contexts": 0,
+        "connected_product_nodes": 0,
+        "source_callbacks": 0
+      }
+    },
+    {
+      "pass": true,
+      "server_entries": 149,
+      "test_only_prepared_source_opt_in": true,
+      "instrument_id": "fluidr3-gm-violin",
+      "first_load_ms": 69.80000001192093,
+      "decoded_bytes": 7314560,
+      "enabled_sources": 21,
+      "native_sample_rate": 48000,
+      "native_decoded_sample_rate": 48000,
+      "shared_native_buffers": 1,
+      "simultaneous_voices": 4,
+      "chunk_fetches": 1,
+      "active": {
+        "rms": 0.013212661301922661,
+        "peak": 0.045280445367097855,
+        "samples": 19200
+      },
+      "after_stop": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 15360
+      },
+      "after_note_boundary": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 17280
+      },
+      "bounded_note_seconds": 3.128888889,
+      "hardware_duration_seconds": 3.1288888889999997,
+      "next_pitch_bleed": false,
+      "natural_completion": true,
+      "replay": true,
+      "cleanup": {
+        "pending_frames": 0,
+        "pending_intervals": 0,
+        "open_contexts": 0,
+        "connected_product_nodes": 0,
+        "source_callbacks": 0
+      }
+    },
+    {
+      "pass": true,
+      "server_entries": 149,
+      "test_only_prepared_source_opt_in": true,
+      "instrument_id": "fluidr3-gm-acoustic-bass",
+      "first_load_ms": 76.10000002384186,
+      "decoded_bytes": 7314560,
+      "enabled_sources": 21,
+      "native_sample_rate": 48000,
+      "native_decoded_sample_rate": 48000,
+      "shared_native_buffers": 1,
+      "simultaneous_voices": 4,
+      "chunk_fetches": 1,
+      "active": {
+        "rms": 0.018660326368530496,
+        "peak": 0.057315099984407425,
+        "samples": 19200
+      },
+      "after_stop": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 15360
+      },
+      "after_note_boundary": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 17280
+      },
+      "bounded_note_seconds": 3.128888889,
+      "hardware_duration_seconds": 3.1288888889999997,
+      "next_pitch_bleed": false,
+      "natural_completion": true,
+      "replay": true,
+      "cleanup": {
+        "pending_frames": 0,
+        "pending_intervals": 0,
+        "open_contexts": 0,
+        "connected_product_nodes": 0,
+        "source_callbacks": 0
+      }
+    },
+    {
+      "pass": true,
+      "server_entries": 149,
+      "test_only_prepared_source_opt_in": true,
+      "instrument_id": "fluidr3-gm-distortion-guitar",
+      "first_load_ms": 76.89999997615814,
+      "decoded_bytes": 7314560,
+      "enabled_sources": 21,
+      "native_sample_rate": 48000,
+      "native_decoded_sample_rate": 48000,
+      "shared_native_buffers": 1,
+      "simultaneous_voices": 4,
+      "chunk_fetches": 1,
+      "active": {
+        "rms": 0.025419967755206933,
+        "peak": 0.0967572033405304,
+        "samples": 19200
+      },
+      "after_stop": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 15360
+      },
+      "after_note_boundary": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 17280
+      },
+      "bounded_note_seconds": 3.128888889,
+      "hardware_duration_seconds": 3.1288888889999997,
+      "next_pitch_bleed": false,
+      "natural_completion": true,
+      "replay": true,
+      "cleanup": {
+        "pending_frames": 0,
+        "pending_intervals": 0,
+        "open_contexts": 0,
+        "connected_product_nodes": 0,
+        "source_callbacks": 0
+      }
+    },
+    {
+      "pass": true,
+      "server_entries": 149,
+      "test_only_prepared_source_opt_in": true,
+      "instrument_id": "fluidr3-gm-church-organ",
+      "first_load_ms": 72.19999998807907,
+      "decoded_bytes": 7314560,
+      "enabled_sources": 21,
+      "native_sample_rate": 48000,
+      "native_decoded_sample_rate": 48000,
+      "shared_native_buffers": 1,
+      "simultaneous_voices": 4,
+      "chunk_fetches": 1,
+      "active": {
+        "rms": 0.014716793128309156,
+        "peak": 0.05193983018398285,
+        "samples": 19200
+      },
+      "after_stop": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 15360
+      },
+      "after_note_boundary": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 17280
+      },
+      "bounded_note_seconds": 3.128888889,
+      "hardware_duration_seconds": 3.1288888889999997,
+      "next_pitch_bleed": false,
+      "natural_completion": true,
+      "replay": true,
+      "cleanup": {
+        "pending_frames": 0,
+        "pending_intervals": 0,
+        "open_contexts": 0,
+        "connected_product_nodes": 0,
+        "source_callbacks": 0
+      }
+    },
+    {
+      "pass": true,
+      "server_entries": 149,
+      "test_only_prepared_source_opt_in": true,
+      "instrument_id": "fluidr3-gm-vibraphone",
+      "first_load_ms": 73.40000003576279,
+      "decoded_bytes": 7314560,
+      "enabled_sources": 21,
+      "native_sample_rate": 48000,
+      "native_decoded_sample_rate": 48000,
+      "shared_native_buffers": 1,
+      "simultaneous_voices": 4,
+      "chunk_fetches": 1,
+      "active": {
+        "rms": 0.011831556565933588,
+        "peak": 0.032893504947423935,
+        "samples": 19200
+      },
+      "after_stop": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 15358
+      },
+      "after_note_boundary": {
+        "rms": 0,
+        "peak": 0,
+        "samples": 17280
+      },
+      "bounded_note_seconds": 3.128888889,
+      "hardware_duration_seconds": 3.1288888889999997,
+      "next_pitch_bleed": false,
+      "natural_completion": true,
+      "replay": true,
+      "cleanup": {
+        "pending_frames": 0,
+        "pending_intervals": 0,
+        "open_contexts": 0,
+        "connected_product_nodes": 0,
+        "source_callbacks": 0
+      }
+    }
+  ],
+  "audition_segments": [
+    {
+      "start_seconds": 0,
+      "duration_seconds": 5.4,
+      "name": "Piano",
+      "library": "legacy"
+    },
+    {
+      "start_seconds": 5.4,
+      "duration_seconds": 5.4,
+      "name": "Piano",
+      "library": "fluidr3-gm"
+    },
+    {
+      "start_seconds": 10.8,
+      "duration_seconds": 5.4,
+      "name": "Flute",
+      "library": "legacy"
+    },
+    {
+      "start_seconds": 16.200000000000003,
+      "duration_seconds": 5.4,
+      "name": "Flute",
+      "library": "fluidr3-gm"
+    },
+    {
+      "start_seconds": 21.6,
+      "duration_seconds": 5.4,
+      "name": "Violin",
+      "library": "legacy"
+    },
+    {
+      "start_seconds": 27,
+      "duration_seconds": 5.4,
+      "name": "Violin",
+      "library": "fluidr3-gm"
+    },
+    {
+      "start_seconds": 32.4,
+      "duration_seconds": 5.4,
+      "name": "Bass",
+      "library": "legacy"
+    },
+    {
+      "start_seconds": 37.8,
+      "duration_seconds": 5.4,
+      "name": "Bass",
+      "library": "fluidr3-gm"
+    },
+    {
+      "start_seconds": 43.199999999999996,
+      "duration_seconds": 5.4,
+      "name": "Guitar",
+      "library": "legacy"
+    },
+    {
+      "start_seconds": 48.599999999999994,
+      "duration_seconds": 5.4,
+      "name": "Guitar",
+      "library": "fluidr3-gm"
+    },
+    {
+      "start_seconds": 53.99999999999999,
+      "duration_seconds": 5.4,
+      "name": "Organ",
+      "library": "legacy"
+    },
+    {
+      "start_seconds": 59.39999999999999,
+      "duration_seconds": 5.4,
+      "name": "Organ",
+      "library": "fluidr3-gm"
+    },
+    {
+      "start_seconds": 64.8,
+      "duration_seconds": 5.4,
+      "name": "Vibraphone",
+      "library": "legacy"
+    },
+    {
+      "start_seconds": 70.2,
+      "duration_seconds": 5.4,
+      "name": "Vibraphone",
+      "library": "fluidr3-gm"
+    }
+  ],
+  "verification": "Native offline A/B rendering plus real AudioContext output capture for each FluidR3 representative; subjective quality review remains a listening decision."
+}

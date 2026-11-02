@@ -1,0 +1,33 @@
+{
+  "pass": true,
+  "commit": "044fab8e1456bfafc5776e86dfd6bb8697149aef",
+  "instruments": 128,
+  "embedded_notes": 11264,
+  "fully_decoded_notes": 11264,
+  "bundle_bytes": 318463450,
+  "encoded_note_bytes": 238543818,
+  "sample_rates": {
+    "44100": 11264
+  },
+  "channels": {
+    "2": 11264
+  },
+  "pitch_min": 21,
+  "pitch_max": 108,
+  "duration_min_seconds": 3.128888888888889,
+  "duration_max_seconds": 3.128888888888889,
+  "notes_per_instrument": [
+    88
+  ],
+  "silent_notes": 616,
+  "instruments_with_silent_notes": 35,
+  "notes_with_samples_outside_unit_range": 0,
+  "environment": {
+    "numpy": "2.5.4",
+    "soundfile": "0.14.0",
+    "libsndfile": "1.2.2"
+  },
+  "browser_verification": "not performed; audit only",
+  "active_catalog_modified": false,
+  "source_lock_sha256": "7d0305e31c019cd8f13d047c3771e5b8ef200d05075e571e57b4c48b92e4cd29"
+}

@@ -1,3 +1,4 @@
+import { catalog_libraries, MAX_CATALOG_BYTES } from "./catalog-libraries.js";
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
@@ -21,8 +22,12 @@ export function create_instrument_library(directory) {
     pending = null;
   const hashes = new Map();
   async function build(key) {
+    if (
+      (await fsp.stat(path.join(root, "catalog.json"))).size > MAX_CATALOG_BYTES
+    )
+      throw new Error("Instrument catalog too large");
     const content = await fsp.readFile(path.join(root, "catalog.json"));
-    if (content.length > 8 * 1024 * 1024)
+    if (content.length > MAX_CATALOG_BYTES)
       throw new Error("Instrument catalog too large");
     const catalog = JSON.parse(content);
     if (
@@ -31,6 +36,7 @@ export function create_instrument_library(directory) {
       !Array.isArray(catalog.instruments)
     )
       throw new Error("Invalid instrument catalog");
+    const library_metadata = catalog_libraries(catalog);
     verify_indexes(root, catalog);
     const instruments = new Map(),
       assets = new Map();
@@ -60,7 +66,11 @@ export function create_instrument_library(directory) {
             entry.bytes <= 0 ||
             entry.path !== relative ||
             (kind === "original" &&
-              !/^[A-Za-z0-9_-]+\.mp3$/.test(entry.filename)) ||
+              (!/^[A-Za-z0-9_-]+\.(mp3|wav)$/.test(entry.filename) ||
+                entry.mime_type !==
+                  (entry.filename.endsWith(".wav")
+                    ? "audio/wav"
+                    : "audio/mpeg"))) ||
             (kind === "playback" &&
               !instrument.recordings.some(
                 (recording) => recording.id === entry.recording_id,
@@ -88,6 +98,7 @@ export function create_instrument_library(directory) {
       stamp: key,
       revision: content_hash(content),
       catalog,
+      library_metadata,
       instruments,
       assets,
     };
@@ -225,6 +236,8 @@ export function public_catalog(snapshot, available, url_for) {
         "midi_programs",
         "banks",
       ]),
+      library_id: instrument.library_id ?? "legacy",
+      instrument_key: instrument.instrument_key ?? instrument.id,
       available:
         playback_assets.length > 0 &&
         playback_assets.every((asset) => asset.available),
@@ -236,6 +249,19 @@ export function public_catalog(snapshot, available, url_for) {
   });
   return {
     schema_version: 1,
+    default_library_id: snapshot.library_metadata.default_library_id,
+    libraries: snapshot.library_metadata.libraries.map((library) =>
+      pick(library, [
+        "id",
+        "name",
+        "version",
+        "source_format",
+        "status",
+        "license",
+        "source_url",
+        "source_revision",
+      ]),
+    ),
     library_version: snapshot.catalog.library_version,
     revision: snapshot.revision,
     browser_verification:

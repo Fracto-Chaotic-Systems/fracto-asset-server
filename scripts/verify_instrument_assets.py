@@ -52,7 +52,7 @@ def run(root, output):
             'comparison':'All note interiors against indexed original stereo-average samples; intentional 2ms/20ms edge fades excluded.',
             'browser_verification':'pending'}
     if output:
-        output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+        output.write_bytes((json.dumps(report,indent=2)+'\n').encode('utf-8'))
     print(json.dumps(report),flush=True)
 
 if __name__=='__main__':

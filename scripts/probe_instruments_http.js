@@ -74,7 +74,7 @@ try {
         assert.equal(part.status, 206, asset.id);
         assert.equal(
           part.headers.get("content-type"),
-          kind === "original" ? "audio/mpeg" : "audio/wav",
+          kind === "original" ? asset.mime_type : "audio/wav",
         );
         assert.equal(
           part.headers.get("content-range"),

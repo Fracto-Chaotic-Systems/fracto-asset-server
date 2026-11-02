@@ -1,3 +1,4 @@
+import { validate_note_sample_index } from "./note-sample-index.js";
 import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
@@ -9,6 +10,8 @@ const fail = (message) => {
 };
 
 export function validate_pitch_index(index, recording) {
+  if (index.method_version === "fluidr3-note-samples-v1")
+    return validate_note_sample_index(index, recording);
   const timing = recording.timing;
   if (
     !timing ||

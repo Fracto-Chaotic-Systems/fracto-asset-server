@@ -135,3 +135,20 @@ test("rerun refuses to replace edited catalog metadata", (t) => {
     "Edited name",
   );
 });
+
+test("legacy source recovery preserves added library metadata", (t) => {
+  const f = fixture(t);
+  seed_library(f.options);
+  const catalog = JSON.parse(fs.readFileSync(f.catalog_path));
+  catalog.libraries.push({
+    id: "fluidr3-gm",
+    name: "FluidR3 GM",
+    version: "pinned",
+    source_format: "midi-js-note-mp3",
+    status: "audited",
+  });
+  fs.writeFileSync(f.catalog_path, JSON.stringify(catalog));
+  const before = fs.readFileSync(f.catalog_path);
+  seed_library(f.options);
+  assert.deepEqual(fs.readFileSync(f.catalog_path), before);
+});

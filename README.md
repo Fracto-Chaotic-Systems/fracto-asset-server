@@ -242,3 +242,8 @@ Common failures:
 The service retains its configurable CORS policy and uses enabled-user or internal-service authorization when `FRACTO_AUTH_REQUIRED=true`. Image rendering still uses synchronous external commands and hardcoded publication settings.
 
 `tiles.csv` is a local runtime export and should not be committed.
+
+
+FluidR3 migration: the [pinned importer](instruments/fluidr3-gm/IMPORT.md) prepares
+128 disabled melodic instruments alongside the unchanged enabled legacy library.
+Native playback comparisons and enablement are the next migration step.

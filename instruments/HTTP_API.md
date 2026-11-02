@@ -18,13 +18,14 @@ Source enablement remains a separate operation.
 
 ## GET /instruments
 
-Returns `schema_version`, `library_version`, `revision`, `browser_verification`
+Returns `schema_version`, `library_version`, `revision`, `default_library_id`,
+`libraries`, `browser_verification`
 and `instruments`. Revision is the SHA-256 of the on-disk catalog; the response
 ETag additionally reflects public URLs and current file availability.
 
 Each instrument contains:
 
-- Stable `id`, `name`, `kind`, `enabled` and `verification_status`.
+- Stable `id`, `library_id`, `instrument_key`, `name`, `kind`, `enabled` and `verification_status`.
 - `available`: all registered playback chunks are present, regular files and
   match their registered byte lengths. This is inventory availability, not a
   browser playback certification. Hashes are checked before audio is served.
@@ -142,3 +143,14 @@ returned the correct 32-byte range and HEAD length; 6,656 bytes were compared
 against disk, and the catalog revalidated with 304. Each first stream additionally
 verified the complete file hash against the catalog. See http-verification.json.
 Browser playback is not asserted by this HTTP verification.
+
+
+Multi-library identity, normalization, program lookup and the 32 MiB catalog
+bound are specified in [MULTI_LIBRARY.md](MULTI_LIBRARY.md). Audio routes and
+authorization are unchanged. FluidR3 is now imported as prepared, disabled instruments.
+
+
+FluidR3 import adds registered canonical source WAVs (audio/wav) alongside legacy
+MP3 source recordings (audio/mpeg). The same source URL/range/authentication rules
+apply. Discrete-note source timing has no 10/20-second grid. See
+[fluidr3-gm/IMPORT.md](fluidr3-gm/IMPORT.md). Prepared FluidR3 instruments stay disabled.

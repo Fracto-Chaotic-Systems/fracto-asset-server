@@ -99,7 +99,7 @@ export function create_instrument_router({
       await library.verify_audio(asset, location);
       res.set(
         "Content-Type",
-        asset.kind === "original" ? "audio/mpeg" : "audio/wav",
+        asset.kind === "original" ? asset.entry.mime_type : "audio/wav",
       );
       res.set("X-Content-Type-Options", "nosniff");
       res.set("ETag", `"${asset.entry.sha256}"`);

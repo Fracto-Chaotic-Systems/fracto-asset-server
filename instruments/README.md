@@ -1,5 +1,7 @@
 # Instrument library seed
 
+Current release: **FluidR3 GM is the default; all 128 FluidR3 and 21 Legacy instruments are enabled.** See [release/setup/rollback](fluidr3-gm/RELEASE.md). Earlier stage descriptions below are historical.
+
 Current playback status (2026-11-02): **all 21 instruments are enabled** after
 75 native Chromium decode/render probes (low/middle/high pitches of every
 recording layer) passed through the sample cache and voice engine at 48 kHz.
@@ -103,3 +105,14 @@ through registered, versioned URLs; see [HTTP_API.md](HTTP_API.md).
 
 See [MIGRATION_VERIFICATION.md](MIGRATION_VERIFICATION.md) for final test evidence,
 setup, enablement boundaries and recovery instructions.
+
+
+The [FluidR3 GM source audit](fluidr3-gm/README.md) pins the active default library.
+The current catalog enables all 128 verified FluidR3 instruments and 21 Legacy
+sounds (149 total). `default_library_id` is `fluidr3-gm`; Legacy remains selectable.
+Short finite samples and excluded silent keys are explicitly modeled.
+
+See [multi-library support](MULTI_LIBRARY.md), [import/recovery](fluidr3-gm/IMPORT.md),
+and [native verification](fluidr3-gm/VERIFICATION.md). The default change is recorded
+in `fluidr3-gm/default-activation.json`. Earlier reports retain their historical
+catalog defaults and enabled flags.

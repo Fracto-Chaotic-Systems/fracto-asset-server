@@ -108,3 +108,8 @@ All entries remain disabled. No program/bank assignment or browser decode
 alignment is certified here. Generate bounded mono playback assets next, with
 fades at guarded ends; check decoded clip boundaries before enabling sound
 sources. Original audio files and the existing S3-backed player are unchanged.
+
+
+FluidR3 uses the separate fluidr3-note-samples-v1 discrete-note source index,
+validated by note-sample-index.js. The 10/20-second grid checks above apply only
+to legacy sources. See [fluidr3-gm/IMPORT.md](fluidr3-gm/IMPORT.md).

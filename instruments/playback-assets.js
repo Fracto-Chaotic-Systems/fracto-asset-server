@@ -125,8 +125,7 @@ export function verify_playback(directory, catalog) {
     notes = 0,
     bytes = 0,
     largest = 0;
-  const ids = new Set(),
-    paths = new Set();
+  const ids = new Set();
   for (const instrument of catalog.instruments) {
     const assets = instrument.playback_assets ?? [];
     if (!assets.length) continue;
@@ -152,12 +151,11 @@ export function verify_playback(directory, catalog) {
         !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(asset.id) ||
         ids.has(asset.id) ||
         !/^[a-f0-9]{64}$/.test(asset.sha256) ||
-        asset.path !== `playback/${recording.id}/${asset.sha256}.wav` ||
-        paths.has(asset.path)
+        asset.path !== `playback/${recording.id}/${asset.sha256}.wav`
       )
         fail("duplicate ID or invalid asset path");
       ids.add(asset.id);
-      paths.add(asset.path);
+      // Distinct octave mappings may reference identical, checksum-addressed audio.
       const target = path.join(path.resolve(directory), asset.path);
       for (const entry of [
         path.join(directory, "playback"),

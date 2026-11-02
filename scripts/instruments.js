@@ -8,6 +8,7 @@ const { values, positionals } = parseArgs({
   options: {
     "source-repo": { type: "string" },
     "library-dir": { type: "string" },
+    "catalog-file": { type: "string" },
     "sources-only": { type: "boolean", default: false },
   },
 });
@@ -25,6 +26,9 @@ try {
       ? seed_library({ source_repo: values["source-repo"], directory })
       : verify_library(directory, {
           include_playback: !values["sources-only"],
+          catalog_file: values["catalog-file"]
+            ? path.resolve(values["catalog-file"])
+            : undefined,
         });
   console.log(JSON.stringify(result, null, 2));
 } catch (error) {

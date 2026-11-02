@@ -497,3 +497,121 @@ test("registered originals cannot be served through a substituted directory link
   assert.equal(catalog.instruments[0].recordings[0].url, null);
   assert.equal(catalog.instruments[0].available, true);
 });
+
+test("multi-library catalog publishes scoped identities without changing legacy audio URLs", async (t) => {
+  const f = fixture(t);
+  f.catalog.default_library_id = "legacy";
+  f.catalog.libraries = [
+    {
+      id: "legacy",
+      name: "Legacy recordings",
+      version: "1",
+      source_format: "chromatic-mp3",
+      status: "active",
+    },
+    {
+      id: "fluidr3-gm",
+      name: "FluidR3 GM",
+      version: "pinned",
+      source_format: "midi-js-note-mp3",
+      status: "active",
+      license: "CC-BY-3.0-US",
+      private_path: "do-not-expose",
+    },
+  ];
+  Object.assign(f.catalog.instruments[0], {
+    library_id: "legacy",
+    instrument_key: "flute",
+  });
+  const second = structuredClone(f.catalog.instruments[0]);
+  Object.assign(second, { id: "fluidr3-gm-flute", library_id: "fluidr3-gm" });
+  f.catalog.instruments.push(second);
+  f.save();
+  const base = await start(t, f),
+    response = await fetch(`${base}/instruments`),
+    body = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(body.default_library_id, "legacy");
+  assert.equal(body.libraries.length, 2);
+  assert.ok(!JSON.stringify(body).includes("do-not-expose"));
+  assert.deepEqual(
+    body.instruments.map((item) => [
+      item.id,
+      item.library_id,
+      item.instrument_key,
+    ]),
+    [
+      ["flute", "legacy", "flute"],
+      ["fluidr3-gm-flute", "fluidr3-gm", "flute"],
+    ],
+  );
+  assert.equal(
+    new URL(body.instruments[0].playback_assets[0].url, base).href,
+    audio_url(f, base),
+  );
+  for (const item of body.instruments) {
+    const audio = await fetch(new URL(item.playback_assets[0].url, base));
+    assert.equal(audio.status, 200);
+    assert.deepEqual(Buffer.from(await audio.arrayBuffer()), f.content);
+  }
+  const etag = response.headers.get("etag");
+  f.catalog.default_library_id = "fluidr3-gm";
+  f.save();
+  const updated = await fetch(`${base}/instruments`, {
+    headers: { "if-none-match": etag },
+  });
+  assert.equal(updated.status, 200);
+  assert.equal((await updated.json()).default_library_id, "fluidr3-gm");
+});
+
+test("library identity failures and oversized on-disk catalogs fail before audio publication", async (t) => {
+  const f = fixture(t),
+    base = await start(t, f);
+  f.catalog.libraries = [
+    {
+      id: "legacy",
+      name: "Legacy",
+      version: "1",
+      source_format: "chromatic-mp3",
+      status: "active",
+    },
+  ];
+  f.catalog.instruments[0].library_id = "missing";
+  f.save();
+  assert.equal((await fetch(`${base}/instruments`)).status, 503);
+  fs.truncateSync(path.join(f.root, "catalog.json"), 32 * 1024 * 1024 + 1);
+  assert.equal((await fetch(`${base}/instruments`)).status, 503);
+});
+
+test("registered canonical WAV source recordings retain WAV MIME and range semantics", async (t) => {
+  const f = fixture(t),
+    recording = f.catalog.instruments[0].recordings[0];
+  recording.filename = "flute-canonical.wav";
+  recording.path = "originals/flute-canonical.wav";
+  recording.mime_type = "audio/wav";
+  recording.bytes = f.content.length;
+  recording.sha256 = hash(f.content);
+  fs.writeFileSync(path.join(f.root, recording.path), f.content);
+  const index_path = path.join(f.root, recording.timing.index_path),
+    index = JSON.parse(fs.readFileSync(index_path));
+  index.source_sha256 = recording.sha256;
+  const index_bytes = Buffer.from(JSON.stringify(index));
+  fs.writeFileSync(index_path, index_bytes);
+  recording.timing.index_sha256 = hash(index_bytes);
+  f.catalog.instruments[0].pitch_map.indexes[0].sha256 =
+    recording.timing.index_sha256;
+  f.save();
+  const base = await start(t, f),
+    body = await (await fetch(`${base}/instruments`)).json();
+  const source = body.instruments[0].recordings[0];
+  assert.equal(source.mime_type, "audio/wav");
+  const response = await fetch(new URL(source.url, base), {
+    headers: { range: "bytes=0-43" },
+  });
+  assert.equal(response.status, 206);
+  assert.equal(response.headers.get("content-type"), "audio/wav");
+  assert.deepEqual(
+    Buffer.from(await response.arrayBuffer()),
+    f.content.subarray(0, 44),
+  );
+});

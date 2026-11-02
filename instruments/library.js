@@ -1,4 +1,5 @@
-import { verify_playback } from "./playback-assets.js";
+import { catalog_libraries } from "./catalog-libraries.js";
+import { verify_playback, read_pcm_wav } from "./playback-assets.js";
 import { verify_indexes } from "./pitch-index.js";
 import fs from "node:fs";
 import path from "node:path";
@@ -27,8 +28,11 @@ const read_git = (repo, args) =>
 const flat_mp3 = (name) =>
   typeof name === "string" && /^[A-Za-z0-9_-]+\.mp3$/.test(name);
 
+const flat_original = (name) =>
+  typeof name === "string" && /^[A-Za-z0-9_-]+\.(mp3|wav)$/.test(name);
+
 function original_path(directory, filename) {
-  if (!flat_mp3(filename))
+  if (!flat_original(filename))
     throw new Error(`Invalid recording filename: ${filename}`);
   const originals = path.join(path.resolve(directory), "originals");
   if (fs.existsSync(originals) && fs.lstatSync(originals).isSymbolicLink())
@@ -45,6 +49,7 @@ function original_path(directory, filename) {
 function validate_catalog(catalog) {
   if (catalog.schema_version !== 1 || !Array.isArray(catalog.instruments))
     throw new Error("Invalid instrument catalog schema.");
+  catalog_libraries(catalog);
   const ids = new Set(),
     files = new Set(),
     recordings = [];
@@ -60,7 +65,9 @@ function validate_catalog(catalog) {
     ids.add(instrument.id);
     for (const recording of instrument.recordings) {
       if (
-        !flat_mp3(recording.filename) ||
+        !flat_original(recording.filename) ||
+        recording.mime_type !==
+          (recording.filename.endsWith(".wav") ? "audio/wav" : "audio/mpeg") ||
         files.has(recording.filename) ||
         recording.path !== `originals/${recording.filename}` ||
         !Number.isSafeInteger(recording.bytes) ||
@@ -92,6 +99,8 @@ export function seed_library({
     .trim();
   const instruments = definitions.map((instrument) => ({
     id: instrument.id,
+    library_id: "legacy",
+    instrument_key: instrument.id,
     name: instrument.name,
     kind: instrument.kind,
     enabled: false,
@@ -128,6 +137,18 @@ export function seed_library({
   const catalog = {
     schema_version: 1,
     library_version: 1,
+    default_library_id: "legacy",
+    libraries: [
+      {
+        id: "legacy",
+        name: "Legacy recordings",
+        version: "1",
+        source_format: "chromatic-mp3",
+        ...(/^https?:\/\//.test(remote) ? { source_url: remote } : {}),
+        source_revision: resolved_commit,
+        status: "active",
+      },
+    ],
     provenance: {
       repository: remote,
       commit: resolved_commit,
@@ -154,21 +175,23 @@ export function seed_library({
       commit: value.provenance.commit,
       commit_date: value.provenance.commit_date,
     },
-    instruments: value.instruments.map((instrument) => ({
-      id: instrument.id,
-      name: instrument.name,
-      kind: instrument.kind,
-      recordings: instrument.recordings.map((recording) => ({
-        id: recording.id,
-        filename: recording.filename,
-        path: recording.path,
-        mime_type: recording.mime_type,
-        bytes: recording.bytes,
-        sha256: recording.sha256,
-        velocity_layer: recording.velocity_layer,
-        source: recording.source,
+    instruments: value.instruments
+      .filter((instrument) => (instrument.library_id ?? "legacy") === "legacy")
+      .map((instrument) => ({
+        id: instrument.id,
+        name: instrument.name,
+        kind: instrument.kind,
+        recordings: instrument.recordings.map((recording) => ({
+          id: recording.id,
+          filename: recording.filename,
+          path: recording.path,
+          mime_type: recording.mime_type,
+          bytes: recording.bytes,
+          sha256: recording.sha256,
+          velocity_layer: recording.velocity_layer,
+          source: recording.source,
+        })),
       })),
-    })),
   });
   if (
     fs.existsSync(catalog_path) &&
@@ -216,9 +239,15 @@ export function seed_library({
   };
 }
 
-export function verify_library(directory, { include_playback = true } = {}) {
+export function verify_library(
+  directory,
+  { include_playback = true, catalog_file } = {},
+) {
   const catalog = JSON.parse(
-    fs.readFileSync(path.join(path.resolve(directory), "catalog.json"), "utf8"),
+    fs.readFileSync(
+      catalog_file ?? path.join(path.resolve(directory), "catalog.json"),
+      "utf8",
+    ),
   );
   const recordings = validate_catalog(catalog);
   let bytes = 0;
@@ -231,6 +260,14 @@ export function verify_library(directory, { include_playback = true } = {}) {
       sha256(content) !== recording.sha256
     )
       throw new Error(`Integrity check failed: ${recording.filename}`);
+    if (recording.mime_type === "audio/wav") {
+      const wav = read_pcm_wav(content);
+      if (
+        wav.sample_rate !== recording.timing?.sample_rate ||
+        wav.frames !== recording.timing?.frames
+      )
+        throw new Error("Canonical source WAV dimensions mismatch");
+    }
     bytes += content.length;
   }
   return {

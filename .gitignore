@@ -152,3 +152,9 @@ __pycache__/
 
 # Generated bounded instrument playback assets (rebuild from verified indexes)
 /instruments/playback/
+
+# Pinned FluidR3 audit downloads; metadata and notices are tracked.
+/instruments/fluidr3-gm/source-cache/
+
+# Private importer catalog candidates, never runtime or committed data.
+/instruments/catalog.fluidr3-*.next.json

@@ -1,0 +1,46 @@
+{
+  "release_tag": "release/fluidr3-gm-v1",
+  "date": "2026-11-02",
+  "scope": "Local coordinated Git release; no remote publication or production deployment. Audio assets remain outside Git.",
+  "catalog_sha256": "86546adc28e9b8bab45ca88a57051da86d2902dd28870f951e5c2e51595694e0",
+  "default_library_id": "fluidr3-gm",
+  "enabled_instruments": 149,
+  "fluidr3_instruments": 128,
+  "fluidr3_native_assets_match_final_catalog": true,
+  "source_revision": "044fab8e1456bfafc5776e86dfd6bb8697149aef",
+  "tests": {
+    "midi": 117,
+    "asset_server": 29,
+    "python": 23,
+    "ui_build": "passed (existing large-chunk advisory)",
+    "targeted_ui_lint": "passed",
+    "full_pcm_source_comparison": "passed",
+    "http_urls": 1435,
+    "native_browser_default_regression": "passed",
+    "native_full_fluidr3_notes": 10648,
+    "native_full_fluidr3_logical_chunks": 1099,
+    "native_sample_rate": 48000
+  },
+  "previous_commits": {
+    "fracto-ui": "af0402fe480fbcdfc51cec9925e897333379d809",
+    "fracto-asset-server": "76751217cf77b5130dbddf2193ac0fe51e6b6757"
+  },
+  "asset_server_evidence_sha256": {
+    "instruments/http-verification.json": "98b169f2f5f4b31ff1fda0b957603362b315d8a2d0dccb1cc272b2b994b99175",
+    "instruments/playback-verification.json": "d9491e8e059ae89a1fea5604c339f1ef3adcaa5b04907ef95f7b7a2e47e2f0b8",
+    "instruments/fluidr3-gm/browser-all-notes.json": "c60af9cd20d207400fcc6eed6db62cef5fc4c9b980cad07ba81c989105bcc750",
+    "instruments/fluidr3-gm/browser-representatives.json": "1e2e91037a1bbf644731dc4d36fa212e361be0ee8877e92e8b388da94a31b160",
+    "instruments/fluidr3-gm/representative-analysis.json": "18b6140f9675cd84e96a6bd6213097c2d170f98769dac634d81410962cd0673d",
+    "instruments/fluidr3-gm/source-lock.json": "7d0305e31c019cd8f13d047c3771e5b8ef200d05075e571e57b4c48b92e4cd29"
+  },
+  "ui_evidence": {
+    "path": "test/midi_reports/fluidr3-default-library.json",
+    "sha256": "c62b1cccf7a9bb49df3f8fdf54c40c6a19cdc6f91e45d6f779bb3b789f035f74"
+  },
+  "limitations": [
+    "Finite mono samples, one velocity layer; no loops or percussion kits",
+    "Instrument-specific silent keys excluded, no transposition fallback",
+    "Native Chromium 48kHz verification; no human quality certification",
+    "Legacy rights and underlying original SF2 creator credits are not independently established by this migration"
+  ]
+}

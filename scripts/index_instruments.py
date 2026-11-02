@@ -72,6 +72,8 @@ def run(root, apply):
     catalog_path = root / "catalog.json"
     original_catalog = catalog_path.read_bytes()
     catalog = json.loads(original_catalog)
+    if any(item.get("library_id", "legacy") != "legacy" for item in catalog["instruments"]):
+        raise ValueError("This legacy grid tool cannot rewrite a mixed-library catalog; use the library-specific importer.")
     reports = []
     summary = []
     for instrument in catalog["instruments"]:

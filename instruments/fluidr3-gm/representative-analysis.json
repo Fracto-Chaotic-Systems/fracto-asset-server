@@ -1,0 +1,397 @@
+{
+  "pass": true,
+  "sample_rate": 48000,
+  "expected_pitch": 60,
+  "source_catalog_revision": "4dcdff2a8a9ddff5ffa79a0fb2550deca2f4409abcf98c1dd396316ff04f4140",
+  "comparison": "Four spectral windows of native rendered C4 clips, fundamental or coherent harmonic series; hypothesis check, not arbitrary pitch transcription. Level-matched audition is derived from the raw 16-bit export; source assets are unchanged.",
+  "results": [
+    {
+      "name": "Piano",
+      "library": "legacy",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": 10.2,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 8.03,
+          "matched_partials": 11,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 8.13,
+          "matched_partials": 11,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 2.15,
+          "matched_partials": 7,
+          "fundamental_detected": true
+        }
+      ]
+    },
+    {
+      "name": "Piano",
+      "library": "fluidr3-gm",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": 11.81,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 10.71,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 9.03,
+          "matched_partials": 10,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 6.51,
+          "matched_partials": 9,
+          "fundamental_detected": true
+        }
+      ],
+      "level_match_gain": 4.653264784601813,
+      "raw_rms_delta_db": -13.355155317674306
+    },
+    {
+      "name": "Flute",
+      "library": "legacy",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": -1.09,
+          "matched_partials": 8,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": -0.34,
+          "matched_partials": 8,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": -0.56,
+          "matched_partials": 9,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": -0.34,
+          "matched_partials": 8,
+          "fundamental_detected": true
+        }
+      ]
+    },
+    {
+      "name": "Flute",
+      "library": "fluidr3-gm",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": 5.97,
+          "matched_partials": 8,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 9.06,
+          "matched_partials": 10,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 9.72,
+          "matched_partials": 10,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 9.71,
+          "matched_partials": 10,
+          "fundamental_detected": true
+        }
+      ],
+      "level_match_gain": 2.3439714940336356,
+      "raw_rms_delta_db": -7.399046515016863
+    },
+    {
+      "name": "Violin",
+      "library": "legacy",
+      "matching_windows": 3,
+      "windows": [
+        {
+          "median_partial_cents": -8.18,
+          "matched_partials": 9,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 6.99,
+          "matched_partials": 11,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 5.87,
+          "matched_partials": 5,
+          "fundamental_detected": true
+        },
+        null
+      ]
+    },
+    {
+      "name": "Violin",
+      "library": "fluidr3-gm",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": -3.67,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": -14.47,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": -14.21,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": -14.21,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        }
+      ],
+      "level_match_gain": 3.275789689012072,
+      "raw_rms_delta_db": -10.306320231526676
+    },
+    {
+      "name": "Bass",
+      "library": "legacy",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": 2.92,
+          "matched_partials": 9,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 2.84,
+          "matched_partials": 9,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 2.83,
+          "matched_partials": 9,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 2.81,
+          "matched_partials": 8,
+          "fundamental_detected": true
+        }
+      ]
+    },
+    {
+      "name": "Bass",
+      "library": "fluidr3-gm",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": -1.04,
+          "matched_partials": 6,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 0.08,
+          "matched_partials": 6,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": -1.03,
+          "matched_partials": 6,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": -1.08,
+          "matched_partials": 6,
+          "fundamental_detected": true
+        }
+      ],
+      "level_match_gain": 2.8228968428824284,
+      "raw_rms_delta_db": -9.01390016027814
+    },
+    {
+      "name": "Guitar",
+      "library": "legacy",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": 2.71,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 2.46,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 2.45,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 2.45,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        }
+      ]
+    },
+    {
+      "name": "Guitar",
+      "library": "fluidr3-gm",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": 4.74,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 0.92,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": -0.46,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": -1.12,
+          "matched_partials": 12,
+          "fundamental_detected": true
+        }
+      ],
+      "level_match_gain": 1.5311643799668335,
+      "raw_rms_delta_db": -3.7004363479998648
+    },
+    {
+      "name": "Organ",
+      "library": "legacy",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": 0.55,
+          "matched_partials": 9,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 0.73,
+          "matched_partials": 10,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 0.42,
+          "matched_partials": 9,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 0.53,
+          "matched_partials": 9,
+          "fundamental_detected": true
+        }
+      ]
+    },
+    {
+      "name": "Organ",
+      "library": "fluidr3-gm",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": 5.61,
+          "matched_partials": 10,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 6.68,
+          "matched_partials": 10,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 5.98,
+          "matched_partials": 11,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 6.82,
+          "matched_partials": 11,
+          "fundamental_detected": true
+        }
+      ],
+      "level_match_gain": 5.719670874756601,
+      "raw_rms_delta_db": -15.147420780792366
+    },
+    {
+      "name": "Vibraphone",
+      "library": "legacy",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": 0.04,
+          "matched_partials": 2,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 1.18,
+          "matched_partials": 2,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 1.37,
+          "matched_partials": 2,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 1.36,
+          "matched_partials": 2,
+          "fundamental_detected": true
+        }
+      ]
+    },
+    {
+      "name": "Vibraphone",
+      "library": "fluidr3-gm",
+      "matching_windows": 4,
+      "windows": [
+        {
+          "median_partial_cents": 2.99,
+          "matched_partials": 2,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 0.94,
+          "matched_partials": 2,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 0.93,
+          "matched_partials": 2,
+          "fundamental_detected": true
+        },
+        {
+          "median_partial_cents": 0.94,
+          "matched_partials": 2,
+          "fundamental_detected": true
+        }
+      ],
+      "level_match_gain": 13.612445444261418,
+      "raw_rms_delta_db": -22.678723044178444
+    }
+  ]
+}

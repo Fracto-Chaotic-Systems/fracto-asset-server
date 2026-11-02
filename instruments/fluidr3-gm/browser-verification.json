@@ -1,0 +1,23 @@
+{
+  "pass": true,
+  "verified_date": "2026-11-02",
+  "source_catalog_revision": "4dcdff2a8a9ddff5ffa79a0fb2550deca2f4409abcf98c1dd396316ff04f4140",
+  "catalog_revision_after_verification": "020899d938a98da15677f29d925092d68ce1a1858a0c59be7f026e13b158d502",
+  "source_commit": "044fab8e1456bfafc5776e86dfd6bb8697149aef",
+  "instruments": 128,
+  "native_notes_checked": 10648,
+  "native_chunks_checked": 1099,
+  "excluded_keys_rejected": 616,
+  "native_sample_rate": 48000,
+  "representative_realtime_cases": 7,
+  "representative_pitch_clips": 14,
+  "largest_native_decoded_chunk_bytes": 7314560,
+  "fluidr3_enabled": 0,
+  "default_library_id": "legacy",
+  "scope": "Native rendering of every usable note; representative real-time output, Stop, replay, bounded sustain and cleanup; C4 harmonic checks. Human quality ranking and other browsers/sample rates are not certified.",
+  "reports": {
+    "browser-all-notes.json": "c60af9cd20d207400fcc6eed6db62cef5fc4c9b980cad07ba81c989105bcc750",
+    "browser-representatives.json": "1e2e91037a1bbf644731dc4d36fa212e361be0ee8877e92e8b388da94a31b160",
+    "representative-analysis.json": "18b6140f9675cd84e96a6bd6213097c2d170f98769dac634d81410962cd0673d"
+  }
+}

@@ -1,7 +1,11 @@
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import {
+  verify_playback,
   read_pcm_wav,
   validate_playback_asset,
 } from "../instruments/playback-assets.js";
@@ -127,4 +131,43 @@ test("oversized decoded chunks fail before any notes can be scheduled", () => {
     () => validate_playback_asset(f.asset, f.recording, f.index, f.content),
     /decoded memory budget/,
   );
+});
+
+test("distinct octave mappings can share identical content-addressed WAV bytes", (t) => {
+  const f = fixture(),
+    second = structuredClone(f.asset);
+  second.id = "test-main-chunk-1";
+  second.notes[0].midi_pitch = 72;
+  second.notes[0].source_start_frame = 401000;
+  second.notes[0].source_end_frame = 401100;
+  f.index.notes.push({
+    ...f.index.notes[0],
+    midi_pitch: 72,
+    offset_seconds: 401,
+    end_seconds: 401.1,
+    onset_seconds: 401.02,
+  });
+  const body = Buffer.from(JSON.stringify(f.index));
+  f.recording.timing.index_path = "indexes/test-main.json";
+  f.recording.timing.index_sha256 = hash(body);
+  f.asset.index_sha256 = second.index_sha256 = hash(body);
+  f.asset.path = second.path = `playback/test-main/${f.asset.sha256}.wav`;
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "fracto-shared-wav-"));
+  t.after(() => {
+    assert.equal(path.dirname(root), path.resolve(os.tmpdir()));
+    assert.ok(path.basename(root).startsWith("fracto-shared-wav-"));
+    fs.rmSync(root, { recursive: true, force: true });
+  });
+  fs.mkdirSync(path.join(root, "indexes"));
+  fs.mkdirSync(path.join(root, "playback/test-main"), { recursive: true });
+  fs.writeFileSync(path.join(root, f.recording.timing.index_path), body);
+  fs.writeFileSync(path.join(root, f.asset.path), f.content);
+  const catalog = {
+    instruments: [
+      { recordings: [f.recording], playback_assets: [f.asset, second] },
+    ],
+  };
+  assert.equal(verify_playback(root, catalog).playback_notes, 2);
+  second.id = f.asset.id;
+  assert.throws(() => verify_playback(root, catalog), /duplicate ID/);
 });
