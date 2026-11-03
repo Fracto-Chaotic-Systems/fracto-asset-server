@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "status": "audited_not_imported",
+  "repository": "https://github.com/pianobooster/fluid-soundfont",
+  "commit": "24c5c8a82e2f2cec2497710c6a72e5ccfeca40cd",
+  "tree": "700b2ed1440eb85e6e91a01dc5fc946561e6cf91",
+  "tag": "v3.1",
+  "release_id": 35191848,
+  "release_asset_id": 29477752,
+  "release_published_at": "2020-12-12T17:59:00Z",
+  "source": {
+    "filename": "FluidR3_GM.sf2",
+    "url": "https://github.com/pianobooster/fluid-soundfont/releases/download/v3.1/FluidR3_GM.sf2",
+    "bytes": 148398306,
+    "sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+    "git_blob": null,
+    "note": "Release binary is outside the Git tree; commit/tag alone does not pin its bytes. SHA-256 is mandatory."
+  },
+  "license": {
+    "id": "MIT",
+    "author": "Frank Wen",
+    "copyright": "Frank Wen 2000-2002, 2008; Toby Smithe 2008",
+    "embedded_comment": "Licensed under the MIT License.",
+    "evidence": [
+      {
+        "path": "upstream/COPYING",
+        "url": "https://raw.githubusercontent.com/pianobooster/fluid-soundfont/24c5c8a82e2f2cec2497710c6a72e5ccfeca40cd/COPYING",
+        "bytes": 1086,
+        "git_blob": "b251ece3b10bd8e316dfa44c1c8b689da94bf9db",
+        "sha256": "8ef830b65c97a976b86e34bb5fde08d99dfb1db13c4149b5b20bc837ac6c4568"
+      },
+      {
+        "path": "upstream/README",
+        "url": "https://raw.githubusercontent.com/pianobooster/fluid-soundfont/24c5c8a82e2f2cec2497710c6a72e5ccfeca40cd/README",
+        "bytes": 1042,
+        "git_blob": "f8bfc859c6abf57eaf45d8d6f6d6d579596bc8f2",
+        "sha256": "2f92d462684629f207e43815115b79d7f1ce130d30ca8792b7d82b398a8306f9"
+      },
+      {
+        "path": "upstream/README.md",
+        "url": "https://raw.githubusercontent.com/pianobooster/fluid-soundfont/24c5c8a82e2f2cec2497710c6a72e5ccfeca40cd/README.md",
+        "bytes": 632,
+        "git_blob": "b3319f306c5ff0a9e64966b840db067506d3d860",
+        "sha256": "632527b8d7caa6889acb1b4fd6f1c98f47149f188a1ab8c3498d4ca16921883f"
+      }
+    ],
+    "relationship_to_melodic_mp3": "Separate distribution and source pin. Does not change the CC-BY declaration retained for existing MIDI.js-rendered samples."
+  },
+  "inventory": {
+    "path": "kit-inventory.json",
+    "sha256": "b98630e9fdae614da171b830f925c67c230ef5f27a29c831569753a16553c6b1"
+  },
+  "selected_first_kit": {
+    "sf2_bank": 128,
+    "program_zero_based": 0,
+    "name": "Standard"
+  },
+  "runtime_catalog_changed": false
+}

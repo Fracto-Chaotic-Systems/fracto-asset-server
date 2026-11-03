@@ -1,3 +1,4 @@
+import { verify_drum_assets } from "./drum-assets.js";
 import { catalog_libraries } from "./catalog-libraries.js";
 import { verify_playback, read_pcm_wav } from "./playback-assets.js";
 import { verify_indexes } from "./pitch-index.js";
@@ -272,12 +273,18 @@ export function verify_library(
   }
   return {
     instruments: catalog.instruments.length,
+    drum_kits: catalog.drum_kits?.length ?? 0,
+    drum_kits_playback_enabled:
+      catalog.drum_kits?.filter((kit) => kit.enabled).length ?? 0,
     recordings: recordings.length,
     bytes,
     integrity_verified: true,
     ...verify_indexes(directory, catalog),
     ...(include_playback
-      ? verify_playback(directory, catalog)
+      ? {
+          ...verify_playback(directory, catalog),
+          ...verify_drum_assets(directory, catalog),
+        }
       : { playback_assets_verified: false }),
     playback_enabled: catalog.instruments.filter(
       (instrument) => instrument.enabled,

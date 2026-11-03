@@ -137,3 +137,6 @@ publishes disabled prepared FluidR3 assets; see [fluidr3-gm/IMPORT.md](fluidr3-g
 
 
 FluidR3 step 4 verification is complete; see [the native results](fluidr3-gm/VERIFICATION.md). Providers remain disabled until library-aware selection is connected.
+
+
+Step 2 adds the [audited drum-kit catalog](DRUM_KITS.md): 31 disabled kit inventories in a separate collection, with note/velocity coverage, source choke classes and the melodic-to-percussion library link. No kit audio is served or enabled yet.

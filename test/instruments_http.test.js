@@ -1,3 +1,4 @@
+import { prepared_kit } from "./drum_assets_fixture.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -615,3 +616,136 @@ test("registered canonical WAV source recordings retain WAV MIME and range seman
     f.content.subarray(0, 44),
   );
 });
+
+const drum_catalog = () => ({
+  schema_version: 1,
+  library_version: 5,
+  revision: "a".repeat(64),
+  default_library_id: "legacy",
+  instruments: [],
+  libraries: [
+    {
+      id: "legacy",
+      name: "Legacy",
+      version: "1",
+      source_format: "chromatic-mp3",
+      status: "active",
+      percussion_library_id: "fluidr3-percussion",
+    },
+    {
+      id: "fluidr3-percussion",
+      name: "FluidR3 percussion",
+      version: "1",
+      source_format: "sf2",
+      status: "audited",
+      license: "MIT",
+    },
+  ],
+  drum_kits: [
+    {
+      id: "fluidr3-percussion-kit-standard",
+      library_id: "fluidr3-percussion",
+      kit_key: "standard",
+      kind: "drum-kit",
+      name: "Standard",
+      midi_program: 0,
+      midi_bank: { msb: 0, lsb: 0 },
+      source_preset: { bank: 128, program: 0 },
+      source_sha256: "b".repeat(64),
+      enabled: false,
+      verification_status: "source_audited",
+      coverage_status: "source-audited",
+      playback_mode: "one-shot",
+      notes: [35, 42, 44, 46].map((midi_note) => ({
+        midi_note,
+        velocity_ranges: [[1, 127]],
+      })),
+      choke_groups: [{ source_exclusive_class: 1, midi_notes: [42, 44, 46] }],
+      recordings: [],
+      playback_assets: [],
+    },
+  ],
+});
+
+test("HTTP catalog publishes disabled drum inventory without source paths or audio routes", async (t) => {
+  const f = fixture(t),
+    drums = drum_catalog();
+  f.catalog.libraries = drums.libraries;
+  f.catalog.default_library_id = "legacy";
+  f.catalog.instruments[0].library_id = "legacy";
+  f.catalog.instruments[0].instrument_key = "flute";
+  f.catalog.drum_kits = drums.drum_kits;
+  f.catalog.drum_kits[0].private_source_path = "DO_NOT_EXPOSE_SF2";
+  f.catalog.drum_kits[0].midi_bank.private_path = "DO_NOT_EXPOSE_BANK";
+  f.catalog.drum_kits[0].source_preset.private_path = "DO_NOT_EXPOSE_PRESET";
+  f.catalog.drum_kits[0].notes[0].private_path = "DO_NOT_EXPOSE_NOTE";
+  f.save();
+  const base = await start(t, f);
+  const response = await fetch(`${base}/instruments`),
+    body = await response.json();
+  assert.equal(response.status, 200);
+  assert.equal(body.drum_kits[0].available, false);
+  assert.deepEqual(body.drum_kits[0].available_notes, []);
+  assert.deepEqual(body.drum_kits[0].playback_assets, []);
+  assert.deepEqual(body.drum_kits[0].choke_groups[0].midi_notes, [42, 44, 46]);
+  assert.equal(body.libraries[0].percussion_library_id, "fluidr3-percussion");
+  assert.ok(!JSON.stringify(body).includes("DO_NOT_EXPOSE"));
+  assert.equal(
+    (
+      await fetch(
+        `${base}/instruments/fluidr3-percussion-kit-standard/audio/source`,
+      )
+    ).status,
+    404,
+  );
+});
+
+for (const enabled of [false, true])
+  test(`prepared drum chunks expose WAV/range URLs with enabled=${enabled}`, async (t) => {
+    const f = fixture(t),
+      drums = drum_catalog(),
+      prepared = prepared_kit(drums.drum_kits[0]);
+    f.catalog.libraries = drums.libraries;
+    f.catalog.default_library_id = "legacy";
+    f.catalog.instruments[0].library_id = "legacy";
+    f.catalog.instruments[0].instrument_key = "flute";
+    f.catalog.drum_kits = [prepared.kit];
+    if (enabled) {
+      f.catalog.libraries[1].status = "active";
+      prepared.kit.enabled = true;
+      prepared.kit.verification_status = "playback_verified";
+    }
+    f.catalog.percussion_preparation = prepared.totals;
+    const write = (relative, content) => {
+      const target = path.join(f.root, relative);
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.writeFileSync(target, content);
+    };
+    write(prepared.kit.playback_assets[0].path, prepared.content);
+    write(prepared.kit.rendering.manifest_path, prepared.manifest_bytes);
+    f.save();
+    const base = await start(t, f),
+      body = await (await fetch(`${base}/instruments`)).json(),
+      kit = body.drum_kits[0];
+    assert.equal(kit.enabled, enabled);
+    assert.equal(kit.available, enabled);
+    assert.deepEqual(kit.available_notes, enabled ? [35, 42, 44, 46] : []);
+    assert.equal(kit.assets_available, true);
+    assert.ok(!JSON.stringify(kit).includes("manifest_path"));
+    assert.ok(!JSON.stringify(kit).includes("playback/"));
+    assert.equal(kit.playback_assets[0].hits.length, 4);
+    const url = new URL(kit.playback_assets[0].url, base);
+    const response = await fetch(url, { headers: { range: "bytes=0-31" } });
+    assert.equal(response.status, 206);
+    assert.equal(response.headers.get("content-type"), "audio/wav");
+    assert.deepEqual(
+      Buffer.from(await response.arrayBuffer()),
+      prepared.content.subarray(0, 32),
+    );
+    const head = await fetch(url, { method: "HEAD" });
+    assert.equal(head.status, 200);
+    assert.equal(
+      Number(head.headers.get("content-length")),
+      prepared.content.length,
+    );
+  });

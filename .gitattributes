@@ -4,3 +4,6 @@ instruments/*.json text eol=lf
 instruments/**/*.json text eol=lf
 # Preserve upstream notices byte-for-byte for their pinned source hashes.
 instruments/fluidr3-gm/upstream/* -text
+
+# Preserve pinned upstream whitespace as well as original bytes.
+instruments/fluidr3-percussion/upstream/* -text -whitespace

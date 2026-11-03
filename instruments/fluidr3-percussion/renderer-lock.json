@@ -1,0 +1,163 @@
+{
+  "renderer": "FluidSynth",
+  "version": "2.6.2",
+  "platform": "win10-x64-cpp11",
+  "repository": "https://github.com/FluidSynth/fluidsynth",
+  "release_tag": "v2.6.2",
+  "release_asset_id": 698253322,
+  "release_published_at": "2026-11-01T12:10:38Z",
+  "archive": {
+    "url": "https://github.com/FluidSynth/fluidsynth/releases/download/v2.6.2/fluidsynth-v2.6.2-win10-x64-cpp11.zip",
+    "bytes": 2729665,
+    "sha256": "808295345d43c9c428f3fa87d29fbf97a9926f356df95559ff2689f3bd4072d7"
+  },
+  "files": [
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/bin/fluidsynth.exe",
+      "bytes": 230912,
+      "sha256": "0da1d54ca018c5d2089d1d2fe1ad97c99f88128ac099f2675a8368e64af14253"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/bin/libfluidsynth-3.dll",
+      "bytes": 903168,
+      "sha256": "3162c0881ab9646191c8327dfc413ea96670a3ac2e99299f28c2f0f257995f0e"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/bin/SDL3.dll",
+      "bytes": 2453504,
+      "sha256": "2dfe1c60557c3e054ddda61bf7f29fdfd462c10faddf04dc6864961f43960df6"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/bin/sndfile.dll",
+      "bytes": 2603520,
+      "sha256": "4e3bd2de8e1485110eaebef8e1239471f73d608773831c323bf528e05645655e"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/audio.h",
+      "bytes": 5693,
+      "sha256": "7533c47eb83cf2c7d219aaa71c9003cc3badcd73aaabc2914fbd4cb8d289377a"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/event.h",
+      "bytes": 6909,
+      "sha256": "36f4195a9fd12c42207c06b98deb563c6a48b61f4c76e84999ace79d7bd8479a"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/gen.h",
+      "bytes": 6270,
+      "sha256": "f8487b4eb2eaa0057de7d33bd01e6ca93de75e00e7091cecf07cd805956b7136"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/ladspa.h",
+      "bytes": 2822,
+      "sha256": "7045101deaa1d43a557f33959c70ec83aaae4003f0e2b9570022c858f460caa2"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/log.h",
+      "bytes": 3228,
+      "sha256": "d35798e1991c66749965211e91c776c10c45d8ba73a3bb8fd2fae2d32a6d1ed6"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/midi.h",
+      "bytes": 12376,
+      "sha256": "126a941a4a7c598a0f8f58c7317a29a29d27906ba5573508719421c2003aa5c0"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/misc.h",
+      "bytes": 1925,
+      "sha256": "b214f54217f519e5caf1df334462093116b1016daeca769634c78749b14ee49c"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/mod.h",
+      "bytes": 6401,
+      "sha256": "14ea8d09b608e24e4466540bc7575b3188d1c3b7c34dd706ccfb1b6fef90796b"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/seq.h",
+      "bytes": 4147,
+      "sha256": "0fe198fbcb56ee3c1c46db54a972525d9fff655d6c8a28a3b0d9e62ec42c165e"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/seqbind.h",
+      "bytes": 1265,
+      "sha256": "d073f24841d5e8becf28ee4250d2cab9de30347585a513d69c660c9a47638176"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/settings.h",
+      "bytes": 6805,
+      "sha256": "d8a7bad37c4c53b325fca7cdef5f98504f1e2a8aa0dc7eb9861070b26927e496"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/sfont.h",
+      "bytes": 14919,
+      "sha256": "f31201b86ff0bb0df79f6076c4d077946e7b127164b53fc0ff5c2f2a9486d4be"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/shell.h",
+      "bytes": 4783,
+      "sha256": "970646629660beb2c25d5f74ccfe32a30142e6b51f04fe8209491c57ccca3225"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/synth.h",
+      "bytes": 29007,
+      "sha256": "3bfdad38cb2e776e6695f52ce64266397e2c030380efe5130a11d44191a4db3f"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/types.h",
+      "bytes": 3932,
+      "sha256": "17ad4c678f4d8d78398331c61818c2b6c9fd497e79077377f84cc4b320e26e75"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/version.h",
+      "bytes": 1535,
+      "sha256": "da199f006fa9239c96148d48c549afb1314bca0c3517a602ac69e2e97bd0a789"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth/voice.h",
+      "bytes": 5089,
+      "sha256": "ab8fe0270e12395b8acfaec9234b9502f6f630c0e2b972b6cff56e960cb2c5d6"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/include/fluidsynth.h",
+      "bytes": 3622,
+      "sha256": "6d9397123c5b7279b75cf5ede240ceb1a3a9dff3ec52f894433e89a5a8ec8c16"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/lib/cmake/fluidsynth/FluidSynth-shared-targets-release.cmake",
+      "bytes": 1467,
+      "sha256": "be8255ea634ff1220543e7c3c5ae624034f1145b46405d3eefe3eae74ed8d4c3"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/lib/cmake/fluidsynth/FluidSynth-shared-targets.cmake",
+      "bytes": 4738,
+      "sha256": "88ea095c31136013aa3af7ad716af3b7e50ef680d22474dcae8d5dc1dd279336"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/lib/cmake/fluidsynth/FluidSynthConfig.cmake",
+      "bytes": 5978,
+      "sha256": "443b2536364b8cdb7649a3a1a5a406a0755666ee8258c89ba9ceea46d29044d1"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/lib/cmake/fluidsynth/FluidSynthConfigVersion.cmake",
+      "bytes": 3760,
+      "sha256": "457de9ffb313d64813e35186ce8b407fc85f22475424b020907f8bd9eb58377c"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/lib/libfluidsynth-3.lib",
+      "bytes": 101470,
+      "sha256": "37f1fd5fd9d4f4357d89db3e53cab7fa3b54aeddf7decda6b71eae17d0bc01bb"
+    },
+    {
+      "path": "fluidsynth-v2.6.2-win10-x64-cpp11/lib/pkgconfig/fluidsynth.pc",
+      "bytes": 354,
+      "sha256": "54000ff165a0a96abac91a4e9cccd3a0319fcc5943928552fdade7796b0cdef1"
+    }
+  ],
+  "source_commit": "c3b244ddfd094489a5490beee013c621a504adf2",
+  "license_notice": {
+    "path": "upstream/FLUIDSYNTH-LICENSE",
+    "url": "https://raw.githubusercontent.com/FluidSynth/fluidsynth/c3b244ddfd094489a5490beee013c621a504adf2/LICENSE",
+    "bytes": 26419,
+    "sha256": "20e50fe7aae3e56378ebf0417d9de904f55a0e61e4df315333e632a4d3555d95"
+  }
+}

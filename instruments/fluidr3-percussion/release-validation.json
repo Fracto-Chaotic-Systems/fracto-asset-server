@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "pass": true,
+  "release_tag": "release/fluidr3-percussion-v1",
+  "release_scope": "Coordinated local Git release; no remote push or deployment",
+  "date": "2026-11-02",
+  "pre_release_commits": {
+    "ui": "d8bf306b5cf0f3156948f92e64b1f12648f46f41",
+    "asset_server": "606091064cefcf64bd29709fab46b8190436e33f"
+  },
+  "catalog_sha256": "9be3f13291b3053efa71bd3d407eaed331098dc4054fae9bb9243da596a4d9f7",
+  "library_version": 7,
+  "default_library_id": "fluidr3-gm",
+  "enabled_kit_ids": [
+    "fluidr3-percussion-kit-standard"
+  ],
+  "disabled_kits": 30,
+  "melodic_instruments": 149,
+  "standard_notes": 61,
+  "standard_hit_windows": 268,
+  "standard_chunks": 23,
+  "drum_encoded_bytes": 26528042,
+  "largest_drum_decoded_bytes_at_48000": 9860316,
+  "render_manifest_path": "indexes/fluidr3-percussion-kit-standard-04cc5ceb2a5e-render.json",
+  "render_manifest_sha256": "2b6b3f0888b09143f362a59faac46013f1c9951a63d4c9b940b73b5655d10a10",
+  "source_sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+  "tests": {
+    "midi": 135,
+    "asset_server": 38,
+    "python": 38,
+    "ui_build": true,
+    "targeted_lint": true,
+    "full_asset_integrity": true,
+    "http_audio_urls": 1458,
+    "source_fresh_renders": 268,
+    "native_hit_cases": 536,
+    "native_sample_rates": [
+      48000,
+      44100
+    ],
+    "production_velocity_lookups": 7747,
+    "kit_assignment_ui": true,
+    "melodic_browser_regression": true,
+    "rapid_roll_regression": true,
+    "rollback_candidate_verified_without_publication": true
+  },
+  "cleanup_zero": true,
+  "evidence_sha256": {
+    "release-browser/standard-browser-verification.json": "52c0a8fb4c30fbc235e75467c00860ee3c15589b7ab47d5c4788e728d84519b3",
+    "release-browser/percussion-playback.json": "99cf2c816da7ea076f867008ff6ec52f8fcf3375b8c5d45b48b4d83ada57d2df",
+    "release-browser/kit-assignment.json": "5ae5aa49c0f0cecf58ab42ff50def102d0b53d69f58e0e0e7bbcbf555aab89fe",
+    "release-browser/browser-results.json": "d1f4fa40dc03ec4b5a0042c5f8e15b42f50bb0de0aba172ff9949b48bd03fd56",
+    "release-source-verification.json": "2742bf9e5560b35e6a9e1c7465b1797b326ed75cb59400fd49f34b94775036d6",
+    "release-http-verification.json": "c2e6531bf65f9a3b59a9f93d876e2a122a4e591a1b09b81966ca05c2da2e93ee",
+    "release-rollback-verification.json": "7d507607bb17421dcb87f042bd0b11d110d50914c884735fa0f10eba965f55bf",
+    "source-lock.json": "53ae3eb802446ec55961f691b7323e7c4448b697ed60353dffd807fa1bd647c6",
+    "renderer-lock.json": "261bceb631e656af948761bdd23ac839761bc5ae216a9018e9230cac81c8cd7a",
+    "kit-inventory.json": "b98630e9fdae614da171b830f925c67c230ef5f27a29c831569753a16553c6b1",
+    "upstream/COPYING": "8ef830b65c97a976b86e34bb5fde08d99dfb1db13c4149b5b20bc837ac6c4568",
+    "upstream/README": "2f92d462684629f207e43815115b79d7f1ce130d30ca8792b7d82b398a8306f9",
+    "upstream/FLUIDSYNTH-LICENSE": "20e50fe7aae3e56378ebf0417d9de904f55a0e61e4df315333e632a4d3555d95"
+  },
+  "audio_in_git": false,
+  "renderer_binaries_in_git": false,
+  "limitations": [
+    "Only Standard kit enabled",
+    "Fixed source gate and finite one-shot rendering; not a live SF2 synthesizer",
+    "Velocity within each prepared interval is approximated",
+    "No subjective listening quality certification"
+  ],
+  "build_advisories": [
+    "Existing large-chunk size advisory"
+  ]
+}

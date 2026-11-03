@@ -1,0 +1,525 @@
+{
+  "selected_source": "original FluidR3 GM SF2 v3.1; see source-lock.json",
+  "alternative": {
+    "repository": "https://github.com/henrikvilhelmberglund/midi-js-compat-soundfonts",
+    "commit": "b58f4fea83d47e9564f1008ac916e0e6ea378d58",
+    "tree": "b2364ec431481bc17c31f0dd6d73d75a4215e319",
+    "tree_truncated": false,
+    "kit_names": [
+      "Standard"
+    ],
+    "individual_mp3_files": 61,
+    "bundle": {
+      "url": "https://raw.githubusercontent.com/henrikvilhelmberglund/midi-js-compat-soundfonts/b58f4fea83d47e9564f1008ac916e0e6ea378d58/GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3.js",
+      "bytes": 5707310,
+      "git_blob": "647a4d6ea10c3605cc2fd5b011c13bc070006be8",
+      "sha256": "68981509e1d98057be777e4d9934d82816029e6043fb7b00d90440da37b95998",
+      "wrapper_prefix": "\nif (typeof(MIDI) === 'undefined') var MIDI = {};\nif (typeof(MIDI.Soundfont) === 'undefined') MIDI.Soundfont = {};\nMIDI.Soundfont.marimba = {\n\"A#1\": \""
+    },
+    "files": [
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3.js",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "647a4d6ea10c3605cc2fd5b011c13bc070006be8",
+        "size": 5707310,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/647a4d6ea10c3605cc2fd5b011c13bc070006be8"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/A#1.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4d419751cdce56e913b1e480fcd5b7810810f217",
+        "size": 56320,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/4d419751cdce56e913b1e480fcd5b7810810f217"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/A#2.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fc1ef59874301c43b111c93875fd14e53e810e55",
+        "size": 98742,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/fc1ef59874301c43b111c93875fd14e53e810e55"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/A#3.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f9b7e0722b0a3e1cc9d138cd4c208ce6ec8e2295",
+        "size": 78994,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/f9b7e0722b0a3e1cc9d138cd4c208ce6ec8e2295"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/A#4.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "db8eb39867c13dcbf578b6489753363118d1b8c2",
+        "size": 49737,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/db8eb39867c13dcbf578b6489753363118d1b8c2"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/A#5.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "15a388545323dd3fa2571e8bdbc1829bfd352bd4",
+        "size": 49737,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/15a388545323dd3fa2571e8bdbc1829bfd352bd4"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/A1.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bffeada5b3f41b05b4daeaac6a1a10556ad89a0d",
+        "size": 49005,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/bffeada5b3f41b05b4daeaac6a1a10556ad89a0d"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/A2.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0125201157af226ef2598b764f784122fbf9de79",
+        "size": 73142,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/0125201157af226ef2598b764f784122fbf9de79"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/A3.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "de26cbab88b52ce274deb0694910f9733b09b36d",
+        "size": 153600,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/de26cbab88b52ce274deb0694910f9733b09b36d"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/A4.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "554aea2bdd90a6d476fb4836275c786593a71d97",
+        "size": 51200,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/554aea2bdd90a6d476fb4836275c786593a71d97"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/A5.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fa5f99f984089a67a49b8621d300fc9433982145",
+        "size": 73874,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/fa5f99f984089a67a49b8621d300fc9433982145"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/B1.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f7336c355ca585b171746ea166a1a525d3e46909",
+        "size": 39497,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/f7336c355ca585b171746ea166a1a525d3e46909"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/B2.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e895220a89ed9122680d7ed2617a3ad805c90c2a",
+        "size": 68022,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/e895220a89ed9122680d7ed2617a3ad805c90c2a"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/B3.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "66a71803e9b66f926a1d4af600be3379c9fc921c",
+        "size": 90697,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/66a71803e9b66f926a1d4af600be3379c9fc921c"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/B4.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c128a98cd103d63fc2559e9a1710a99cabd5c5a6",
+        "size": 65828,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/c128a98cd103d63fc2559e9a1710a99cabd5c5a6"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/B5.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e25dd4085cfb71ef44c50e261d80aa4f2a0b890d",
+        "size": 64365,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/e25dd4085cfb71ef44c50e261d80aa4f2a0b890d"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/C#2.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "497db9ed1c655200c3404161f50f1749c523852c",
+        "size": 62171,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/497db9ed1c655200c3404161f50f1749c523852c"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/C#3.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d2d0b935aeaf0067bb1752ac3b6c689696990bcf",
+        "size": 183588,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/d2d0b935aeaf0067bb1752ac3b6c689696990bcf"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/C#4.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0e7f33eabb80e8c0bc95836c99c0c7622d0c128f",
+        "size": 65828,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/0e7f33eabb80e8c0bc95836c99c0c7622d0c128f"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/C#5.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a205ec29233faa26337d891ce7f168bbecfb238c",
+        "size": 57051,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/a205ec29233faa26337d891ce7f168bbecfb238c"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/C#6.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "06ffc8b215f3c32a4d55ae892a550fbb473e031c",
+        "size": 53394,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/06ffc8b215f3c32a4d55ae892a550fbb473e031c"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/C2.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ef0a1665575e4d8578de0fbc1a68f02817000f74",
+        "size": 40228,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/ef0a1665575e4d8578de0fbc1a68f02817000f74"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/C3.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "af4689644a9d65e666d67f3596c8871d6dd86cd0",
+        "size": 68754,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/af4689644a9d65e666d67f3596c8871d6dd86cd0"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/C4.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "534996d5ef3b960e6a44bf2ec9bbebcdedff2962",
+        "size": 62171,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/534996d5ef3b960e6a44bf2ec9bbebcdedff2962"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/C5.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "22cc7d2c7cd6342e406045480f5eea1affa78024",
+        "size": 75337,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/22cc7d2c7cd6342e406045480f5eea1affa78024"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/C6.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "69d161369d05a7b3012bdc80cc04c31b88e77e2b",
+        "size": 183588,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/69d161369d05a7b3012bdc80cc04c31b88e77e2b"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/D#1.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b51ab88ac73570e07d7ba0f3b84d94f1417f5070",
+        "size": 73874,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/b51ab88ac73570e07d7ba0f3b84d94f1417f5070"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/D#2.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "83e940ca4c08490d295cebeaecfccc4226a476e4",
+        "size": 68754,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/83e940ca4c08490d295cebeaecfccc4226a476e4"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/D#3.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "84b5e409176514573b3fc4fb7904c332fadbc715",
+        "size": 81188,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/84b5e409176514573b3fc4fb7904c332fadbc715"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/D#4.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "825ba1d42c9fc21ce9decc0326860045dcfad9c8",
+        "size": 65097,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/825ba1d42c9fc21ce9decc0326860045dcfad9c8"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/D#5.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bed73ed4fd56998ee21e36e5fd3b8dce6a9f8783",
+        "size": 59977,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/bed73ed4fd56998ee21e36e5fd3b8dce6a9f8783"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/D#6.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "15020dab44a3ab6e0d81d4005de7a59a6ea30249",
+        "size": 73142,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/15020dab44a3ab6e0d81d4005de7a59a6ea30249"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/D2.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1bc30afbf0fe80124f1785777a598221f35f4fe3",
+        "size": 67291,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/1bc30afbf0fe80124f1785777a598221f35f4fe3"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/D3.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9a9b57188a0c756f6f9d9e073bc2a66962d2edd7",
+        "size": 64365,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/9a9b57188a0c756f6f9d9e073bc2a66962d2edd7"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/D4.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "2ec82291cf755c10c36fba27d38e74348ba5ce7a",
+        "size": 60708,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/2ec82291cf755c10c36fba27d38e74348ba5ce7a"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/D5.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d0851440ac2796279364f7cf10911fb858d39732",
+        "size": 65097,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/d0851440ac2796279364f7cf10911fb858d39732"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/D6.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7d7b538b5eede73ab139f53ce3f9a87fa6c3fd9c",
+        "size": 66560,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/7d7b538b5eede73ab139f53ce3f9a87fa6c3fd9c"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/E1.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "946aa93c9723fdf2fd48dddf15a653113a7e0f1c",
+        "size": 66560,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/946aa93c9723fdf2fd48dddf15a653113a7e0f1c"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/E2.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d3a1924a55c3945328b2dc59427727605960f9b7",
+        "size": 64365,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/d3a1924a55c3945328b2dc59427727605960f9b7"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/E3.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4b4a86ab3a458b48f2f28565a191704b8f4ed1d2",
+        "size": 90697,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/4b4a86ab3a458b48f2f28565a191704b8f4ed1d2"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/E4.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ba0bd7200adedeb1e722ce8309328cc1e2b1ed56",
+        "size": 62902,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/ba0bd7200adedeb1e722ce8309328cc1e2b1ed56"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/E5.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a3d9ac589a890562082c95a6d59f9cfec4cabe44",
+        "size": 62902,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/a3d9ac589a890562082c95a6d59f9cfec4cabe44"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/F#1.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a0fe980eb955228e329f6af4ad894851982fb628",
+        "size": 59245,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/a0fe980eb955228e329f6af4ad894851982fb628"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/F#2.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5ac298e069da28497ee2487b9287fa8a1b40d505",
+        "size": 47542,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/5ac298e069da28497ee2487b9287fa8a1b40d505"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/F#3.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "92334fee2cebbb426cc6209296182cb96b26fc89",
+        "size": 54857,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/92334fee2cebbb426cc6209296182cb96b26fc89"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/F#4.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "17fb4625973b93c36910710833ce88c2debd2308",
+        "size": 68754,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/17fb4625973b93c36910710833ce88c2debd2308"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/F#5.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a96ee8e0a21e8612a37f38792b09d92e92471413",
+        "size": 75337,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/a96ee8e0a21e8612a37f38792b09d92e92471413"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/F1.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3a1c224efcc5516d8c3e5d3a52adf2a81329188a",
+        "size": 59245,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/3a1c224efcc5516d8c3e5d3a52adf2a81329188a"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/F2.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b36dbfe52f50e81eea1881038a2a59efa7172ebc",
+        "size": 73874,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/b36dbfe52f50e81eea1881038a2a59efa7172ebc"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/F3.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "bce1297ec56bcf330e9ce5a87686fa4ae5c3cefc",
+        "size": 105325,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/bce1297ec56bcf330e9ce5a87686fa4ae5c3cefc"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/F4.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4bff1e5f0f5042c2e7b1bd3398a8999de8ec6e50",
+        "size": 68754,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/4bff1e5f0f5042c2e7b1bd3398a8999de8ec6e50"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/F5.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "487472bb8034756692a26907d0c581a121f9ffdf",
+        "size": 62902,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/487472bb8034756692a26907d0c581a121f9ffdf"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/G#1.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ff99410c381a4cfb4f31c39de52cfb763b0aad07",
+        "size": 43885,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/ff99410c381a4cfb4f31c39de52cfb763b0aad07"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/G#2.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f881a9ae93d10de0c7d243d0ec416a6219da77e7",
+        "size": 53394,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/f881a9ae93d10de0c7d243d0ec416a6219da77e7"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/G#3.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fc5735aa75d329f844ae244116e70df97e345ab2",
+        "size": 55588,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/fc5735aa75d329f844ae244116e70df97e345ab2"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/G#4.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "521e927018b0dc54693e3ad34c7f79d8e4c3d9ce",
+        "size": 54857,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/521e927018b0dc54693e3ad34c7f79d8e4c3d9ce"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/G#5.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d65deb21200c2559269b2d36ee388fb6a3cbef9d",
+        "size": 48274,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/d65deb21200c2559269b2d36ee388fb6a3cbef9d"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/G1.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "263a98530c58e5972ae089314031eb283d3ac6f3",
+        "size": 52662,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/263a98530c58e5972ae089314031eb283d3ac6f3"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/G2.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a2979987184b957dae102393b0882663268cd1ee",
+        "size": 70217,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/a2979987184b957dae102393b0882663268cd1ee"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/G3.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "53c128e656ca90c70e3541e8ba09ce52e413af8a",
+        "size": 78262,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/53c128e656ca90c70e3541e8ba09ce52e413af8a"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/G4.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7e0973ce77671d680989903ca200c9a31342caa9",
+        "size": 59245,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/7e0973ce77671d680989903ca200c9a31342caa9"
+      },
+      {
+        "path": "GM-soundfonts/FluidR3_GM/drumkits/Standard-mp3/G5.mp3",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "72836963d218eefe2500c45ff216da617e789976",
+        "size": 78262,
+        "url": "https://api.github.com/repos/henrikvilhelmberglund/midi-js-compat-soundfonts/git/blobs/72836963d218eefe2500c45ff216da617e789976"
+      }
+    ],
+    "status": "not_selected",
+    "reasons": [
+      "No repository license or supplied FluidR3 attribution notices found in the pinned full tree.",
+      "No pinned source SF2 bytes or renderer configuration connecting the rendered MP3s to a reproducible original.",
+      "Only Standard is present; bundle wrapper identity differs from kit identity.",
+      "Candidate MP3s were not decoded or certified by this audit."
+    ]
+  }
+}

@@ -116,3 +116,11 @@ See [multi-library support](MULTI_LIBRARY.md), [import/recovery](fluidr3-gm/IMPO
 and [native verification](fluidr3-gm/VERIFICATION.md). The default change is recorded
 in `fluidr3-gm/default-activation.json`. Earlier reports retain their historical
 catalog defaults and enabled flags.
+
+
+[Percussion source audit](fluidr3-percussion/README.md): original SF2 pinned with 31 drum-kit inventories and MIT notices. Standard is the first planned kit; no percussion has been imported or enabled.
+
+
+Step 3: [prepared percussion assets](fluidr3-percussion/IMPORT.md) add Standard kit render manifests, bounded note/velocity hit chunks and sanitized authenticated WAV URLs. Assets may be available while kit playback remains disabled. This supersedes the step-2 empty-assets-only gate; no percussion provider is enabled yet.
+
+Current percussion release: [FluidR3 Standard v1](fluidr3-percussion/RELEASE.md), coordinated local tag release/fluidr3-percussion-v1. Includes verified Standard playback and kit assignments; other kits remain disabled.

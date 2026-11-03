@@ -19,7 +19,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "instruments:seed": "node scripts/instruments.js seed",
     "instruments:verify": "node scripts/instruments.js verify",
-    "test:instruments": "node --test test/instruments.test.js test/pitch_index.test.js test/note_sample_index.test.js test/playback_assets.test.js test/instruments_http.test.js",
+    "test:instruments": "node --test test/instruments.test.js test/pitch_index.test.js test/note_sample_index.test.js test/playback_assets.test.js test/instruments_http.test.js test/drum_catalog.test.js",
     "instruments:probe-http": "node scripts/probe_instruments_http.js"
   },
   "dependencies": {

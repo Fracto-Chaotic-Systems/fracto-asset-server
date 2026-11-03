@@ -154,3 +154,11 @@ FluidR3 import adds registered canonical source WAVs (audio/wav) alongside legac
 MP3 source recordings (audio/mpeg). The same source URL/range/authentication rules
 apply. Discrete-note source timing has no 10/20-second grid. See
 [fluidr3-gm/IMPORT.md](fluidr3-gm/IMPORT.md). Prepared FluidR3 instruments stay disabled.
+
+
+Step 2 adds the [audited drum-kit catalog](DRUM_KITS.md): 31 disabled kit inventories in a separate collection, with note/velocity coverage, source choke classes and the melodic-to-percussion library link. No kit audio is served or enabled yet.
+
+
+Step 3: [prepared percussion assets](fluidr3-percussion/IMPORT.md) add Standard kit render manifests, bounded note/velocity hit chunks and sanitized authenticated WAV URLs. Assets may be available while kit playback remains disabled. This supersedes the step-2 empty-assets-only gate; no percussion provider is enabled yet.
+
+Step 5 supersedes the disabled-only drum gate: enabled, playback_verified kits in active libraries report available only when every registered chunk is present; available_notes lists exact note identities. Assets may still be served for disabled-kit verification. See fluidr3-percussion/PLAYBACK.md.

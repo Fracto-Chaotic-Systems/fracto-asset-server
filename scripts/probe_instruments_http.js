@@ -51,6 +51,8 @@ try {
       ]),
     ),
   );
+  let drum_assets = 0,
+    drum_hits = 0;
   let originals = 0,
     playback = 0,
     notes = 0,
@@ -110,6 +112,43 @@ try {
       }
     }
   }
+  for (const kit of catalog.drum_kits ?? []) {
+    assert.equal(
+      kit.enabled,
+      local.drum_kits.find((item) => item.id === kit.id).enabled,
+    );
+    assert.equal(
+      kit.available,
+      kit.enabled && kit.verification_status === "playback_verified",
+    );
+    assert.deepEqual(
+      kit.available_notes,
+      kit.available ? kit.notes.map((note) => note.midi_note) : [],
+    );
+    for (const asset of kit.playback_assets) {
+      assert.equal(asset.available, true);
+      const url = new URL(asset.url, base);
+      const response = await fetch(url, {
+        headers: { ...headers, range: "bytes=0-31" },
+      });
+      assert.equal(response.status, 206);
+      assert.equal(response.headers.get("content-type"), "audio/wav");
+      assert.equal(response.headers.get("etag"), `"${asset.sha256}"`);
+      const bytes = Buffer.from(await response.arrayBuffer());
+      const local_kit = local.drum_kits.find((item) => item.id === kit.id);
+      const registered = local_kit.playback_assets.find(
+        (item) => item.id === asset.id,
+      );
+      const expected = await fs.readFile(path.join(directory, registered.path));
+      assert.deepEqual(bytes, expected.subarray(0, 32));
+      const head = await fetch(url, { method: "HEAD", headers });
+      assert.equal(head.status, 200);
+      assert.equal(Number(head.headers.get("content-length")), asset.bytes);
+      drum_assets++;
+      drum_hits += asset.hits.length;
+      total += bytes.length;
+    }
+  }
   const revalidated = await fetch(`${base}/instruments`, {
     headers: {
       ...headers,
@@ -123,11 +162,16 @@ try {
     library_version: catalog.library_version,
     revision: catalog.revision,
     instruments: catalog.instruments.length,
+    audited_drum_kits: catalog.drum_kits?.length ?? 0,
+    enabled_drum_kits:
+      catalog.drum_kits?.filter((kit) => kit.enabled).length ?? 0,
+    prepared_drum_assets: drum_assets,
+    prepared_drum_hit_windows: drum_hits,
     original_urls: originals,
     playback_urls: playback,
     playback_notes: notes,
     range_bytes_compared: total,
-    head_requests: originals + playback,
+    head_requests: originals + playback + drum_assets,
     catalog_revalidation_status: 304,
     isolated_loopback_authorization: true,
     browser_playback: "pending",

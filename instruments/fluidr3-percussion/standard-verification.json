@@ -1,0 +1,38 @@
+{
+  "pass": true,
+  "step": 4,
+  "source_catalog_sha256": "088b47e92d87e3631141f73446d33b6d858fb5c7e41551595c75e40ab31ff732",
+  "verified_catalog_sha256": "689a30240899133cb9c2ce1a201364894aaf2ef78aad62156e39f1f6d0222ada",
+  "kit_id": "fluidr3-percussion-kit-standard",
+  "enabled": false,
+  "source_sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+  "render_manifest_sha256": "2b6b3f0888b09143f362a59faac46013f1c9951a63d4c9b940b73b5655d10a10",
+  "fresh_render_hits": 268,
+  "native_render_cases": 536,
+  "native_sample_rates": [
+    48000,
+    44100
+  ],
+  "native_chunks": 23,
+  "velocity_lookups": 7747,
+  "gm_source_family_mappings": 47,
+  "hi_hat_source_choke_reference": {
+    "open_hat_tail_rms": 0.0002969877666549716,
+    "after_closed_hat_rms": 0.0,
+    "pass": true
+  },
+  "realtime_simultaneous_hits": 4,
+  "stop_silent": true,
+  "replay_without_fetch": true,
+  "natural_completion": true,
+  "cleanup": {
+    "pending_frames": 0,
+    "pending_intervals": 0,
+    "open_contexts": 0,
+    "connected_product_nodes": 0,
+    "source_callbacks": 0
+  },
+  "source_report_sha256": "cf0042f7a0dc356586c0f0c9e6ad294497643a772806a6a745af44fc35c6942b",
+  "browser_report_sha256": "7fe1a3b91c3e671e238a84dc2917fbbd1330dcc9e6759a93600dd6849d4bb0f9",
+  "scope": "Source-faithful PCM, source-label GM families, native finite-window rendering and test-only real-time asset playback. Production percussion routing/choking and subjective human listening quality are not certified."
+}

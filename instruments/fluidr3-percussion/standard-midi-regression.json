@@ -1,0 +1,182 @@
+{
+  "pass": true,
+  "cleanup": {
+    "pending_frames": 0,
+    "pending_intervals": 0,
+    "open_contexts": 0,
+    "connected_product_nodes": 0,
+    "source_callbacks": 0
+  },
+  "instruments": {
+    "fluidr3_default_original_assignment": true,
+    "fluid_audio": {
+      "rms": 0.008403686011420188,
+      "peak": 0.02316349931061268,
+      "samples": 19200
+    },
+    "library_switch_stop": true,
+    "library_refresh_and_replacement": true,
+    "cross_library_override_retained": true,
+    "active": {
+      "rms": 0.0149736549465795,
+      "peak": 0.047586482018232346,
+      "samples": 20226
+    },
+    "after_assignment_change": {
+      "rms": 0,
+      "peak": 0,
+      "samples": 16320
+    },
+    "explicit_play_required": true,
+    "mixer_preserved": true,
+    "unsupported_original_disabled": true,
+    "bank_checked": true,
+    "playable_choices_verified_only": true,
+    "catalog_entries_rendered": 149,
+    "availability_matches_catalog": true,
+    "catalog_sound_selected": true,
+    "context_after_unmount": "closed"
+  },
+  "mixer": {
+    "baseline": {
+      "left": 0.04211797443133949,
+      "right": 0.03819948525940409,
+      "rms": 0.04020649477561055
+    },
+    "reduced": {
+      "left": 0.005569340861459883,
+      "right": 0.0050511914957651035,
+      "rms": 0.0053165822272403735
+    },
+    "hard_left": {
+      "left": 0.035706985873401514,
+      "right": 0,
+      "rms": 0.02524865184681447
+    },
+    "hard_right": {
+      "left": 6.941373515469106e-19,
+      "right": 0.02161757762633293,
+      "rms": 0.015285935732406605
+    },
+    "muted": {
+      "left": 0,
+      "right": 0,
+      "rms": 0
+    },
+    "muted_solo": {
+      "left": 0,
+      "right": 0,
+      "rms": 0
+    },
+    "second_solo": {
+      "left": 0.0027271303081132965,
+      "right": 0.0032106257580395156,
+      "rms": 0.0029787042044836327
+    },
+    "both_muted": {
+      "left": 0,
+      "right": 0,
+      "rms": 0
+    },
+    "reset": {
+      "left": 0.0018822265100629392,
+      "right": 0.0018861254497745984,
+      "rms": 0.0018841769884317054
+    },
+    "after_replacement": {
+      "left": 0,
+      "right": 0,
+      "rms": 0
+    },
+    "after_stop": {
+      "left": 0,
+      "right": 0,
+      "rms": 0
+    },
+    "independent_tracks_shared_channel": true,
+    "reset_all": true,
+    "replacement_resets_mix": true,
+    "no_voice_restart": true,
+    "context_after_unmount": "closed"
+  },
+  "imports": {
+    "latest_file_wins": true,
+    "stop_during_read": true,
+    "read_error_recovery": true,
+    "immutable_song_exposed": true,
+    "stable_song_reference": true,
+    "song_absent_from_progress_snapshot": true,
+    "cleared_on_replacement": true
+  },
+  "tracks": {
+    "note_strips": true,
+    "selection": true,
+    "horizontal_zoom_and_fit": true,
+    "aligned_labels": true,
+    "narrow_pane": true,
+    "virtualized_64_tracks": true,
+    "dense_10000_notes": true,
+    "replacement_resets_view": true
+  },
+  "synchronization": {
+    "audio_clock_error_seconds": 0,
+    "suspended_clock_and_highlights_frozen": true,
+    "held_notes": 3,
+    "pedal_held_notes": 3,
+    "manual_scroll_respected": true,
+    "follow_recentered": true
+  },
+  "notes": [
+    {
+      "pitch": 60,
+      "start": 0,
+      "end": 4.8
+    },
+    {
+      "pitch": 64,
+      "start": 0,
+      "end": 4.8
+    },
+    {
+      "pitch": 67,
+      "start": 0,
+      "end": 4.8
+    },
+    {
+      "pitch": 67,
+      "start": 4.8,
+      "end": 6
+    },
+    {
+      "pitch": 71,
+      "start": 4.8,
+      "end": 6
+    },
+    {
+      "pitch": 74,
+      "start": 4.8,
+      "end": 6
+    }
+  ],
+  "duration_seconds": 6,
+  "sample_rate": 48000,
+  "active": {
+    "rms": 0.0038046952500040247,
+    "peak": 0.03255651891231537,
+    "samples": 242112
+  },
+  "after_stop": {
+    "rms": 0,
+    "peak": 0,
+    "samples": 18240
+  },
+  "after_replacement": {
+    "rms": 0,
+    "peak": 0,
+    "samples": 9600
+  },
+  "context_after_unmount": "closed",
+  "natural_completion": true,
+  "replay": true,
+  "capture_seconds": 9.890666666666666
+}

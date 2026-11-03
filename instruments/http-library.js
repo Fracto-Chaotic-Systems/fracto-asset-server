@@ -1,3 +1,4 @@
+import { verify_drum_manifests } from "./drum-assets.js";
 import { catalog_libraries, MAX_CATALOG_BYTES } from "./catalog-libraries.js";
 import fs from "node:fs";
 import fsp from "node:fs/promises";
@@ -38,6 +39,7 @@ export function create_instrument_library(directory) {
       throw new Error("Invalid instrument catalog");
     const library_metadata = catalog_libraries(catalog);
     verify_indexes(root, catalog);
+    verify_drum_manifests(root, catalog);
     const instruments = new Map(),
       assets = new Map();
     for (const instrument of catalog.instruments) {
@@ -88,6 +90,17 @@ export function create_instrument_library(directory) {
         }
       }
     }
+    for (const kit of library_metadata.drum_kits)
+      for (const entry of kit.playback_assets) {
+        const id = `${kit.id}/${entry.id}`;
+        if (assets.has(id)) throw new Error("Duplicate kit asset ID");
+        assets.set(id, {
+          kind: "drum-playback",
+          instrument_id: kit.id,
+          entry,
+          relative: `playback/${kit.id}/${entry.sha256}.wav`,
+        });
+      }
     const after = await fsp.stat(path.join(root, "catalog.json"), {
       bigint: true,
     });
@@ -249,6 +262,95 @@ export function public_catalog(snapshot, available, url_for) {
   });
   return {
     schema_version: 1,
+    drum_kits: snapshot.library_metadata.drum_kits.map((kit) => ({
+      ...pick(kit, [
+        "id",
+        "library_id",
+        "kit_key",
+        "kind",
+        "name",
+        "midi_program",
+        "midi_bank",
+        "source_preset",
+        "source_sha256",
+        "enabled",
+        "verification_status",
+        "coverage_status",
+        "playback_mode",
+      ]),
+      midi_bank: pick(kit.midi_bank, ["msb", "lsb"]),
+      source_preset: pick(kit.source_preset, ["bank", "program"]),
+      notes: kit.notes.map((note) =>
+        pick(note, ["midi_note", "velocity_ranges"]),
+      ),
+      choke_groups: kit.choke_groups.map((group) =>
+        pick(group, ["source_exclusive_class", "midi_notes"]),
+      ),
+      rendering: kit.rendering
+        ? pick(kit.rendering, [
+            "method_version",
+            "config_sha256",
+            "renderer_lock_sha256",
+            "renderer_version",
+          ])
+        : undefined,
+      available:
+        kit.enabled &&
+        kit.verification_status === "playback_verified" &&
+        kit.playback_assets.length > 0 &&
+        kit.playback_assets.every((asset) =>
+          available.has(`${kit.id}/${asset.id}`),
+        ),
+      assets_available:
+        kit.playback_assets.length > 0 &&
+        kit.playback_assets.every((asset) =>
+          available.has(`${kit.id}/${asset.id}`),
+        ),
+      available_notes:
+        kit.enabled &&
+        kit.verification_status === "playback_verified" &&
+        kit.playback_assets.length > 0 &&
+        kit.playback_assets.every((asset) =>
+          available.has(`${kit.id}/${asset.id}`),
+        )
+          ? kit.notes.map((note) => note.midi_note)
+          : [],
+      recordings: [],
+      playback_assets: kit.playback_assets.map((asset) => ({
+        ...pick(asset, [
+          "id",
+          "method_version",
+          "sha256",
+          "bytes",
+          "mime_type",
+          "encoding",
+          "sample_rate",
+          "channels",
+          "frames",
+          "duration_seconds",
+          "decoded_bytes_at_48000",
+          "source_sha256",
+          "render_config_sha256",
+        ]),
+        hits: asset.hits.map((hit) =>
+          pick(hit, [
+            "midi_note",
+            "velocity_min",
+            "velocity_max",
+            "render_velocity",
+            "offset_frames",
+            "frames",
+            "offset_seconds",
+            "duration_seconds",
+            "pcm_sha256",
+          ]),
+        ),
+        available: available.has(`${kit.id}/${asset.id}`),
+        url: available.has(`${kit.id}/${asset.id}`)
+          ? url_for(kit.id, asset)
+          : null,
+      })),
+    })),
     default_library_id: snapshot.library_metadata.default_library_id,
     libraries: snapshot.library_metadata.libraries.map((library) =>
       pick(library, [
@@ -260,6 +362,7 @@ export function public_catalog(snapshot, available, url_for) {
         "license",
         "source_url",
         "source_revision",
+        "percussion_library_id",
       ]),
     ),
     library_version: snapshot.catalog.library_version,

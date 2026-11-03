@@ -1,0 +1,25 @@
+{
+  "step": 2,
+  "catalog_sha256": "3564d03208cca08fceaed1aff7947ce4d131595985c7a2f6e02f45790f3f9dbe",
+  "library_version": 5,
+  "melodic_instruments": 149,
+  "melodic_entries_byte_semantics_unchanged": true,
+  "default_library_id": "fluidr3-gm",
+  "drum_kits": 31,
+  "enabled_drum_kits": 0,
+  "percussion_source_sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0",
+  "validation": {
+    "midi_tests": 124,
+    "server_tests": 32,
+    "python_tests": 31,
+    "targeted_http_tests_after_nested_projection_check": 13,
+    "ui_build": "passed; existing large-chunk advisory",
+    "targeted_ui_lint": "passed",
+    "full_original_index_playback_integrity": "passed before atomic metadata publication",
+    "idempotent_metadata_preview": "passed; no changes",
+    "identical_server_ui_validators": true,
+    "head_and_range_audio_urls": 1435
+  },
+  "http_report_sha256": "11dc382ca7fcdce42f87e14dfd83d71ab08c57be571cb770b6911ecac6b56813",
+  "scope": "Metadata only. No drum samples imported, rendered, enabled or certified for browser playback."
+}
