@@ -1,5 +1,35 @@
 # Instrument library seed
 
+## Peer inventory, transfer and publication
+
+The [instrument transfer contract](../../fracto-admin-server/INSTRUMENT_TRANSFER.md)
+defines the asset service's inventory, staging and publication ownership
+on both sending and receiving servers. Protocol 1 repairs an identical catalog's
+missing dependencies or installs into an empty destination; different catalogs
+and conflicting files block transfer. Source inventory and receiver preview are
+read-only. Missing files stream into a private verified cache. Step 4 validates
+the complete candidate with existing PCM/index validators in a worker, installs
+dependencies without clobbering files, then atomically publishes an absent catalog
+or refreshes the identical installed catalog. Completion requires verified live
+files and a durable receipt; staging alone does not change public playback.
+`transfer_package.js` derives manifest membership and validates source dependencies;
+`transfer_files.js` bounds file reads/hashes and rejects linked paths;
+`transfer_preview.js` owns peer-scoped, expiring preview sessions;
+`transfer_store.js` adds reservations, staged receive/send operations and progress;
+`transfer_staging.js` owns bounded file reads, partial writes, checksum verification,
+fsync and atomic no-clobber cache installation. Cache files live under
+`.instrument-transfer/packages/<manifest-sha256>/` and are excluded from exports.
+New previews hash and reuse verified cache files, including after a process restart.
+Incomplete `.part` files are never reused/exported; ordinary cancellation removes
+them. `transfer_publication.js` owns durable journals, previous-catalog backups,
+publication and restart reconciliation; `transfer_persistence.js` owns durable
+metadata writes and no-clobber installation; `transfer_validation*.js` runs the
+existing validators away from HTTP work. `transfer_storage_init.js` initializes a
+new persistent data root from image data while keeping code outside the volume.
+Completed candidate work directories are removed; verified caches and backups
+remain. Private runtime state is excluded from Git and Docker build contexts.
+See the contract for routes, configuration and tests.
+
 Current release: **FluidR3 GM is the default; all 128 FluidR3 and 21 Legacy instruments are enabled.** See [release/setup/rollback](fluidr3-gm/RELEASE.md). Earlier stage descriptions below are historical.
 
 Current playback status (2026-11-02): **all 21 instruments are enabled** after

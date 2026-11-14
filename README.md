@@ -15,9 +15,13 @@ in [instruments/README.md](instruments/README.md). The seed recovers historical
 recordings into local storage. Offline pitch indexing is verified and bounded
 mono playback assets are prepared. The catalog and registered audio endpoints
 are available and connected to the All Music engine and instrument selector.
-All prepared sources remain disabled; see
-[instruments/MIGRATION_VERIFICATION.md](instruments/MIGRATION_VERIFICATION.md)
-for verification scope and operational setup.
+The current catalog enables 149 melodic instruments and the Standard drum kit;
+installed-file availability remains a separate runtime check. See
+[instruments/fluidr3-gm/RELEASE.md](instruments/fluidr3-gm/RELEASE.md) and
+[instruments/fluidr3-percussion/RELEASE.md](instruments/fluidr3-percussion/RELEASE.md)
+for setup. Private instrument inventory, preview, transfer and durable publication
+are implemented; deployment, recovery and storage ownership are specified in the
+[contract](../fracto-admin-server/INSTRUMENT_TRANSFER.md).
 
 ## Requirements
 

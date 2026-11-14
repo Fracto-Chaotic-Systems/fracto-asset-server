@@ -153,6 +153,9 @@ __pycache__/
 # Generated bounded instrument playback assets (rebuild from verified indexes)
 /instruments/playback/
 
+# Private peer-transfer cache, journals, candidates and previous catalogs.
+/instruments/.instrument-transfer/
+
 # Pinned FluidR3 audit downloads; metadata and notices are tracked.
 /instruments/fluidr3-gm/source-cache/
 

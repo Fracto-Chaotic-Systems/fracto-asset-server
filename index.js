@@ -25,10 +25,16 @@ import {
 
 import { asset_cors } from "./middleware/cors.js";
 import { create_instrument_router } from "./handlers/instruments.js";
+import { create_instrument_transfer_router } from "./handlers/instrument_transfer.js";
+import { initialize_instrument_storage } from "./instruments/transfer_storage_init.js";
 
+await initialize_instrument_storage();
 const app = express();
 
 app.use(asset_cors);
+
+// Private inventory/preview authenticates before its bounded body parser.
+app.use('/internal/instrument-transfer', create_instrument_transfer_router());
 
 app.use(express.json());
 

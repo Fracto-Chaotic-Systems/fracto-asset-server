@@ -16,6 +16,11 @@ const stamp = (stat) =>
   `${stat.dev}:${stat.ino}:${stat.size}:${stat.mtimeNs}:${stat.ctimeNs}`;
 const pick = (value, fields) =>
   Object.fromEntries(fields.map((key) => [key, value[key]]));
+const generations = new Map();
+export function invalidate_instrument_library(directory) {
+  const root = path.resolve(directory);
+  generations.set(root, (generations.get(root) ?? 0) + 1);
+}
 
 export function create_instrument_library(directory) {
   const root = path.resolve(directory);
@@ -121,13 +126,17 @@ export function create_instrument_library(directory) {
       bigint: true,
     });
     const key = stamp(stat);
-    if (cache?.stamp === key) return cache;
-    if (pending?.key === key) return pending.work;
+    const generation = generations.get(root) ?? 0;
+    if (cache?.stamp === key && cache.generation === generation) return cache;
+    if (pending?.key === key && pending.generation === generation)
+      return pending.work;
     const work = build(key);
-    pending = { key, work };
+    pending = { key, work, generation };
     try {
       const result = await work;
-      if (pending?.work === work) cache = result;
+      result.generation = generation;
+      if (pending?.work === work && (generations.get(root) ?? 0) === generation)
+        cache = result;
       return result;
     } finally {
       if (pending?.work === work) pending = null;

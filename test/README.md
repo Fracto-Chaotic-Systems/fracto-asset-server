@@ -1,0 +1,18 @@
+# Asset service tests
+
+Run `npm run test:instruments` for catalog, source/index/audio and HTTP coverage.
+`instrument_transfer.test.js` adds isolated inventory/preview coverage: exact file
+hashes, missing destinations, catalog/file conflicts, path containment, source
+completeness, manifest closure, storage readiness, cancellation and expiry.
+`instrument_transfer_fixture.js` supplies disposable stores for both service suites.
+`instrument_transfer_stream.test.js` verifies reservations, checksum/length failures,
+no-clobber staging, stream cancellation, disk checks, path containment, source
+revalidation and verified-cache reuse after restart.
+`instrument_publication.test.js` covers full semantic validation, identical/empty
+catalog publication, backups, runtime cache invalidation, cancellation at commit,
+durable receipts and bootstrap preservation. Its child helper exits at actual
+publication boundaries to test process-crash recovery. The explicit
+`instrument_persistence_probe.mjs` additionally runs install and verify in separate
+disposable Linux containers sharing a labelled volume, as uid 1000; it is not part
+of normal test discovery and does not contact production.
+No transfer test writes into the application instrument library.

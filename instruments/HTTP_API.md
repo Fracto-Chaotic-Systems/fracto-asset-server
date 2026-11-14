@@ -1,20 +1,23 @@
 # Instrument HTTP API
 
-Current playback status (2026-11-02): **all 21 instruments are enabled** after
-75 native Chromium decode/render probes (low/middle/high pitches of every
-recording layer) passed through the sample cache and voice engine at 48 kHz.
-The catalog marks them playback_verified; detailed evidence is recorded in
-browser-verification.json in the asset-server instruments directory. Earlier
-disabled/pending statements below describe the initial migration stages.
-Native probes confirm signal output, not a subjective listening review.
-Reload All Music to fetch the updated catalog. A source can still be disabled
-for a track containing notes outside that instrument's verified pitch range.
+Current catalog: 149 enabled melodic instruments (21 Legacy and 128 FluidR3),
+with FluidR3 GM as default, plus the enabled Standard drum kit. Earlier validation
+counts below describe historical probes. Enablement and verification metadata do
+not establish installed-file availability: the runtime inventory reports that
+separately. Native probes confirm signal output, not a subjective listening review.
+See [FluidR3 release](fluidr3-gm/RELEASE.md) and
+[percussion release](fluidr3-percussion/RELEASE.md) for current deployment details.
 
 
 Implemented 2026-11-02. These read-only routes are mounted in the asset server
 (port 3003 by default) after its existing authorization middleware. No upload,
 editing or deletion endpoint is introduced. The All Music engine can consume this catalog; the instrument selector consumes its runtime registry and inventory.
-Source enablement remains a separate operation.
+Source enablement remains a separate operation. Private inventory/preview routes
+and staged-transfer routes are specified in the [instrument transfer contract](../../fracto-admin-server/INSTRUMENT_TRANSFER.md)
+and mounted separately under `/internal/instrument-transfer`. Private finalize
+validates and publishes complete libraries, invalidating this API's cached snapshot
+even for an unchanged catalog. These public endpoints remain read-only and cannot
+read staging, journals or backups.
 
 ## GET /instruments
 
@@ -30,7 +33,7 @@ Each instrument contains:
   match their registered byte lengths. This is inventory availability, not a
   browser playback certification. Hashes are checked before audio is served.
 - `available_pitches` / `common_pitches`, plus verified `midi_programs` and `banks`
-  (currently empty; none are inferred from names).
+  (explicit catalog assignments; none are inferred from names).
 - `recordings`: original MP3 IDs, velocity-layer labels, MIME type, sizes,
   checksums, timing-grid/coverage summaries, availability flags and URLs.
 - `playback_assets`: generated WAV IDs, source-recording/layer identity, method,
@@ -38,9 +41,11 @@ Each instrument contains:
   decoded size at 48kHz, availability and URLs. `notes` gives pitch, chunk offset,
   duration in frames/seconds, onset in frames, and the tail-guard flag.
 
-The current response has 21 instruments, 25 original URLs and 183 playback URLs
-covering 1,999 notes. `enabled` is still false and browser verification is pending;
-all prepared sources can be inspected/downloaded by an authorized caller.
+The current catalog registers 149 melodic instruments, 153 originals and 1,282
+melodic playback chunks, plus 23 Standard-kit playback chunks. Drum-kit metadata
+is returned in the separate `drum_kits` collection, including disabled audited
+kits. URLs are present only for installed available files; the catalog alone does
+not deploy audio. Prepared sources can be inspected by an authorized caller.
 A missing original does not prevent otherwise available playback chunks from
 being listed. An unavailable asset has `available:false` and `url:null`.
 
@@ -147,18 +152,20 @@ Browser playback is not asserted by this HTTP verification.
 
 Multi-library identity, normalization, program lookup and the 32 MiB catalog
 bound are specified in [MULTI_LIBRARY.md](MULTI_LIBRARY.md). Audio routes and
-authorization are unchanged. FluidR3 is now imported as prepared, disabled instruments.
+authorization are unchanged. FluidR3's earlier prepared/disabled stage has been
+superseded by the enabled release described above.
 
 
 FluidR3 import adds registered canonical source WAVs (audio/wav) alongside legacy
 MP3 source recordings (audio/mpeg). The same source URL/range/authentication rules
 apply. Discrete-note source timing has no 10/20-second grid. See
-[fluidr3-gm/IMPORT.md](fluidr3-gm/IMPORT.md). Prepared FluidR3 instruments stay disabled.
+[fluidr3-gm/IMPORT.md](fluidr3-gm/IMPORT.md). Current FluidR3 enablement is recorded
+in the catalog; the historical import stage did not enable instruments.
 
 
-Step 2 adds the [audited drum-kit catalog](DRUM_KITS.md): 31 disabled kit inventories in a separate collection, with note/velocity coverage, source choke classes and the melodic-to-percussion library link. No kit audio is served or enabled yet.
+Historical step 2 added the [audited drum-kit catalog](DRUM_KITS.md): 31 disabled kit inventories in a separate collection, with note/velocity coverage, source choke classes and the melodic-to-percussion library link. At that stage no kit audio was served or enabled.
 
 
-Step 3: [prepared percussion assets](fluidr3-percussion/IMPORT.md) add Standard kit render manifests, bounded note/velocity hit chunks and sanitized authenticated WAV URLs. Assets may be available while kit playback remains disabled. This supersedes the step-2 empty-assets-only gate; no percussion provider is enabled yet.
+Historical step 3 [prepared percussion assets](fluidr3-percussion/IMPORT.md) added Standard kit render manifests, bounded note/velocity hit chunks and sanitized authenticated WAV URLs while playback remained disabled. Step 5 below supersedes that gate.
 
 Step 5 supersedes the disabled-only drum gate: enabled, playback_verified kits in active libraries report available only when every registered chunk is present; available_notes lists exact note identities. Assets may still be served for disabled-kit verification. See fluidr3-percussion/PLAYBACK.md.
