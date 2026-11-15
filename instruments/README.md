@@ -30,6 +30,13 @@ Completed candidate work directories are removed; verified caches and backups
 remain. Private runtime state is excluded from Git and Docker build contexts.
 See the contract for routes, configuration and tests.
 
+Transfer packages include support documentation as exact bytes. The percussion
+`README.md` is pinned to LF in `.gitattributes` so Windows and Linux checkouts
+do not introduce a checksum conflict solely through line-ending conversion.
+An existing development copy can be normalized to the Git blob's LF bytes after
+verifying its text is identical. Existing destination conflicts still require
+operator review; no overwrite or newline-equivalence exception is added to v1.
+
 Current release: **FluidR3 GM is the default; all 128 FluidR3 and 21 Legacy instruments are enabled.** See [release/setup/rollback](fluidr3-gm/RELEASE.md). Earlier stage descriptions below are historical.
 
 Current playback status (2026-11-02): **all 21 instruments are enabled** after

@@ -4,6 +4,9 @@ Run `npm run test:instruments` for catalog, source/index/audio and HTTP coverage
 `instrument_transfer.test.js` adds isolated inventory/preview coverage: exact file
 hashes, missing destinations, catalog/file conflicts, path containment, source
 completeness, manifest closure, storage readiness, cancellation and expiry.
+It also checks that the transfer-owned percussion README has identical bytes
+after Git checkout with Windows-style automatic line endings enabled or disabled.
+This checkout regression skips when Git is absent from a minimal runtime image.
 `instrument_transfer_fixture.js` supplies disposable stores for both service suites.
 `instrument_transfer_stream.test.js` verifies reservations, checksum/length failures,
 no-clobber staging, stream cancellation, disk checks, path containment, source

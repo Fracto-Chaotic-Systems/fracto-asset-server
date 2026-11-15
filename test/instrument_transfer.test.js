@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
+import { spawnSync } from "node:child_process";
 import {
   transfer_fixture,
   add_transfer_index,
@@ -19,6 +20,44 @@ import {
 } from "../../../utils/instrument_transfer.js";
 
 const owner = transfer_hash("test-owner");
+
+test("transfer-owned notice keeps identical bytes in Windows and Linux Git checkouts", (t) => {
+  const available = spawnSync("git", ["--version"], { windowsHide: true });
+  if (available.error?.code === "ENOENT")
+    return t.skip("Git is absent from the runtime image");
+  assert.equal(available.status, 0);
+  const f = transfer_fixture(t);
+  const repository = path.join(f.root, "repository");
+  const relative = "instruments/fluidr3-percussion/README.md";
+  const bytes = Buffer.from(
+    "# Synthetic transfer notice\n\nIdentical text on both hosts.\n",
+  );
+  f.write(`repository/${relative}`, bytes);
+  f.write(
+    "repository/.gitattributes",
+    fs.readFileSync(new URL("../.gitattributes", import.meta.url)),
+  );
+  const git = (...args) => {
+    const result = spawnSync(
+      "git",
+      ["-c", "core.safecrlf=false", "-C", repository, ...args],
+      { encoding: "utf8", windowsHide: true },
+    );
+    assert.equal(result.status, 0, result.stderr);
+  };
+  git("init", "--quiet");
+  git("add", "--", ".gitattributes", relative);
+  for (const automatic of ["true", "false"]) {
+    git(
+      "-c",
+      `core.autocrlf=${automatic}`,
+      "checkout-index",
+      "--all",
+      "--force",
+    );
+    assert.deepEqual(fs.readFileSync(path.join(repository, relative)), bytes);
+  }
+});
 const storage = async () => ({ ready: true, free_bytes: 32 * 1024 ** 3 });
 const store = (root, options = {}) =>
   new InstrumentPreviewStore({
