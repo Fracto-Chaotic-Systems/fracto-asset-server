@@ -3,7 +3,10 @@ import fsp from "node:fs/promises";
 import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import { safe_transfer_path, observe_transfer_file } from "./transfer_files.js";
-import { transfer_error } from "../../../utils/instrument_transfer.js";
+import {
+  transfer_error,
+  TRANSFER_LIMITS,
+} from "../../../utils/instrument_transfer.js";
 import { transfer_deadline } from "../../../utils/instrument_transfer_stream.js";
 
 export const staging_path = (manifest_sha256, file) =>
@@ -12,7 +15,7 @@ const stamp = (s) => `${s.dev}:${s.ino}:${s.size}:${s.mtimeNs}:${s.ctimeNs}`;
 export async function observe_staged(root, manifest_sha256, file, signal) {
   return observe_transfer_file(root, staging_path(manifest_sha256, file), {
     signal,
-    max_bytes: file.bytes,
+    max_bytes: TRANSFER_LIMITS.file_bytes,
   });
 }
 export async function transfer_parent(root, relative) {
@@ -117,8 +120,12 @@ export async function receive_staged_file(
         file,
         deadline.signal,
       );
-      if (previous?.sha256 !== file.sha256 || previous.bytes !== file.bytes)
-        throw transfer_error("file_conflict");
+      if (previous?.sha256 !== file.sha256 || previous.bytes !== file.bytes) {
+        await safe_transfer_path(root, relative);
+        await fsp.rename(temporary, final);
+        installed = true;
+        on_commit();
+      }
     }
     await sync_directory(path.dirname(final));
     return {

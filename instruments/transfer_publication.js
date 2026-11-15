@@ -8,6 +8,11 @@ import {
 } from "./transfer_persistence.js";
 import { safe_transfer_path, observe_transfer_file } from "./transfer_files.js";
 import { staging_path, transfer_parent } from "./transfer_staging.js";
+import {
+  assert_observation,
+  backup_observation,
+  install_replacement,
+} from "./transfer_replacement.js";
 import { validate_package } from "./transfer_package.js";
 import { validate_instrument_directory } from "./transfer_validation.js";
 import {
@@ -273,13 +278,15 @@ export class InstrumentPublication {
       entry.signal.throwIfAborted();
       const live = await observe_transfer_file(this.root, file.relative_path, {
         signal: entry.signal,
-        max_bytes: file.bytes,
+        max_bytes: TRANSFER_LIMITS.file_bytes,
       });
-      const source_relative = live
+      const matching =
+        live?.sha256 === file.sha256 && live.bytes === file.bytes;
+      const source_relative = matching
         ? file.relative_path
         : staging_path(entry.manifest_sha256, file);
       const observed =
-        live ??
+        (matching ? live : null) ??
         (await observe_transfer_file(this.root, source_relative, {
           signal: entry.signal,
           max_bytes: file.bytes,
@@ -310,12 +317,21 @@ export class InstrumentPublication {
     const candidate = await this.candidate(entry);
     await this.hook("candidate_validated", entry);
     await this.assert_catalog(entry);
+    if (entry.replacement_policy === "source")
+      for (const file of entry.package.manifest.files)
+        await assert_observation(
+          this.root,
+          file,
+          entry.live_observations.find((o) => o.file_id === file.file_id),
+          entry.signal,
+        );
     await this.save(entry, "installing");
     for (const file of entry.package.manifest.files.filter(
       (file) => file.kind !== "catalog",
     )) {
       entry.signal.throwIfAborted();
-      await install_link(
+      await this.install(
+        entry,
         this.root,
         `${candidate}/${file.relative_path}`,
         file,
@@ -327,7 +343,17 @@ export class InstrumentPublication {
     }
     await this.assert_catalog(entry);
     const previous = entry.summary.target_catalog_sha256;
-    if (previous) {
+    if (previous && entry.replacement_policy === "source") {
+      const file = entry.package.manifest.files.find(
+        (f) => f.kind === "catalog",
+      );
+      await backup_observation(
+        this.root,
+        file,
+        entry.live_observations.find((o) => o.file_id === file.file_id),
+        `.instrument-transfer/backups/${previous}.json`,
+      );
+    } else if (previous) {
       const backup = `.instrument-transfer/backups/${previous}.json`;
       const current = await observe_transfer_file(this.root, "catalog.json", {
         max_bytes: 32 * 1024 * 1024,
@@ -352,11 +378,12 @@ export class InstrumentPublication {
     await this.save(entry, "catalog_intent");
     await this.hook("catalog_intent", entry);
     await this.assert_catalog(entry);
-    if (!previous) {
+    if (!previous || previous !== entry.package.manifest.catalog_sha256) {
       const catalog = entry.package.manifest.files.find(
         (file) => file.kind === "catalog",
       );
-      await install_link(
+      await this.install(
+        entry,
         this.root,
         `${candidate}/catalog.json`,
         catalog,
@@ -375,6 +402,18 @@ export class InstrumentPublication {
     await this.save(entry, "verifying");
     await this.verify_live(entry);
     await this.complete(entry);
+  }
+  install(entry, root, source_relative, file, on_change) {
+    if (entry.replacement_policy !== "source")
+      return install_link(root, source_relative, file, on_change);
+    return install_replacement(
+      root,
+      source_relative,
+      file,
+      entry.live_observations.find((o) => o.file_id === file.file_id),
+      `.instrument-transfer/backups/${entry.id}/${file.relative_path}`,
+      on_change,
+    );
   }
   async assert_catalog(entry) {
     const current = await observe_transfer_file(this.root, "catalog.json", {

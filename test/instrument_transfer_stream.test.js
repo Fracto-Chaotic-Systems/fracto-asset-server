@@ -8,13 +8,100 @@ import { InstrumentTransferStore } from "../instruments/transfer_store.js";
 import { build_transfer_package } from "../instruments/transfer_package.js";
 import {
   observe_staged,
+  staging_path,
   source_file_chunks,
 } from "../instruments/transfer_staging.js";
-import { transfer_hash } from "../../../utils/instrument_transfer.js";
+import {
+  transfer_hash,
+  json_hash,
+} from "../../../utils/instrument_transfer.js";
 import { transfer_deadline } from "../../../utils/instrument_transfer_stream.js";
 
 const owner = transfer_hash("stream-owner");
 const space = async () => ({ ready: true, free_bytes: 32 * 1024 ** 3 });
+test("a corrupt private cache is replaced only by a checksum-verified stream", async (t) => {
+  const source = transfer_fixture(t),
+    target = transfer_fixture(t);
+  const packet = await build_transfer_package(source.root);
+  const file = packet.manifest.files.find((f) => f.kind === "playback");
+  target.write(file.relative_path, "bad live audio");
+  target.write(
+    staging_path(json_hash(packet.manifest), file),
+    Buffer.alloc(file.bytes + 30, 8),
+  );
+  const store = new InstrumentTransferStore({
+    directory: target.root,
+    persistent: true,
+    storage: space,
+  });
+  const entry = store.start_session(
+    owner,
+    packet.manifest,
+    packet.catalog_text,
+    "source",
+  );
+  await entry.work;
+  assert.equal(entry.state, "ready", JSON.stringify(entry.error));
+  assert.equal(entry.summary.conflict_files, 1);
+  const identity = {
+    protocol_version: 1,
+    manifest_sha256: entry.manifest_sha256,
+    plan_sha256: "a".repeat(64),
+  };
+  store.prepare(entry, {
+    ...identity,
+    target_snapshot_sha256: entry.target_snapshot_sha256,
+  });
+  await entry.work;
+  await assert.rejects(
+    store.receive(
+      entry,
+      file.file_id,
+      Readable.from([Buffer.alloc(file.bytes)]),
+      file.bytes,
+    ),
+    { code: "instrument_transfer_checksum_mismatch" },
+  );
+  assert.equal(
+    (await observe_staged(target.root, entry.manifest_sha256, file)).bytes,
+    file.bytes + 30,
+  );
+  await store.receive(
+    entry,
+    file.file_id,
+    Readable.from([
+      fs.readFileSync(path.join(source.root, file.relative_path)),
+    ]),
+    file.bytes,
+  );
+  assert.equal(
+    (await observe_staged(target.root, entry.manifest_sha256, file)).sha256,
+    file.sha256,
+  );
+  assert.equal(
+    fs.readFileSync(path.join(target.root, file.relative_path), "utf8"),
+    "bad live audio",
+  );
+  await store.cancel(store.sessions, entry.id, owner);
+  const legacy = store.start_session(
+    owner,
+    packet.manifest,
+    packet.catalog_text,
+  );
+  await legacy.work;
+  assert.equal(legacy.state, "blocked");
+  assert.equal(legacy.summary.conflict_files, 1);
+  const retry = store.start_session(
+    owner,
+    packet.manifest,
+    packet.catalog_text,
+    "source",
+  );
+  await retry.work;
+  assert.equal(retry.state, "ready");
+  assert.equal(retry.summary.conflict_files, 0); // No payload needed; verified cache reused.
+  assert.equal(retry.summary.replacement_files, 1); // The live file still needs replacement.
+});
 async function prepared(t, { empty = false } = {}) {
   const source = transfer_fixture(t),
     target = transfer_fixture(t);
@@ -203,6 +290,7 @@ test("changed preview state and source mutations cannot be transferred", async (
   await assert.rejects(
     async () => {
       for await (const _ of source_file_chunks(f.root, file)) {
+        // Drain until the source identity/checksum check rejects the stream.
       }
     },
     { code: "instrument_transfer_snapshot_changed" },

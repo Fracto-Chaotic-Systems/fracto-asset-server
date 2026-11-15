@@ -19,3 +19,8 @@ publication boundaries to test process-crash recovery. The explicit
 disposable Linux containers sharing a labelled volume, as uid 1000; it is not part
 of normal test discovery and does not contact production.
 No transfer test writes into the application instrument library.
+
+Source-replacement regressions cover differing and invalid-UTF8 catalogs, corrupt
+originals/indexes/audio, CRLF support notices, retained file backups, changed live
+snapshots, repair of corrupt staging, six real process-crash boundaries across
+legacy/replacement modes, restart receipts and zero-payload repeat exports.

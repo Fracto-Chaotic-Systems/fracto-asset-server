@@ -154,13 +154,21 @@ export function create_instrument_transfer_router({
       inflate: false,
     }),
     safe(async (req, res) => {
-      exact_fields(req.body, ["protocol_version", "manifest", "catalog_text"]);
+      exact_fields(req.body, [
+        "protocol_version",
+        "manifest",
+        "catalog_text",
+        ...(Object.hasOwn(req.body ?? {}, "replacement_policy")
+          ? ["replacement_policy"]
+          : []),
+      ]);
       if (req.body.protocol_version !== 1)
         throw transfer_error("upgrade_required");
       const entry = store.start_session(
         req.transfer_owner,
         req.body.manifest,
         req.body.catalog_text,
+        req.body.replacement_policy,
       );
       res.status(202).json({ protocol_version: 1, session_id: entry.id });
     }),

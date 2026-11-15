@@ -4,26 +4,29 @@
 
 The [instrument transfer contract](../../fracto-admin-server/INSTRUMENT_TRANSFER.md)
 defines the asset service's inventory, staging and publication ownership
-on both sending and receiving servers. Protocol 1 repairs an identical catalog's
-missing dependencies or installs into an empty destination; different catalogs
-and conflicting files block transfer. Source inventory and receiver preview are
-read-only. Missing files stream into a private verified cache. Step 4 validates
-the complete candidate with existing PCM/index validators in a worker, installs
-dependencies without clobbering files, then atomically publishes an absent catalog
-or refreshes the identical installed catalog. Completion requires verified live
+on both sending and receiving servers. Protocol 1's negotiated `source` replacement
+policy initializes or repairs a destination to the selected source's exact package.
+Different catalogs, corrupt audio/indexes and CRLF-only support files are replaced
+on explicit export, with durable backups. Older/unnegotiated peers retain the
+preserve/block policy. Inventory and preview are read-only. Pending files stream
+into a private verified cache. A complete candidate passes existing PCM/index
+validators in a worker before installation. Dependencies install before an atomic
+catalog commit. Completion requires verified live
 files and a durable receipt; staging alone does not change public playback.
 `transfer_package.js` derives manifest membership and validates source dependencies;
 `transfer_files.js` bounds file reads/hashes and rejects linked paths;
 `transfer_preview.js` owns peer-scoped, expiring preview sessions;
 `transfer_store.js` adds reservations, staged receive/send operations and progress;
 `transfer_staging.js` owns bounded file reads, partial writes, checksum verification,
-fsync and atomic no-clobber cache installation. Cache files live under
+fsync and atomic verified cache installation/repair. Cache files live under
 `.instrument-transfer/packages/<manifest-sha256>/` and are excluded from exports.
 New previews hash and reuse verified cache files, including after a process restart.
 Incomplete `.part` files are never reused/exported; ordinary cancellation removes
 them. `transfer_publication.js` owns durable journals, previous-catalog backups,
 publication and restart reconciliation; `transfer_persistence.js` owns durable
-metadata writes and no-clobber installation; `transfer_validation*.js` runs the
+metadata writes and legacy no-clobber installation; `transfer_replacement.js`
+owns preview-bound replacement and durable backups of old file inodes;
+`transfer_validation*.js` runs the
 existing validators away from HTTP work. `transfer_storage_init.js` initializes a
 new persistent data root from image data while keeping code outside the volume.
 Completed candidate work directories are removed; verified caches and backups
@@ -33,9 +36,12 @@ See the contract for routes, configuration and tests.
 Transfer packages include support documentation as exact bytes. The percussion
 `README.md` is pinned to LF in `.gitattributes` so Windows and Linux checkouts
 do not introduce a checksum conflict solely through line-ending conversion.
-An existing development copy can be normalized to the Git blob's LF bytes after
-verifying its text is identical. Existing destination conflicts still require
-operator review; no overwrite or newline-equivalence exception is added to v1.
+Existing destination newline differences require no manual normalization when
+source replacement is negotiated: export installs the source's exact bytes.
+Backups live under `.instrument-transfer/backups/<session-id>/<relative-path>`;
+previous catalogs also have checksum-keyed backups. Unrelated files are retained.
+External writers must stay idle during publication. Interrupted replacement may
+leave a mixed library; a new preview reuses verified bytes and completes repair.
 
 Current release: **FluidR3 GM is the default; all 128 FluidR3 and 21 Legacy instruments are enabled.** See [release/setup/rollback](fluidr3-gm/RELEASE.md). Earlier stage descriptions below are historical.
 

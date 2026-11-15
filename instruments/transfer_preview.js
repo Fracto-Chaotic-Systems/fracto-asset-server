@@ -109,9 +109,15 @@ export class InstrumentPreviewStore {
       .catch((error) => this.failure(entry, error));
     return entry;
   }
-  start_session(owner, manifest, catalog_text) {
+  start_session(
+    owner,
+    manifest,
+    catalog_text,
+    replacement_policy = "preserve",
+  ) {
     const canonical = validate_package(manifest, catalog_text);
     const entry = this.create(this.sessions, owner, "scanning");
+    entry.replacement_policy = replacement_policy;
     entry.files_total = canonical.files.length;
     entry.package = { manifest: canonical, catalog_text };
     entry.manifest_sha256 = json_hash(canonical);
@@ -133,14 +139,30 @@ export class InstrumentPreviewStore {
   async scan_receiver(entry, manifest) {
     const signal = entry.signal;
     const files = [];
+    const live_files = [];
     let matching = 0,
       missing = 0,
       missing_bytes = 0,
       conflicts = 0,
+      replacement_files = 0,
+      replacement_bytes = 0,
       largest = 0;
     const conflict_ids = [];
     for (const file of manifest.files) {
-      const observed = await this.observe_receiver(entry, file, signal);
+      const live = await InstrumentPreviewStore.prototype.observe_receiver.call(
+        this,
+        entry,
+        file,
+        signal,
+      );
+      live_files.push({
+        file_id: file.file_id,
+        sha256: live?.sha256 ?? null,
+        bytes: live?.bytes ?? null,
+      });
+      if (live && (live.sha256 !== file.sha256 || live.bytes !== file.bytes))
+        replacement_files++;
+      const observed = await this.observe_receiver(entry, file, signal, live);
       const state = !observed
         ? "missing"
         : observed.sha256 === file.sha256 && observed.bytes === file.bytes
@@ -159,6 +181,8 @@ export class InstrumentPreviewStore {
         largest = Math.max(largest, file.bytes);
       } else {
         conflicts++;
+        replacement_bytes += file.bytes;
+        largest = Math.max(largest, file.bytes);
         if (conflict_ids.length < 100) conflict_ids.push(file.file_id);
       }
       entry.files_checked++;
@@ -174,12 +198,14 @@ export class InstrumentPreviewStore {
       )?.sha256 ?? null;
     const storage = await this.storage(this.directory, this.persistent);
     signal.throwIfAborted();
-    const required = missing_bytes + largest + 1024 ** 3;
+    const required = missing_bytes + replacement_bytes + largest + 1024 ** 3;
     entry.target_snapshot_sha256 = json_hash({
       catalog_sha256: target_catalog,
       files,
+      live_files,
     });
     entry.observations = files;
+    entry.live_observations = live_files;
     entry.summary = {
       source_catalog_sha256: manifest.catalog_sha256,
       target_catalog_sha256: target_catalog,
@@ -189,15 +215,19 @@ export class InstrumentPreviewStore {
       missing_files: missing,
       missing_bytes,
       conflict_files: conflicts,
+      replacement_bytes,
+      replacement_files,
       conflict_file_ids: conflict_ids,
       free_bytes: storage.free_bytes,
       required_free_bytes: required,
       publication_state: "unchanged",
     };
     const reason =
-      target_catalog && target_catalog !== manifest.catalog_sha256
+      entry.replacement_policy !== "source" &&
+      target_catalog &&
+      target_catalog !== manifest.catalog_sha256
         ? "catalog_conflict"
-        : conflicts
+        : entry.replacement_policy !== "source" && conflicts
           ? "file_conflict"
           : !storage.ready
             ? "storage_not_ready"
@@ -208,7 +238,8 @@ export class InstrumentPreviewStore {
     entry.deadline = this.now() + TRANSFER_LIMITS.preview_seconds * 1000;
     entry.error = reason ? public_transfer_error(transfer_error(reason)) : null;
   }
-  observe_receiver(_entry, file, signal) {
+  observe_receiver(_entry, file, signal, live = undefined) {
+    if (live !== undefined) return live;
     return observe_transfer_file(this.directory, file.relative_path, {
       signal,
       max_bytes:
@@ -236,7 +267,9 @@ export class InstrumentPreviewStore {
             files_verified: entry.summary?.matching_files ?? 0,
             files_total: entry.files_total,
             bytes_transferred: 0,
-            bytes_to_transfer: entry.summary?.missing_bytes ?? 0,
+            bytes_to_transfer:
+              (entry.summary?.missing_bytes ?? 0) +
+              (entry.summary?.replacement_bytes ?? 0),
             current_file_id: null,
           },
           summary: entry.summary,

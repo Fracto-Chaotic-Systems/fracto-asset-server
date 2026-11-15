@@ -31,7 +31,16 @@ export class InstrumentTransferStore extends InstrumentPreviewStore {
   initialize() {
     return this.publisher.initialize();
   }
-  start_session(owner, manifest, catalog_text) {
+  start_session(
+    owner,
+    manifest,
+    catalog_text,
+    replacement_policy = "preserve",
+  ) {
+    if (!["preserve", "source"].includes(replacement_policy))
+      throw transfer_error("invalid_request", 400);
+    if (replacement_policy === "source" && !this.publication_enabled)
+      throw transfer_error("upgrade_required");
     // Reserve room for the bounded status/ownership envelope in the commit WAL.
     if (
       this.publication_enabled &&
@@ -42,7 +51,12 @@ export class InstrumentTransferStore extends InstrumentPreviewStore {
         TRANSFER_LIMITS.preview_request_bytes
     )
       throw transfer_error("limit_exceeded", 413);
-    return super.start_session(owner, manifest, catalog_text);
+    return super.start_session(
+      owner,
+      manifest,
+      catalog_text,
+      replacement_policy,
+    );
   }
   async lookup(map, id, owner) {
     if (map.has(id) || map !== this.sessions) return this.get(map, id, owner);
@@ -54,6 +68,7 @@ export class InstrumentTransferStore extends InstrumentPreviewStore {
       preview_only: false,
       staging_supported: true,
       publication_supported: this.publication_enabled,
+      replacement_policies: this.publication_enabled ? ["source"] : [],
     };
   }
   create(...args) {
@@ -73,17 +88,20 @@ export class InstrumentTransferStore extends InstrumentPreviewStore {
       this.touch(entry);
     return entry;
   }
-  async observe_receiver(entry, file, signal) {
-    const live = await super.observe_receiver(entry, file, signal);
-    return (
-      live ??
-      (await observe_staged(
-        this.directory,
-        entry.manifest_sha256,
-        file,
-        signal,
-      ))
+  async observe_receiver(entry, file, signal, live = undefined) {
+    if (live === undefined)
+      live = await super.observe_receiver(entry, file, signal);
+    if (live?.sha256 === file.sha256 && live.bytes === file.bytes) return live;
+    if (live && entry.replacement_policy !== "source") return live;
+    const staged = await observe_staged(
+      this.directory,
+      entry.manifest_sha256,
+      file,
+      signal,
     );
+    return staged?.sha256 === file.sha256 && staged.bytes === file.bytes
+      ? staged
+      : live;
   }
   acquire(entry) {
     if (this.reservation && this.reservation !== entry)
@@ -257,8 +275,13 @@ export class InstrumentTransferStore extends InstrumentPreviewStore {
       throw transfer_error("invalid_state");
     const file = this.file(entry, file_id);
     if (
-      entry.observations.find((observed) => observed.file_id === file_id)
-        ?.state !== "missing"
+      !entry.observations.some(
+        (observed) =>
+          observed.file_id === file_id &&
+          (observed.state === "missing" ||
+            (entry.replacement_policy === "source" &&
+              observed.state === "conflict")),
+      )
     )
       throw transfer_error("invalid_state");
     if (file.bytes !== length) throw transfer_error("checksum_mismatch", 422);
@@ -274,7 +297,7 @@ export class InstrumentTransferStore extends InstrumentPreviewStore {
       const outstanding = entry.package.manifest.files.reduce(
         (n, f, index) =>
           n +
-          (entry.observations[index].state === "missing" &&
+          (entry.observations[index].state !== "matching" &&
           !entry.acknowledged.has(f.file_id)
             ? f.bytes
             : 0),
@@ -283,7 +306,13 @@ export class InstrumentTransferStore extends InstrumentPreviewStore {
       if (storage.free_bytes < outstanding + file.bytes + 1024 ** 3)
         throw transfer_error("insufficient_space", 507);
       const live = await super.observe_receiver(entry, file, entry.signal);
-      if (live && (live.sha256 !== file.sha256 || live.bytes !== file.bytes))
+      const expected = entry.live_observations.find(
+        (o) => o.file_id === file_id,
+      );
+      if (
+        (live?.sha256 ?? null) !== expected.sha256 ||
+        (live?.bytes ?? null) !== expected.bytes
+      )
         throw transfer_error("snapshot_changed");
       const result = await receive_staged_file(
         this.directory,
@@ -375,11 +404,11 @@ export class InstrumentTransferStore extends InstrumentPreviewStore {
           transferred.filter(
             (file) =>
               entry.observations?.find((o) => o.file_id === file.file_id)
-                ?.state === "missing",
+                ?.state !== "matching",
           ).length;
       const pending = Buffer.alloc(Math.ceil(entry.files_total / 8));
       entry.observations?.forEach((file, index) => {
-        if (file.state === "missing") pending[index >> 3] |= 1 << (index & 7);
+        if (file.state !== "matching") pending[index >> 3] |= 1 << (index & 7);
       });
       status.pending_bitmap = pending.toString("base64");
       status.receipt = entry.receipt ?? null;

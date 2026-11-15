@@ -24,6 +24,8 @@ export async function staged_publication(
     invalid_pcm = false,
     publication = {},
     make_fixture = publication_fixture,
+    replacement_policy = "preserve",
+    modify_target = () => {},
   } = {},
 ) {
   const source = make_fixture(t),
@@ -47,6 +49,7 @@ export async function staged_publication(
     if (empty || file.kind === "playback" || file.kind === "index")
       fs.unlinkSync(path.join(target.root, file.relative_path));
   target.write("destination-only.txt", "retain this file");
+  modify_target(target);
   const store = new InstrumentTransferStore({
     directory: target.root,
     persistent: true,
@@ -58,6 +61,7 @@ export async function staged_publication(
     owner,
     packet.manifest,
     packet.catalog_text,
+    replacement_policy,
   );
   await entry.work;
   const identity = {
@@ -72,7 +76,7 @@ export async function staged_publication(
   await entry.work;
   assert.equal(entry.state, "transferring", JSON.stringify(entry.error));
   for (const file of packet.manifest.files.filter(
-    (file, index) => entry.observations[index].state === "missing",
+    (file, index) => entry.observations[index].state !== "matching",
   ))
     await store.receive(
       entry,
@@ -87,6 +91,130 @@ export async function staged_publication(
   assert.equal(entry.state, "staged", JSON.stringify(entry.error));
   return { source, target, packet, store, entry, identity };
 }
+
+test("source replacement repairs differing catalogs, corrupt audio and indexes with durable backups", async (t) => {
+  const originals = new Map();
+  const f = await staged_publication(t, {
+    replacement_policy: "source",
+    modify_target(target) {
+      target.catalog.library_version++;
+      target.save();
+      target.write(
+        target.recording.path,
+        Buffer.from("broken recording with different size"),
+      );
+      target.write(target.asset.path, Buffer.alloc(1000, 7));
+      const index = target.recording.timing.index_path;
+      target.write(index, "bad index");
+      for (const relative of [
+        "catalog.json",
+        target.recording.path,
+        target.asset.path,
+        index,
+      ])
+        originals.set(
+          relative,
+          fs.readFileSync(path.join(target.root, relative)),
+        );
+    },
+  });
+  assert.equal(f.entry.summary.conflict_files, 4);
+  assert.ok(f.entry.summary.replacement_bytes > 0);
+  // Preview and verified staging never edit the live files.
+  for (const [relative, bytes] of originals)
+    assert.deepEqual(
+      fs.readFileSync(path.join(f.target.root, relative)),
+      bytes,
+    );
+  f.store.finalize(f.entry, f.identity);
+  await f.entry.work;
+  assert.equal(f.entry.state, "completed", JSON.stringify(f.entry.error));
+  for (const file of f.packet.manifest.files) {
+    assert.deepEqual(
+      fs.readFileSync(path.join(f.target.root, file.relative_path)),
+      fs.readFileSync(path.join(f.source.root, file.relative_path)),
+    );
+    assert.deepEqual(
+      fs.readFileSync(
+        path.join(
+          f.target.root,
+          `.instrument-transfer/backups/${f.entry.id}/${file.relative_path}`,
+        ),
+      ),
+      originals.get(file.relative_path),
+    );
+  }
+  verify_library(f.target.root);
+  const restarted = new InstrumentTransferStore({
+    directory: f.target.root,
+    persistent: true,
+    storage,
+  });
+  await restarted.initialize();
+  const receipt = await restarted.lookup(restarted.sessions, f.entry.id, owner);
+  assert.equal(restarted.status(receipt).state, "completed");
+  const retry = restarted.start_session(
+    owner,
+    f.packet.manifest,
+    f.packet.catalog_text,
+    "source",
+  );
+  await retry.work;
+  assert.equal(retry.summary.conflict_files, 0);
+  assert.equal(retry.summary.missing_files, 0);
+  assert.equal(retry.summary.replacement_bytes, 0);
+  assert.equal(
+    fs.readFileSync(path.join(f.target.root, "destination-only.txt"), "utf8"),
+    "retain this file",
+  );
+});
+
+test("source replacement can repair an unreadable catalog without decoding its previous bytes", async (t) => {
+  const original = Buffer.from([255, 254, 0, 127]);
+  const f = await staged_publication(t, {
+    replacement_policy: "source",
+    modify_target(target) {
+      target.write("catalog.json", original);
+    },
+  });
+  f.store.finalize(f.entry, f.identity);
+  await f.entry.work;
+  assert.equal(f.entry.state, "completed", JSON.stringify(f.entry.error));
+  assert.deepEqual(
+    fs.readFileSync(
+      path.join(
+        f.target.root,
+        `.instrument-transfer/backups/${transfer_hash(original)}.json`,
+      ),
+    ),
+    original,
+  );
+  verify_library(f.target.root);
+});
+
+test("source replacement refuses a destination changed after staging before replacing any file", async (t) => {
+  const f = await staged_publication(t, {
+    replacement_policy: "source",
+    modify_target(target) {
+      target.write(target.recording.path, "old bytes");
+    },
+  });
+  const changed = Buffer.from("another writer's new bytes");
+  f.target.write(f.target.recording.path, changed);
+  f.store.finalize(f.entry, f.identity);
+  await f.entry.work;
+  assert.equal(f.entry.state, "partial");
+  assert.equal(f.entry.error.code, "instrument_transfer_snapshot_changed");
+  assert.equal(f.entry.receipt, null);
+  assert.deepEqual(
+    fs.readFileSync(path.join(f.target.root, f.target.recording.path)),
+    changed,
+  );
+  assert.equal(
+    fs.existsSync(path.join(f.target.root, f.target.asset.path)),
+    false,
+  );
+});
 test("validated publication repairs identical catalogs, preserves backup and issues a durable receipt", async (t) => {
   const f = await staged_publication(t),
     original = fs.readFileSync(path.join(f.target.root, "catalog.json"));
@@ -240,81 +368,113 @@ test("cancellation during the catalog commit waits for verification instead of r
 });
 
 test("process crashes before/after catalog commit recover from the durable journal", async (t) => {
-  for (const phase of [
-    "dependency_installed",
-    "catalog_intent",
-    "catalog_committed",
-  ]) {
-    const f = await staged_publication(t, { empty: true });
-    const packet_path = path.join(
-      f.source.root,
-      "publication-test-packet.json",
-    );
-    fs.writeFileSync(packet_path, JSON.stringify(f.packet));
-    const outcome = await new Promise((resolve, reject) => {
-      const child = spawn(
-        process.execPath,
-        [
-          fileURLToPath(
-            new URL("./instrument_publication_child.mjs", import.meta.url),
-          ),
-          f.target.root,
-          packet_path,
-          phase,
-        ],
-        { windowsHide: true, stdio: ["ignore", "pipe", "pipe"] },
-      );
-      let stdout = "",
-        stderr = "";
-      child.stdout.on("data", (chunk) => {
-        stdout += chunk;
+  for (const replacement_policy of ["preserve", "source"]) {
+    for (const phase of [
+      "dependency_installed",
+      "catalog_intent",
+      "catalog_committed",
+    ]) {
+      const f = await staged_publication(t, {
+        empty: replacement_policy === "preserve",
+        replacement_policy,
+        modify_target(target) {
+          if (replacement_policy === "source") {
+            target.catalog.library_version++;
+            target.save();
+            target.write(target.recording.path, "broken original");
+          }
+        },
       });
-      child.stderr.on("data", (chunk) => {
-        stderr += chunk;
-      });
-      child.once("error", reject);
-      child.once("exit", (code) => resolve({ code, stdout, stderr }));
-    });
-    assert.equal(outcome.code, 47, outcome.stderr);
-    const id = JSON.parse(outcome.stdout.trim()).session_id;
-    await initialize_instrument_storage({
-      directory: f.target.root,
-      source: f.source.root,
-      persistent: true,
-    });
-    const restarted = new InstrumentTransferStore({
-      directory: f.target.root,
-      persistent: true,
-      storage,
-    });
-    await restarted.initialize();
-    const active = restarted.sessions.get(id);
-    if (active?.work) await active.work;
-    const recovered = await restarted.lookup(restarted.sessions, id, owner),
-      status = restarted.status(recovered);
-    assert.equal(
-      status.state,
-      phase === "catalog_committed" ? "completed" : "partial",
-      JSON.stringify(status.error),
-    );
-    assert.equal(
-      fs.existsSync(path.join(f.target.root, "catalog.json")),
-      phase === "catalog_committed",
-    );
-    if (phase === "catalog_committed") {
-      assert.equal(status.receipt.manifest_sha256, f.entry.manifest_sha256);
-      verify_library(f.target.root);
-    } else {
-      assert.equal(status.receipt, null);
-      const retry = restarted.start_session(
-        owner,
-        f.packet.manifest,
-        f.packet.catalog_text,
+      const packet_path = path.join(
+        f.source.root,
+        "publication-test-packet.json",
       );
-      await retry.work;
-      assert.equal(retry.summary.missing_files, 0); // Installed or verified-cached bytes are reusable.
+      fs.writeFileSync(
+        packet_path,
+        JSON.stringify({ ...f.packet, replacement_policy }),
+      );
+      const outcome = await new Promise((resolve, reject) => {
+        const child = spawn(
+          process.execPath,
+          [
+            fileURLToPath(
+              new URL("./instrument_publication_child.mjs", import.meta.url),
+            ),
+            f.target.root,
+            packet_path,
+            phase,
+          ],
+          { windowsHide: true, stdio: ["ignore", "pipe", "pipe"] },
+        );
+        let stdout = "",
+          stderr = "";
+        child.stdout.on("data", (chunk) => {
+          stdout += chunk;
+        });
+        child.stderr.on("data", (chunk) => {
+          stderr += chunk;
+        });
+        child.once("error", reject);
+        child.once("exit", (code) => resolve({ code, stdout, stderr }));
+      });
+      assert.equal(outcome.code, 47, outcome.stderr);
+      const id = JSON.parse(outcome.stdout.trim()).session_id;
+      await initialize_instrument_storage({
+        directory: f.target.root,
+        source: f.source.root,
+        persistent: true,
+      });
+      const restarted = new InstrumentTransferStore({
+        directory: f.target.root,
+        persistent: true,
+        storage,
+      });
+      await restarted.initialize();
+      const active = restarted.sessions.get(id);
+      if (active?.work) await active.work;
+      const recovered = await restarted.lookup(restarted.sessions, id, owner),
+        status = restarted.status(recovered);
+      assert.equal(
+        status.state,
+        phase === "catalog_committed" ? "completed" : "partial",
+        JSON.stringify(status.error),
+      );
+      assert.equal(
+        fs.existsSync(path.join(f.target.root, "catalog.json")),
+        replacement_policy === "source" || phase === "catalog_committed",
+      );
+      if (phase === "catalog_committed") {
+        assert.equal(status.receipt.manifest_sha256, f.entry.manifest_sha256);
+        verify_library(f.target.root);
+      } else {
+        assert.equal(status.receipt, null);
+        const retry = restarted.start_session(
+          owner,
+          f.packet.manifest,
+          f.packet.catalog_text,
+          replacement_policy,
+        );
+        await retry.work;
+        assert.equal(retry.summary.missing_files, 0); // Installed or verified-cached bytes are reusable.
+        assert.equal(retry.summary.conflict_files, 0);
+        const identity = {
+          protocol_version: 1,
+          manifest_sha256: retry.manifest_sha256,
+          plan_sha256: "a".repeat(64),
+        };
+        restarted.prepare(retry, {
+          ...identity,
+          target_snapshot_sha256: retry.target_snapshot_sha256,
+        });
+        await retry.work;
+        restarted.finish_staging(retry, identity);
+        await retry.work;
+        restarted.finalize(retry, identity);
+        await retry.work;
+        assert.equal(retry.state, "completed", JSON.stringify(retry.error));
+      }
+      assert.equal(restarted.reservation, null);
     }
-    assert.equal(restarted.reservation, null);
   }
 });
 
@@ -408,13 +568,31 @@ test("publication includes verified drum hit windows, render manifests and sourc
     fixture.save();
     return fixture;
   };
-  const f = await staged_publication(t, { empty: true, make_fixture });
+  const f = await staged_publication(t, {
+    empty: true,
+    make_fixture,
+    replacement_policy: "source",
+    modify_target(target) {
+      target.write("fluidr3-percussion/README.md", "fixture source notice\r\n");
+    },
+  });
+  assert.equal(f.entry.summary.conflict_files, 1);
   f.store.finalize(f.entry, f.identity);
   await f.entry.work;
   assert.equal(f.entry.state, "completed", JSON.stringify(f.entry.error));
   const verified = verify_library(f.target.root);
   assert.equal(verified.drum_playback_assets_verified, true);
   assert.equal(verified.drum_hit_windows, 4);
+  assert.equal(
+    fs.readFileSync(
+      path.join(
+        f.target.root,
+        `.instrument-transfer/backups/${f.entry.id}/fluidr3-percussion/README.md`,
+      ),
+      "utf8",
+    ),
+    "fixture source notice\r\n",
+  );
   assert.equal(
     fs.readFileSync(
       path.join(f.target.root, "fluidr3-percussion/upstream/COPYING"),

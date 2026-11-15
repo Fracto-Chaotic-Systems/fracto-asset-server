@@ -14,3 +14,6 @@ Finalize runs full candidate/live validation, durable publication and receipt
 creation. Session status can recover receipts from disk after restart; recovery
 reconciles committed catalog intent without resuming an incomplete install.
 Binary routes retain backpressure, exact lengths, authorization and deadlines.
+Session creation accepts optional negotiated `replacement_policy: "source"`;
+omission preserves the legacy no-overwrite behavior. Publication-capable stores
+advertise this extension explicitly.

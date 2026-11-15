@@ -19,7 +19,12 @@ const store = new InstrumentTransferStore({
   },
 });
 await store.initialize();
-const entry = store.start_session(owner, packet.manifest, packet.catalog_text);
+const entry = store.start_session(
+  owner,
+  packet.manifest,
+  packet.catalog_text,
+  packet.replacement_policy,
+);
 await entry.work;
 const identity = {
   protocol_version: 1,
