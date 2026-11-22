@@ -1,7 +1,8 @@
 # Asset-service maintenance scripts
 
 `environment_catalog.py list [query]` and `validate` search the service-owned
-`models` library and check source hashes/file references. Set
+`models` library across ingredients, composites and environments and check
+source hashes/file references. The root catalog supplies the tier-relative paths. Set
 `FRACTO_ENVIRONMENT_CATALOG_DIR` for another canonical store.
 `register_environment_assets.js` reconciles all registered library records through
 the data-service API. Run `npm run environment:register`; this changes no library

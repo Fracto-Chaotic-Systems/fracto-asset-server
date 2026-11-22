@@ -33,6 +33,12 @@ test("the default models library is readable and an external library override is
   const index = JSON.parse(
     await readFile(path.join(expected, "catalog.json"), "utf8"),
   );
+  const tiers = ["ingredients", "composites", "environments"];
+  const entries = await readdir(expected);
+  assert.ok(tiers.every((tier) => entries.includes(tier)));
+  assert.ok(
+    index.assets.every((asset) => tiers.includes(asset.record.split("/")[0])),
+  );
   assert.deepEqual(
     assets.map((asset) => asset.id),
     index.assets.map((asset) => asset.id),
@@ -60,7 +66,10 @@ async function fixture(t, registry = null) {
   });
   const record = JSON.parse(
     await readFile(
-      new URL("../models/grass-patch-001/asset.json", import.meta.url),
+      new URL(
+        "../models/ingredients/grass-patch-001/asset.json",
+        import.meta.url,
+      ),
       "utf8",
     ),
   );

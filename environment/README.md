@@ -6,7 +6,9 @@ catalog edits and registered preview delivery at `/environment-catalog`.
 and sanitized errors. `catalog.js` owns revision checks, allowlisted attribution
 edits, atomic JSON publication, per-asset edit queues and resource containment.
 `import.js` preserves originals/checksums, validates ZIP expansion using the SDK,
-serializes imports and publishes staged folders. `blender_conversion.js` runs
+serializes imports and publishes staged folders under `models/ingredients/`.
+`library_paths.js` keeps that publication directory within the canonical library,
+including when local symlinks/junctions are present. `blender_conversion.js` runs
 Blender with auto-execution disabled and bounded time/output, producing a separate
 GLB through this service's Python scripts. It never saves the original model.
 
@@ -20,7 +22,11 @@ has a 15-second timeout. No provenance or credentials are logged.
 The default library is `../models`; `FRACTO_ENVIRONMENT_CATALOG_DIR` overrides
 it for existing installations. The service-owned library is named `models/`;
 model and metadata contents are preserved when moving an existing library to
-this location. Existing
+this location. `models/ingredients/` holds simple reusable pieces,
+`models/composites/` holds combined macro-scale objects, and
+`models/environments/` holds complete playable scenes. One root `catalog.json`
+indexes all tiers; record-relative paths and stable IDs preserve preview/save
+URLs when an asset moves between tiers. Existing
 deployments with external storage should keep the override pointing to that store;
 do not initialize a second empty library. Compose mounts the service-owned library.
 

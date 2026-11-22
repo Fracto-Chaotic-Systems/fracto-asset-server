@@ -133,7 +133,7 @@ test("blend-only folders are accepted and register a converted preview without c
       };
     },
   });
-  const directory = path.join(root, saved.id),
+  const directory = path.join(root, "ingredients", saved.id),
     record = JSON.parse(
       await readFile(path.join(directory, "asset.json"), "utf8"),
     );

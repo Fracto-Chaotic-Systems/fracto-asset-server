@@ -6,6 +6,8 @@ import {
   mkdir,
   readdir,
   rm,
+  rename,
+  symlink,
 } from "node:fs/promises";
 import path from "node:path";
 import { tmpdir } from "node:os";
@@ -55,12 +57,22 @@ test("folder import preserves source bytes and attribution files, registers a li
     }),
   );
   assert.deepEqual(result, { id: "test-prop", duplicate: false });
+  const index = JSON.parse(
+    await readFile(path.join(root, "catalog.json"), "utf8"),
+  );
+  assert.equal(index.assets[0].record, "ingredients/test-prop/asset.json");
   assert.equal(
-    await readFile(path.join(root, result.id, "source/files/prop.obj"), "utf8"),
+    await readFile(
+      path.join(root, "ingredients", result.id, "source/files/prop.obj"),
+      "utf8",
+    ),
     triangle,
   );
   const record = JSON.parse(
-    await readFile(path.join(root, result.id, "asset.json"), "utf8"),
+    await readFile(
+      path.join(root, "ingredients", result.id, "asset.json"),
+      "utf8",
+    ),
   );
   assert.equal(record.attribution.creator_name, null);
   assert.equal(record.attribution.license_name, null);
@@ -72,12 +84,74 @@ test("folder import preserves source bytes and attribution files, registers a li
   assert.equal(assets[0].model, "source/files/prop.obj");
   assert.equal(
     await store.file(result.id, "source/files/prop.obj"),
-    path.join(root, result.id, "source/files/prop.obj"),
+    path.join(root, "ingredients", result.id, "source/files/prop.obj"),
   );
   await assert.rejects(store.file(result.id, "asset.json"), /asset_not_found/);
   await assert.rejects(
     store.file(result.id, "../../catalog.json"),
     /asset_not_found/,
+  );
+});
+
+test("duplicate detection and IDs span ingredients, composites and environments", async (t) => {
+  const root = await fixture(t);
+  const upload = pack({ "prop.obj": triangle });
+  const first = await import_environment_asset(root, upload);
+  const indexFile = path.join(root, "catalog.json");
+  const index = JSON.parse(await readFile(indexFile, "utf8"));
+  for (const tier of ["composites", "environments"]) {
+    await mkdir(path.join(root, tier));
+    const previous = path.dirname(index.assets[0].record);
+    await rename(path.join(root, previous), path.join(root, tier, first.id));
+    index.assets[0].record = `${tier}/${first.id}/asset.json`;
+    await writeFile(indexFile, JSON.stringify(index));
+    assert.deepEqual(await import_environment_asset(root, upload), {
+      id: first.id,
+      duplicate: true,
+    });
+    const store = create_environment_catalog({ directory: root });
+    assert.equal((await store.list()).assets[0].id, first.id);
+    assert.equal(
+      await readFile(
+        await store.file(first.id, "source/files/prop.obj"),
+        "utf8",
+      ),
+      triangle,
+    );
+  }
+  const second = await import_environment_asset(
+    root,
+    pack({ "prop.obj": triangle + "# second source\n" }),
+  );
+  assert.equal(second.id, "test-prop-2");
+  const updated = JSON.parse(await readFile(indexFile, "utf8"));
+  assert.deepEqual(
+    updated.assets.map((asset) => asset.record),
+    ["environments/test-prop/asset.json", "ingredients/test-prop-2/asset.json"],
+  );
+});
+
+test("ingredient publication rejects a symlink or junction outside the library", async (t) => {
+  const root = await fixture(t),
+    outside = await fixture(t);
+  await symlink(
+    outside,
+    path.join(root, "ingredients"),
+    process.platform === "win32" ? "junction" : "dir",
+  );
+  await assert.rejects(
+    import_environment_asset(root, pack({ "prop.obj": triangle })),
+    /unsafe_path/,
+  );
+  assert.deepEqual(await readdir(outside), ["catalog.json"]);
+  assert.deepEqual(
+    JSON.parse(await readFile(path.join(root, "catalog.json"), "utf8")).assets,
+    [],
+  );
+  assert.ok(
+    !(await readdir(root)).some(
+      (name) => name.startsWith(".import-") || name === ".catalog-import.lock",
+    ),
   );
 });
 
@@ -94,7 +168,9 @@ test("ZIP downloads are retained unchanged and expanded resources are available 
   );
   assert.deepEqual(
     new Uint8Array(
-      await readFile(path.join(root, result.id, "source/files/OBJ.zip")),
+      await readFile(
+        path.join(root, "ingredients", result.id, "source/files/OBJ.zip"),
+      ),
     ),
     archive,
   );
@@ -109,8 +185,8 @@ test("ZIP downloads are retained unchanged and expanded resources are available 
 test("duplicate imports select an existing asset and name collisions preserve existing folders", async (t) => {
   const root = await fixture(t),
     upload = pack({ "prop.obj": triangle });
-  await mkdir(path.join(root, "test-prop"));
-  await writeFile(path.join(root, "test-prop/keep.txt"), "keep");
+  await mkdir(path.join(root, "ingredients", "test-prop"), { recursive: true });
+  await writeFile(path.join(root, "ingredients/test-prop/keep.txt"), "keep");
   const first = await import_environment_asset(root, upload);
   assert.equal(first.id, "test-prop-2");
   assert.deepEqual(await import_environment_asset(root, upload), {
@@ -118,7 +194,7 @@ test("duplicate imports select an existing asset and name collisions preserve ex
     duplicate: true,
   });
   assert.equal(
-    await readFile(path.join(root, "test-prop/keep.txt"), "utf8"),
+    await readFile(path.join(root, "ingredients/test-prop/keep.txt"), "utf8"),
     "keep",
   );
   assert.equal(

@@ -125,7 +125,10 @@ test("Asset storage uses the private data HTTP contract for import/edit/resource
   assert.equal(rows.get(id).revision, current.revision);
   assert.equal(
     JSON.parse(
-      await readFile(path.join(directory, id, "asset.json"), "utf8"),
+      await readFile(
+        path.join(directory, "ingredients", id, "asset.json"),
+        "utf8",
+      ),
     ).history.at(-1).description,
     changes.note,
   );
@@ -137,7 +140,10 @@ test("Asset storage uses the private data HTTP contract for import/edit/resource
   unavailable = false;
   assert.equal((await fetch(`${base}/${id}`)).status, 200);
   assert.equal(
-    await readFile(path.join(directory, id, "source/files/grass.obj"), "utf8"),
+    await readFile(
+      path.join(directory, "ingredients", id, "source/files/grass.obj"),
+      "utf8",
+    ),
     triangle,
   );
 });

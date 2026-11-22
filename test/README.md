@@ -6,7 +6,9 @@ The service suite uses temporary libraries and an HTTP data-service contract dou
 no live catalog or database rows are changed.
 The default-path regression reads the registered `models/` library and resolves
 each preview resource, then verifies the external-directory override. Library
-files remain untouched.
+files remain untouched. Import tests check ingredient destinations, nested
+catalog entries, cross-tier duplicate detection/global IDs and containment of
+symlink/junction publication directories.
 
 Run `npm run test:instruments` for catalog, source/index/audio and HTTP coverage.
 `instrument_transfer.test.js` adds isolated inventory/preview coverage: exact file

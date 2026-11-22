@@ -12,7 +12,7 @@ MTL file. `working/build_runtime.py` rebuilds a self-contained GLB using materia
 roughness need visual confirmation; no texture channels are inverted. Materials
 use double-sided rendering and alpha masking for the grass silhouettes.
 
-Run `python servers/fracto-asset-server/models/grass-patch-001/working/build_runtime.py` from the
+Run `python servers/fracto-asset-server/models/ingredients/grass-patch-001/working/build_runtime.py` from the
 repository root to rebuild. No third-party Python packages are needed.
 
 The source units are unspecified. The conversion provisionally treats 100 source

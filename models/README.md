@@ -1,7 +1,38 @@
 # Model asset library
 
-`models/` is the asset service's canonical 3D library. Runtime catalog access,
+`models/` contains all 3D assets used by the app, mostly for the games. It is
+the asset service's canonical 3D library. Runtime catalog access,
 folder imports, Python validation and Compose persistence use this directory.
+
+## Organization
+
+| Folder          | Purpose                                                                      | Main building blocks                                             |
+| --------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `ingredients/`  | The simplest reusable forms and pieces, including the existing grass assets. | Original meshes, materials and textures belonging to each asset. |
+| `composites/`   | Ingredients combined into macro-scale, reusable objects.                     | Ingredients, with other composites where useful.                 |
+| `environments/` | Complete environments for play.                                              | Mostly composites, with ingredients added as needed.             |
+
+```text
+models/
+  catalog.json
+  ingredients/
+    grass-patch-001/
+    grasses-2/
+    grasses3/
+  composites/
+  environments/
+```
+
+Each tier has its own README. Folder imports default to `ingredients/`. The root
+`catalog.json` indexes assets across all three tiers using record paths such as
+`ingredients/grasses-2/asset.json`. IDs are unique across the complete library.
+When assembling composites or environments, record the component asset IDs and
+versions used, arrangement and modifications, and preserve all required creator
+and license attribution. The directory tier describes the asset’s construction
+level; existing record categories and tags retain their subject-matter meaning.
+
+## Catalog and preservation
+
 Asset IDs and record-relative resource paths are independent of the library's
 folder name. When upgrading an installation with a custom
 `FRACTO_ENVIRONMENT_CATALOG_DIR`, keep its existing external store or update that

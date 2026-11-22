@@ -13,6 +13,7 @@ import {
 import path from "node:path";
 import { unzipSync } from "fflate";
 import { convert_blend_asset } from "./blender_conversion.js";
+import { ingredient_directory } from "./library_paths.js";
 import {
   asset_relative_path,
   asset_format,
@@ -104,9 +105,10 @@ export async function import_environment_asset(
     const base = /^[a-z]/.test(slug) ? slug : `asset-${slug}`;
     let id = base,
       suffix = 2;
+    const ingredients = await ingredient_directory(root);
     const exists = async (name) => {
       try {
-        await access(path.join(root, name));
+        await access(path.join(ingredients, name));
         return true;
       } catch (error) {
         if (error.code === "ENOENT") return false;
@@ -118,7 +120,7 @@ export async function import_environment_asset(
       (await exists(id))
     )
       id = `${base}-${suffix++}`;
-    destination = path.join(root, id);
+    destination = path.join(ingredients, id);
     await mkdir(stage);
     for (const entry of entries) {
       const file = path.join(stage, asset_relative_path(entry.path));
@@ -210,9 +212,13 @@ export async function import_environment_asset(
     );
     if ((await readFile(index_path, "utf8")) !== raw_index)
       fail("file_conflict", 409);
+    destination = path.join(
+      await ingredient_directory(root, { create: true }),
+      id,
+    );
     await rename(stage, destination);
     published = true;
-    catalog.assets.push({ id, record: `${id}/asset.json` });
+    catalog.assets.push({ id, record: `ingredients/${id}/asset.json` });
     const temp_index = path.join(root, `.catalog-${randomUUID()}.tmp`);
     try {
       await writeFile(temp_index, JSON.stringify(catalog, null, 2) + "\n", {

@@ -1,4 +1,4 @@
-"""Search and check the local environment catalog without external services."""
+"""Search and check the local 3D model catalog without external services."""
 import argparse
 import hashlib
 import json
