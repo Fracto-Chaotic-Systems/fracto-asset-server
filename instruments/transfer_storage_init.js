@@ -14,7 +14,7 @@ import {
   transfer_hash,
   transfer_error,
   TRANSFER_LIMITS,
-} from "../../../utils/instrument_transfer.js";
+} from "@fracto/sdk/utils/InstrumentTransfer.js";
 
 // Copy only catalog-owned data into a new persistent volume. Code stays in the
 // image so volume contents cannot freeze old JS across an image upgrade.

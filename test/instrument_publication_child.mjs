@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import { InstrumentTransferStore } from "../instruments/transfer_store.js";
-import { transfer_hash } from "../../../utils/instrument_transfer.js";
+import { transfer_hash } from "@fracto/sdk/utils/InstrumentTransfer.js";
 
 const [root, packet_path, crash_phase] = process.argv.slice(2);
 const packet = JSON.parse(fs.readFileSync(packet_path, "utf8"));

@@ -3,7 +3,7 @@ import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { safe_transfer_path, observe_transfer_file } from "./transfer_files.js";
 import { transfer_parent, sync_directory } from "./transfer_staging.js";
-import { transfer_error } from "../../../utils/instrument_transfer.js";
+import { transfer_error } from "@fracto/sdk/utils/InstrumentTransfer.js";
 
 export async function durable_file(
   root,

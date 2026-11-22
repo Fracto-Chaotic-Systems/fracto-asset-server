@@ -6,7 +6,7 @@ import { transfer_parent, sync_directory } from "./transfer_staging.js";
 import {
   TRANSFER_LIMITS,
   transfer_error,
-} from "../../../utils/instrument_transfer.js";
+} from "@fracto/sdk/utils/InstrumentTransfer.js";
 
 // Compare live bytes with the approved preview, not with an arbitrary current file.
 export async function assert_observation(root, file, expected, signal) {

@@ -6,7 +6,7 @@ import { spawnSync } from "node:child_process";
 import {
   transfer_fixture,
   add_transfer_index,
-} from "./instrument_transfer_fixture.js";
+} from "@fracto/sdk/testing/InstrumentFixtures.js";
 import { InstrumentPreviewStore } from "../instruments/transfer_preview.js";
 import {
   build_transfer_package,
@@ -17,7 +17,7 @@ import {
   canonical_manifest,
   json_hash,
   transfer_hash,
-} from "../../../utils/instrument_transfer.js";
+} from "@fracto/sdk/utils/InstrumentTransfer.js";
 
 const owner = transfer_hash("test-owner");
 

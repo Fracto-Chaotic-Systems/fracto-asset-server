@@ -9,7 +9,7 @@ import { createHash } from "node:crypto";
 import express from "express";
 import { create_instrument_router } from "../handlers/instruments.js";
 import { asset_cors } from "../middleware/cors.js";
-import { require_enabled_user_if_configured } from "../../../utils/service_authorization.js";
+import { require_enabled_user_if_configured } from "@fracto/sdk/utils/ServiceAuthorization.js";
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const quiet = { error: () => {} };
 

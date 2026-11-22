@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { Readable } from "node:stream";
-import { transfer_fixture } from "./instrument_transfer_fixture.js";
+import { transfer_fixture } from "@fracto/sdk/testing/InstrumentFixtures.js";
 import { InstrumentTransferStore } from "../instruments/transfer_store.js";
 import { build_transfer_package } from "../instruments/transfer_package.js";
 import {
@@ -14,8 +14,8 @@ import {
 import {
   transfer_hash,
   json_hash,
-} from "../../../utils/instrument_transfer.js";
-import { transfer_deadline } from "../../../utils/instrument_transfer_stream.js";
+} from "@fracto/sdk/utils/InstrumentTransfer.js";
+import { transfer_deadline } from "@fracto/sdk/utils/InstrumentTransferStream.js";
 
 const owner = transfer_hash("stream-owner");
 const space = async () => ({ ready: true, free_bytes: 32 * 1024 ** 3 });

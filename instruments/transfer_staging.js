@@ -6,11 +6,11 @@ import { safe_transfer_path, observe_transfer_file } from "./transfer_files.js";
 import {
   transfer_error,
   TRANSFER_LIMITS,
-} from "../../../utils/instrument_transfer.js";
-import { transfer_deadline } from "../../../utils/instrument_transfer_stream.js";
+} from "@fracto/sdk/utils/InstrumentTransfer.js";
+import { transfer_deadline } from "@fracto/sdk/utils/InstrumentTransferStream.js";
 
-export const staging_path = (manifest_sha256, file) =>
-  `.instrument-transfer/packages/${manifest_sha256}/${file.file_id}.verified`;
+import { staging_path } from "@fracto/sdk/utils/InstrumentTransfer.js";
+export { staging_path } from "@fracto/sdk/utils/InstrumentTransfer.js";
 const stamp = (s) => `${s.dev}:${s.ino}:${s.size}:${s.mtimeNs}:${s.ctimeNs}`;
 export async function observe_staged(root, manifest_sha256, file, signal) {
   return observe_transfer_file(root, staging_path(manifest_sha256, file), {

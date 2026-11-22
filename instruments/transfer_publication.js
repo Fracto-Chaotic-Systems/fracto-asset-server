@@ -25,7 +25,7 @@ import {
   public_transfer_error,
   transfer_error,
   TRANSFER_LIMITS,
-} from "../../../utils/instrument_transfer.js";
+} from "@fracto/sdk/utils/InstrumentTransfer.js";
 
 const UUID = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
 const RETAIN_MS = 7 * 24 * 60 * 60 * 1000;

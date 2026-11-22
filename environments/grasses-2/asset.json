@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "id": "grasses-2",
+  "version": "1.0.0",
+  "name": "Grasses 2",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-22",
+  "import_fingerprint": "7bb18c5e6587f5a8e87610590570d38a87a60c6e17238d566a5f63fdbdd8414d",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/grass.blend",
+      "format": "blend",
+      "sha256": "220333c4df732bc5676183bc49cb6a59760aacedfd7ab706153522ba245c662d",
+      "bytes": 1214284
+    },
+    {
+      "path": "source/files/grass2.jpg",
+      "format": "jpg",
+      "sha256": "dc45a3084d3cd488460ca7b654a6011ea4f68a579bf6c675875a5d805de42307",
+      "bytes": 1395642
+    }
+  ],
+  "working_files": [
+    "source/files/grass.blend",
+    "working/blender-export.json"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "runtime/model.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/grass.blend",
+      "source/files/grass2.jpg",
+      "runtime/model.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-22",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-22",
+      "action": "derive-runtime",
+      "description": "Exported the Blender source to a separate GLB for Inventory. Evaluated modifiers for the static preview; original .blend and texture files are unchanged. Review procedural materials and scale. Particle preview density reduced from 5318 evaluated instances to 119 for interactive rendering. The original Blender particle systems are unchanged. Relinked one missing texture to the sole supplied image, grass2.jpg; review the material."
+    }
+  ],
+  "conversion": {
+    "source": "source/files/grass.blend",
+    "path": "runtime/model.glb",
+    "format": "glb",
+    "report_file": "working/blender-export.json",
+    "report": {
+      "blender_version": "3.4.1",
+      "warnings": [
+        "Particle preview density reduced from 5318 evaluated instances to 119 for interactive rendering. The original Blender particle systems are unchanged.",
+        "Relinked one missing texture to the sole supplied image, grass2.jpg; review the material."
+      ],
+      "particles": {
+        "configured_particles": 20000,
+        "evaluated_instances": 5318,
+        "preview_instances": 119,
+        "triangle_budget": 500000
+      },
+      "mesh_objects": 120,
+      "materials": 3,
+      "source_unit_scale": 1,
+      "source_unit_system": "METRIC",
+      "export": "glb",
+      "original_saved": false
+    }
+  }
+}

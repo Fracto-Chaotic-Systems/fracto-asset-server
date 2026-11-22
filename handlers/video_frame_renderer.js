@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { createCanvas } from "canvas";
-import { internal_service_headers } from "../../../utils/service_authorization.js";
+import { internal_service_headers } from "@fracto/sdk/utils/ServiceAuthorization.js";
 
 const FRACTO_DATA_PORT = Number(process.env.FRACTO_DATA_PORT || 3002);
 const FRACTO_TILES_PORT = Number(process.env.FRACTO_TILES_PORT || 3004);

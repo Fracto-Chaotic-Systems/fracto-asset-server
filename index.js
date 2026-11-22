@@ -2,7 +2,7 @@ import express from 'express'
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
-import { require_enabled_user_if_configured } from "../../utils/service_authorization.js";
+import { require_enabled_user_if_configured } from "@fracto/sdk/utils/ServiceAuthorization.js";
 
 const SEPARATOR = path.sep;
 
@@ -24,6 +24,7 @@ import {
 } from "./handlers/render_video.js";
 
 import { asset_cors } from "./middleware/cors.js";
+import { create_environment_catalog_router } from "./environment/routes.js";
 import { create_instrument_router } from "./handlers/instruments.js";
 import { create_instrument_transfer_router } from "./handlers/instrument_transfer.js";
 import { initialize_instrument_storage } from "./instruments/transfer_storage_init.js";
@@ -32,6 +33,8 @@ await initialize_instrument_storage();
 const app = express();
 
 app.use(asset_cors);
+// Owns folder imports, Blender conversion, catalog files and preview resources.
+app.use('/environment-catalog', create_environment_catalog_router());
 
 // Private inventory/preview authenticates before its bounded body parser.
 app.use('/internal/instrument-transfer', create_instrument_transfer_router());

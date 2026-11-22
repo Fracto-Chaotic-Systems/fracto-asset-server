@@ -5,13 +5,13 @@ import path from "node:path";
 import { Readable } from "node:stream";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { publication_fixture } from "./instrument_transfer_fixture.js";
+import { publication_fixture } from "@fracto/sdk/testing/InstrumentFixtures.js";
 import { build_transfer_package } from "../instruments/transfer_package.js";
 import { InstrumentTransferStore } from "../instruments/transfer_store.js";
 import { initialize_instrument_storage } from "../instruments/transfer_storage_init.js";
 import { verify_library } from "../instruments/library.js";
 import { create_instrument_library } from "../instruments/http-library.js";
-import { transfer_hash } from "../../../utils/instrument_transfer.js";
+import { transfer_hash } from "@fracto/sdk/utils/InstrumentTransfer.js";
 import { SUPPORT_FILES } from "../instruments/transfer_package.js";
 import { prepared_kit } from "./drum_assets_fixture.js";
 

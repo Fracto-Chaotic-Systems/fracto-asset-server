@@ -7,7 +7,7 @@ import {
   is_hash,
   TRANSFER_LIMITS,
   transfer_error,
-} from "../../../utils/instrument_transfer.js";
+} from "@fracto/sdk/utils/InstrumentTransfer.js";
 
 export const SUPPORT_FILES = Object.freeze({
   legacy: [],

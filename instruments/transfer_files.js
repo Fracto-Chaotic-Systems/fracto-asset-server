@@ -2,7 +2,7 @@ import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { createHash } from "node:crypto";
-import { transfer_error } from "../../../utils/instrument_transfer.js";
+import { transfer_error } from "@fracto/sdk/utils/InstrumentTransfer.js";
 
 const stamp = (s) => `${s.dev}:${s.ino}:${s.size}:${s.mtimeNs}:${s.ctimeNs}`;
 // Preview never creates directories/files, including for an empty receiver.

@@ -1,0 +1,19 @@
+{
+  "blender_version": "3.4.1",
+  "warnings": [
+    "Particle preview density reduced from 5318 evaluated instances to 119 for interactive rendering. The original Blender particle systems are unchanged.",
+    "Relinked one missing texture to the sole supplied image, grass2.jpg; review the material."
+  ],
+  "particles": {
+    "configured_particles": 20000,
+    "evaluated_instances": 5318,
+    "preview_instances": 119,
+    "triangle_budget": 500000
+  },
+  "mesh_objects": 120,
+  "materials": 3,
+  "source_unit_scale": 1.0,
+  "source_unit_system": "METRIC",
+  "export": "glb",
+  "original_saved": false
+}

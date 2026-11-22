@@ -1,5 +1,10 @@
 # Asset service tests
 
+`npm run test:environment` covers folder/ZIP/Blender preservation, catalog file
+saves, revision conflicts and the asset-to-data HTTP registration contract.
+The service suite uses temporary libraries and an HTTP data-service contract double;
+no live catalog or database rows are changed.
+
 Run `npm run test:instruments` for catalog, source/index/audio and HTTP coverage.
 `instrument_transfer.test.js` adds isolated inventory/preview coverage: exact file
 hashes, missing destinations, catalog/file conflicts, path containment, source

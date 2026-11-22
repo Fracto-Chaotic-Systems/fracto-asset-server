@@ -1,5 +1,5 @@
 import { Worker } from "node:worker_threads";
-import { transfer_error } from "../../../utils/instrument_transfer.js";
+import { transfer_error } from "@fracto/sdk/utils/InstrumentTransfer.js";
 
 // Existing full PCM/index validators run off the HTTP event loop, one file at a
 // time. The worker never publishes files or accesses upstream/network resources.

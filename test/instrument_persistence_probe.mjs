@@ -2,11 +2,11 @@
 import fs from "node:fs/promises";
 import { Readable } from "node:stream";
 import assert from "node:assert/strict";
-import { publication_fixture } from "./instrument_transfer_fixture.js";
+import { publication_fixture } from "@fracto/sdk/testing/InstrumentFixtures.js";
 import { build_transfer_package } from "../instruments/transfer_package.js";
 import { InstrumentTransferStore } from "../instruments/transfer_store.js";
 import { verify_library } from "../instruments/library.js";
-import { transfer_hash } from "../../../utils/instrument_transfer.js";
+import { transfer_hash } from "@fracto/sdk/utils/InstrumentTransfer.js";
 
 if (
   process.platform !== "linux" ||

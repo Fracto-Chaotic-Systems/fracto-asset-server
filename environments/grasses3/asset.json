@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "id": "grasses3",
+  "version": "1.0.0",
+  "name": "grasses3",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-22",
+  "import_fingerprint": "e307dc4538b732080f1663cd38a563986b0e7bf51cb88c8e8d8f00e349935094",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/Grass_blend.zip",
+      "format": "zip",
+      "sha256": "a3e8f7682d6e722d1b180e997a44376419eb2094f8bad00be2dfa3e9ad15ff16",
+      "bytes": 398735
+    },
+    {
+      "path": "source/files/Grass_fbx.zip",
+      "format": "zip",
+      "sha256": "e89e9758ee164c050453848a025350c8a4452761ea53c64b74a2da4760961e36",
+      "bytes": 107920
+    },
+    {
+      "path": "source/files/Grass_uasset.zip",
+      "format": "zip",
+      "sha256": "d73fbdd0a9c989ea8e07fc4b1269b5c87e1b6e8debeedbacd7ba2ddfa1f3521a",
+      "bytes": 584324
+    }
+  ],
+  "working_files": [
+    "source/extracted/Grass_fbx/Grass_fbx/Grass1.fbx"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/extracted/Grass_fbx/Grass_fbx/Grass1.fbx",
+    "format": "fbx",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/Grass_blend.zip",
+      "source/extracted/Grass_blend/Grass_blend/2vudf75.png",
+      "source/extracted/Grass_blend/Grass_blend/Grass1.blend",
+      "source/extracted/Grass_blend/Grass_blend/Grass1.blend1",
+      "source/extracted/Grass_blend/Grass_blend/Grass2.blend",
+      "source/extracted/Grass_blend/Grass_blend/Grass2.blend1",
+      "source/files/Grass_fbx.zip",
+      "source/extracted/Grass_fbx/Grass_fbx/2vudf75.png",
+      "source/extracted/Grass_fbx/Grass_fbx/Grass1.fbx",
+      "source/extracted/Grass_fbx/Grass_fbx/Grass2.fbx",
+      "source/files/Grass_uasset.zip",
+      "source/extracted/Grass_uasset/Grass_uasset/2vudf75.png",
+      "source/extracted/Grass_uasset/Grass_uasset/2vudf75.uasset",
+      "source/extracted/Grass_uasset/Grass_uasset/Grass1.uasset",
+      "source/extracted/Grass_uasset/Grass_uasset/Grass2.uasset",
+      "source/extracted/Grass_uasset/Grass_uasset/Herbe_M.uasset"
+    ],
+    "units": "unverified",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-22",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP resources; registered a preview model. Attribution requires review."
+    }
+  ]
+}

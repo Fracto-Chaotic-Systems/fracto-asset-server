@@ -9,3 +9,6 @@ instruments/fluidr3-gm/upstream/* -text
 
 # Preserve pinned upstream whitespace as well as original bytes.
 instruments/fluidr3-percussion/upstream/* -text -whitespace
+
+# Environment originals retain exact download bytes and source checksums.
+environments/**/source/** -text -diff

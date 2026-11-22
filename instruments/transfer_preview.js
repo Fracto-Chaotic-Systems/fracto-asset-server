@@ -13,7 +13,7 @@ import {
   json_hash,
   transfer_error,
   public_transfer_error,
-} from "../../../utils/instrument_transfer.js";
+} from "@fracto/sdk/utils/InstrumentTransfer.js";
 
 export class InstrumentPreviewStore {
   constructor({

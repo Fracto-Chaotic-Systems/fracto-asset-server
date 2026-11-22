@@ -1,5 +1,5 @@
 const FRACTO_DATA_PORT = Number(process.env.FRACTO_DATA_PORT || 3002);
-import { internal_service_headers } from "../../../utils/service_authorization.js";
+import { internal_service_headers } from "@fracto/sdk/utils/ServiceAuthorization.js";
 
 const data_host = process.env.FRACTO_DATA_HOST || "127.0.0.1";
 const data_origin = `http://${data_host}:${FRACTO_DATA_PORT}`;

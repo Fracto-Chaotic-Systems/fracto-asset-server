@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "id": "grass-patch-001",
+  "version": "1.0.0",
+  "name": "Crossed-plane grass patch",
+  "description": "Four crossed textured grass planes; original asset named Grass_Plane_001.",
+  "category": "vegetation/grass",
+  "tags": [
+    "grass",
+    "vegetation",
+    "foliage",
+    "ground-cover",
+    "crossed-planes"
+  ],
+  "parent_id": null,
+  "imported_on": "2026-11-22",
+  "original_location": "D:\\mediaplex\\models\\grasses",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "No creator, license, or readme supplied in any of the four archives."
+  },
+  "sources": [
+    {
+      "path": "source/3DS.zip",
+      "format": "3ds",
+      "sha256": "7e705a655168a3333b094b5f08cbb7cc9d2bac0a9499c60c3842d10a1523f6bc",
+      "bytes": 681
+    },
+    {
+      "path": "source/FBX.zip",
+      "format": "fbx",
+      "sha256": "f9a5b73c764b6f718483e4867df41a79f2508a401bedaf16707eff878850ffb4",
+      "bytes": 12554225
+    },
+    {
+      "path": "source/OBJ.zip",
+      "format": "obj",
+      "sha256": "d409ea1666123656f2f0c9b4d5bfeffdda01094b7c891230d8bf07b9c39a8eb2",
+      "bytes": 617
+    },
+    {
+      "path": "source/Texture.zip",
+      "format": "texture",
+      "sha256": "58c2e78ef70fc185ca8289933fba9c8626ab498e783a482efcb8990f0bf66f4d",
+      "bytes": 6271311
+    }
+  ],
+  "working_files": [
+    "working/build_runtime.py",
+    "source/extracted/FBX/Grass_Plane_001.fbx",
+    "source/extracted/OBJ/Grass_Plane_001.obj"
+  ],
+  "preview": {
+    "path": "preview.png",
+    "kind": "source-base-color-texture",
+    "notes": "First supplied grass texture; not a 3D render."
+  },
+  "runtime": {
+    "path": "runtime/grass-patch-001.glb",
+    "format": "glb",
+    "status": "candidate-awaiting-in-game-review",
+    "triangles": 8,
+    "materials": 4,
+    "texture_count": 12,
+    "collision": "none",
+    "units": "meters",
+    "dimensions": [
+      1,
+      1,
+      1
+    ],
+    "up_axis": "+Y",
+    "origin": "ground-center",
+    "source_scale": 0.01,
+    "scale_verified": false,
+    "texture_roles_verified": false,
+    "notes": "Source units unknown; provisional 100 units per meter. D/N/R roles inferred. Check alpha cutoff, normal convention, roughness, scale, and lighting in game."
+  },
+  "history": [
+    {
+      "date": "2026-11-22",
+      "action": "import",
+      "description": "Preserved original ZIPs and extracted files; recorded missing attribution."
+    },
+    {
+      "date": "2026-11-22",
+      "action": "derive-runtime",
+      "description": "Triangulated OBJ, assigned numbered D/N/R maps, embedded original PNGs, enabled double-sided alpha masking, applied provisional 0.01 scale. Originals unchanged."
+    },
+    {
+      "date": "2026-11-22",
+      "action": "catalog-note",
+      "description": "Enabled direct catalog saving from Games inventory; preview controls leave source models unchanged."
+    }
+  ]
+}

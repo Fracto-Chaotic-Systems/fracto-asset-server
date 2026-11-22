@@ -1,5 +1,5 @@
 const FRACTO_DATA_PORT = Number(process.env.FRACTO_DATA_PORT || 3002);
-import { internal_service_headers } from "../../../utils/service_authorization.js";
+import { internal_service_headers } from "@fracto/sdk/utils/ServiceAuthorization.js";
 import {
   cancel_video_frame_render,
   start_video_frame_render,
