@@ -12,6 +12,8 @@ import {
   CATALOG_FIELDS,
   catalog_view,
   validate_catalog_edit,
+  validate_model_category,
+  model_category_from_path,
 } from "@fracto/sdk/FractoEnvironmentCatalog.js";
 export { CATALOG_FIELDS } from "@fracto/sdk/FractoEnvironmentCatalog.js";
 export const environment_catalog_directory = () =>
@@ -53,6 +55,10 @@ export function create_environment_catalog({
     const raw = await readFile(file, "utf8"),
       record = JSON.parse(raw);
     if (record.id !== id || record.schema_version !== 1) fail("invalid_record");
+    record.model_category = validate_model_category(
+      record.model_category ??
+        model_category_from_path(path.relative(directory, file)),
+    );
     if (registry && sync) await registry.sync(record, revision_of(raw));
     return { file, raw, record };
   };
@@ -61,7 +67,8 @@ export function create_environment_catalog({
     revision: revision_of(raw),
   });
   return {
-    async list() {
+    async list(category) {
+      if (category !== undefined) validate_model_category(category);
       const root = await realpath(directory);
       const catalog = JSON.parse(
         await readFile(
@@ -69,20 +76,33 @@ export function create_environment_catalog({
           "utf8",
         ),
       );
+      const registered = await Promise.all(
+        catalog.assets.map(async ({ id }) => {
+          const { record } = await read(id);
+          return {
+            id,
+            name: record.name,
+            category: record.model_category,
+            model: record.runtime?.path || null,
+            format: record.runtime?.format || null,
+            resources:
+              record.runtime?.files || [record.runtime?.path].filter(Boolean),
+          };
+        }),
+      );
+      // Membership, names and category filtering come from the one database table.
+      // Filesystem records supply only the registered preview resource allowlist.
+      const assets = registry
+        ? await registry.list(category)
+        : registered.filter(
+            (asset) => !category || asset.category === category,
+          );
       return {
-        assets: await Promise.all(
-          catalog.assets.map(async ({ id }) => {
-            const { record } = await read(id);
-            return {
-              id,
-              name: record.name,
-              model: record.runtime?.path || null,
-              format: record.runtime?.format || null,
-              resources:
-                record.runtime?.files || [record.runtime?.path].filter(Boolean),
-            };
-          }),
-        ),
+        assets: assets.map((asset) => ({
+          ...asset,
+          resources:
+            registered.find((entry) => entry.id === asset.id)?.resources || [],
+        })),
       };
     },
     async file(id, relative) {

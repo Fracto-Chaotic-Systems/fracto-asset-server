@@ -6,7 +6,7 @@ catalog edits and registered preview delivery at `/environment-catalog`.
 and sanitized errors. `catalog.js` owns revision checks, allowlisted attribution
 edits, atomic JSON publication, per-asset edit queues and resource containment.
 `import.js` preserves originals/checksums, validates ZIP expansion using the SDK,
-serializes imports and publishes staged folders under `models/ingredients/`.
+serializes imports and publishes staged folders under the selected model tier.
 `library_paths.js` keeps that publication directory within the canonical library,
 including when local symlinks/junctions are present. `blender_conversion.js` runs
 Blender with auto-execution disabled and bounded time/output, producing a separate
@@ -44,3 +44,16 @@ The API routes and revision/error semantics are unchanged for browsers.
 Shared contracts, ZIP validation and authorization helpers are imported through
 `@fracto/sdk` package subpaths. There are no relative root or other-service imports
 in these modules. The data service owns the registry's documented HTTP contract.
+
+Model lists now use database membership and names via the private paginated GET
+registry contract. `/environment-catalog?category=material|component|area` filters
+the shared table; omitting category lists all entries for compatibility. Before
+querying, portable records reconcile their registry rows. File records supply
+preview resource allowlists, not list membership. Missing DB access fails with
+503 rather than returning the filesystem list. Standalone stores without a
+registry are retained for offline maintenance/tests.
+
+Imports accept manifest `model_category`, default material for older clients.
+They publish under ingredients/composites/environments respectively, with global
+IDs but category-specific duplicate detection. Legacy records infer construction
+category from their indexed folder; existing grass imports are materials.

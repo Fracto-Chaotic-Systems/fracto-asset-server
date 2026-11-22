@@ -102,6 +102,17 @@ const edit = (view, extra = {}) => ({
 test("database registry follows listing and edits with the saved revision", async (t) => {
   const rows = new Map();
   const registry = {
+    async list(category) {
+      return [...rows.values()]
+        .filter(({ record }) => !category || record.model_category === category)
+        .map(({ record }) => ({
+          id: record.id,
+          name: record.name,
+          category: record.model_category,
+          model: record.runtime.path,
+          format: record.runtime.format,
+        }));
+    },
     async sync(record, revision) {
       rows.set(record.id, { record: structuredClone(record), revision });
     },
@@ -293,4 +304,45 @@ test("HTTP endpoint enforces origin, authentication, bounded bodies and safe err
   });
   assert.equal(failure.status, 400);
   assert.deepEqual(await failure.json(), { error: "invalid_record" });
+});
+
+test("category lists use database membership and names instead of repeating filesystem materials", async (t) => {
+  const { store, record } = await fixture(t, {
+    async sync(value) {
+      assert.equal(value.model_category, "material");
+    },
+    async list(category) {
+      return category === "component"
+        ? [
+            {
+              id: "database-component",
+              name: "Database component",
+              category,
+              model: null,
+              format: null,
+            },
+          ]
+        : category === "area"
+          ? []
+          : [
+              {
+                id: "grass-patch-001",
+                name: "Database grass name",
+                category: "material",
+                model: "runtime/grass.glb",
+                format: "glb",
+              },
+            ];
+    },
+  });
+  assert.equal(
+    (await store.list("material")).assets[0].name,
+    "Database grass name",
+  );
+  assert.deepEqual(
+    (await store.list("component")).assets.map((a) => a.id),
+    ["database-component"],
+  );
+  assert.deepEqual((await store.list("area")).assets, []);
+  await assert.rejects(store.list("unknown"), /invalid_record/);
 });

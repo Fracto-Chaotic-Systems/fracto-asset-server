@@ -60,6 +60,27 @@ test("Asset storage uses the private data HTTP contract for import/edit/resource
     rows.set(record.id, { record, revision });
     res.json({ id: record.id, revision });
   });
+  data.get("/internal/environment-assets", (req, res) => {
+    assert.equal(req.get("X-Fracto-Service-Token"), "boundary-test-token");
+    if (unavailable)
+      return res.status(503).json({ error: "catalog_unavailable" });
+    res.json({
+      assets: [...rows.values()]
+        .map(({ record }) => ({
+          id: record.id,
+          name: record.name,
+          category: record.model_category,
+          model: record.runtime.path,
+          format: record.runtime.format,
+        }))
+        .filter(
+          (asset) =>
+            !req.query.category || asset.category === req.query.category,
+        )
+        .sort((a, b) => a.id.localeCompare(b.id)),
+      next_cursor: null,
+    });
+  });
   process.env.FRACTO_DATA_PORT = String(await start(data));
   const store = create_environment_catalog({
     directory,
@@ -146,4 +167,41 @@ test("Asset storage uses the private data HTTP contract for import/edit/resource
     ),
     triangle,
   );
+});
+
+test("database list client follows category pages and rejects non-progressing cursors", async () => {
+  const requests = [];
+  const row = (id) => ({
+    id,
+    name: id,
+    category: "material",
+    model: null,
+    format: null,
+  });
+  const client = create_environment_asset_registry({
+    request: async (url) => {
+      requests.push(new URL(url));
+      return new Response(
+        JSON.stringify(
+          requests.length === 1
+            ? { assets: [row("a")], next_cursor: "a" }
+            : { assets: [row("b")], next_cursor: null },
+        ),
+        { status: 200 },
+      );
+    },
+  });
+  assert.deepEqual(
+    (await client.list("material")).map((a) => a.id),
+    ["a", "b"],
+  );
+  assert.equal(requests[1].searchParams.get("category"), "material");
+  assert.equal(requests[1].searchParams.get("after"), "a");
+  const stalled = create_environment_asset_registry({
+    request: async () =>
+      new Response(JSON.stringify({ assets: [], next_cursor: "a" }), {
+        status: 200,
+      }),
+  });
+  await assert.rejects(stalled.list("material"), /catalog_unavailable/);
 });

@@ -56,7 +56,7 @@ export function create_environment_catalog_router({
   };
   router.get(
     "/",
-    respond(() => store.list()),
+    respond((req) => store.list(req.query.category)),
   );
   router.post(
     "/import",

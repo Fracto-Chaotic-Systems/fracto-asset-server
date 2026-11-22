@@ -13,7 +13,12 @@ import {
 import path from "node:path";
 import { unzipSync } from "fflate";
 import { convert_blend_asset } from "./blender_conversion.js";
-import { ingredient_directory } from "./library_paths.js";
+import { model_directory } from "./library_paths.js";
+import {
+  MODEL_CATEGORY_DIRECTORIES,
+  validate_model_category,
+  model_category_from_path,
+} from "@fracto/sdk/FractoEnvironmentCatalog.js";
 import {
   asset_relative_path,
   asset_format,
@@ -47,6 +52,7 @@ export async function import_environment_asset(
   const manifest = JSON.parse(
     new TextDecoder().decode(envelope["manifest.json"]),
   );
+  const category = validate_model_category(manifest.model_category);
   if (
     typeof manifest.name !== "string" ||
     !manifest.name.trim() ||
@@ -90,7 +96,10 @@ export async function import_environment_asset(
       if (path.relative(root, file).startsWith("..")) fail("unsafe_path");
       const record = JSON.parse(await readFile(file, "utf8"));
       if (
-        (record.import_fingerprint || fingerprint(record.sources)) === signature
+        (record.import_fingerprint || fingerprint(record.sources)) ===
+          signature &&
+        (record.model_category ?? model_category_from_path(entry.record)) ===
+          category
       )
         return { id: entry.id, duplicate: true };
     }
@@ -105,7 +114,7 @@ export async function import_environment_asset(
     const base = /^[a-z]/.test(slug) ? slug : `asset-${slug}`;
     let id = base,
       suffix = 2;
-    const ingredients = await ingredient_directory(root);
+    const ingredients = await model_directory(root, category);
     const exists = async (name) => {
       try {
         await access(path.join(ingredients, name));
@@ -142,6 +151,7 @@ export async function import_environment_asset(
       name: manifest.name.trim(),
       description: "Imported environment asset.",
       category: "environment",
+      model_category: category,
       tags: [],
       parent_id: null,
       imported_on: day,
@@ -213,12 +223,15 @@ export async function import_environment_asset(
     if ((await readFile(index_path, "utf8")) !== raw_index)
       fail("file_conflict", 409);
     destination = path.join(
-      await ingredient_directory(root, { create: true }),
+      await model_directory(root, category, { create: true }),
       id,
     );
     await rename(stage, destination);
     published = true;
-    catalog.assets.push({ id, record: `ingredients/${id}/asset.json` });
+    catalog.assets.push({
+      id,
+      record: `${MODEL_CATEGORY_DIRECTORIES[category]}/${id}/asset.json`,
+    });
     const temp_index = path.join(root, `.catalog-${randomUUID()}.tmp`);
     try {
       await writeFile(temp_index, JSON.stringify(catalog, null, 2) + "\n", {

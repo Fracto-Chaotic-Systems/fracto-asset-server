@@ -41,7 +41,7 @@ configured path if the directory itself was moved.
 MySQL table `environment_assets` tracks each registered asset and its attribution,
 model references, original source checksums and modification history. Inventory
 metadata reads, imports and edits synchronize it automatically. JSON remains the
-portable editable authority; binaries remain here on disk. Apply migration 019,
+portable editable authority; binaries remain here on disk. Apply migrations 019 and 020,
 then run `node servers/fracto-asset-server/scripts/register_environment_assets.js` to register an existing
 library. Re-running this command reconciles rows without changing files. Database
 failures are reported by Inventory; preserved file saves can be reconciled by the

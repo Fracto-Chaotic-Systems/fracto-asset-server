@@ -300,3 +300,34 @@ test("folder upload endpoint registers files and returns a list that survives re
     1,
   );
 });
+
+test("imports preserve selected categories and publish each tier independently", async (t) => {
+  const root = await fixture(t),
+    ids = [];
+  for (const [category, folder] of [
+    ["material", "ingredients"],
+    ["component", "composites"],
+    ["area", "environments"],
+  ]) {
+    const upload = zipSync({
+      "manifest.json": strToU8(
+        JSON.stringify({
+          name: "Same model",
+          model: "source/files/prop.obj",
+          model_category: category,
+        }),
+      ),
+      "files/prop.obj": strToU8(triangle),
+    });
+    const result = await import_environment_asset(root, upload);
+    ids.push(result.id);
+    const record = JSON.parse(
+      await readFile(path.join(root, folder, result.id, "asset.json"), "utf8"),
+    );
+    assert.equal(record.model_category, category);
+    assert.equal((await import_environment_asset(root, upload)).id, result.id);
+    const store = create_environment_catalog({ directory: root });
+    assert.equal((await store.list(category)).assets.length, 1);
+  }
+  assert.equal(new Set(ids).size, 3);
+});
