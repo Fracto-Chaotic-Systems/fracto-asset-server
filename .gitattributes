@@ -11,4 +11,4 @@ instruments/fluidr3-gm/upstream/* -text
 instruments/fluidr3-percussion/upstream/* -text -whitespace
 
 # Environment originals retain exact download bytes and source checksums.
-environments/**/source/** -text -diff
+models/**/source/** -text -diff

@@ -5,7 +5,7 @@ import json
 import os
 from pathlib import Path
 
-ROOT = Path(os.environ.get('FRACTO_ENVIRONMENT_CATALOG_DIR', Path(__file__).resolve().parents[1] / 'environments'))
+ROOT = Path(os.environ.get('FRACTO_ENVIRONMENT_CATALOG_DIR', Path(__file__).resolve().parents[1] / 'models'))
 
 
 def local_path(base, relative):

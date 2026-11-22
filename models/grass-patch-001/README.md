@@ -12,7 +12,7 @@ MTL file. `working/build_runtime.py` rebuilds a self-contained GLB using materia
 roughness need visual confirmation; no texture channels are inverted. Materials
 use double-sided rendering and alpha masking for the grass silhouettes.
 
-Run `python assets/environments/grass-patch-001/working/build_runtime.py` from the
+Run `python servers/fracto-asset-server/models/grass-patch-001/working/build_runtime.py` from the
 repository root to rebuild. No third-party Python packages are needed.
 
 The source units are unspecified. The conversion provisionally treats 100 source
@@ -21,7 +21,7 @@ on x/z. Geometry uses eight triangles. `asset.json` records these assumptions.
 The original FBX is also retained for future editing in a modeling tool.
 `preview.png` is the first supplied base-color texture, not a rendered model.
 
-Games → inventory now provides a rendered GLB preview with independent 1 m
+Games → assets now provides a rendered GLB preview with independent 1 m
 references, a 10 cm grid, scale and lighting controls, texture-map toggles, and
 wireframe inspection. The GLB has loaded and rendered successfully there; scale
 and material interpretation remain provisional. Preview settings do not edit

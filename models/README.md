@@ -1,4 +1,11 @@
-# Environment asset library
+# Model asset library
+
+`models/` is the asset service's canonical 3D library. Runtime catalog access,
+folder imports, Python validation and Compose persistence use this directory.
+Asset IDs and record-relative resource paths are independent of the library's
+folder name. When upgrading an installation with a custom
+`FRACTO_ENVIRONMENT_CATALOG_DIR`, keep its existing external store or update that
+configured path if the directory itself was moved.
 
 MySQL table `environment_assets` tracks each registered asset and its attribution,
 model references, original source checksums and modification history. Inventory

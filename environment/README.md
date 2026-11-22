@@ -17,9 +17,10 @@ supervisor); an unauthenticated lab permits loopback service traffic only.
 `FRACTO_DATA_PORT` selects the loopback data service, default 3002. Registration
 has a 15-second timeout. No provenance or credentials are logged.
 
-The default library is `../environments`; `FRACTO_ENVIRONMENT_CATALOG_DIR` overrides
-it for existing installations. The workspace's former root `assets/environments`
-library has been relocated without changing model or metadata contents. Existing
+The default library is `../models`; `FRACTO_ENVIRONMENT_CATALOG_DIR` overrides
+it for existing installations. The service-owned library is named `models/`;
+model and metadata contents are preserved when moving an existing library to
+this location. Existing
 deployments with external storage should keep the override pointing to that store;
 do not initialize a second empty library. Compose mounts the service-owned library.
 

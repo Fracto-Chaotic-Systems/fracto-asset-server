@@ -14,8 +14,42 @@ import express from "express";
 import {
   create_environment_catalog,
   CATALOG_FIELDS,
+  environment_catalog_directory,
 } from "../environment/catalog.js";
 import { create_environment_catalog_router } from "../environment/routes.js";
+
+test("the default models library is readable and an external library override is honored", async (t) => {
+  const previous = process.env.FRACTO_ENVIRONMENT_CATALOG_DIR;
+  t.after(() => {
+    if (previous === undefined)
+      delete process.env.FRACTO_ENVIRONMENT_CATALOG_DIR;
+    else process.env.FRACTO_ENVIRONMENT_CATALOG_DIR = previous;
+  });
+  delete process.env.FRACTO_ENVIRONMENT_CATALOG_DIR;
+  const expected = path.resolve(import.meta.dirname, "../models");
+  assert.equal(environment_catalog_directory(), expected);
+  const store = create_environment_catalog();
+  const { assets } = await store.list();
+  const index = JSON.parse(
+    await readFile(path.join(expected, "catalog.json"), "utf8"),
+  );
+  assert.deepEqual(
+    assets.map((asset) => asset.id),
+    index.assets.map((asset) => asset.id),
+  );
+  for (const asset of assets) {
+    const resource = await store.file(asset.id, asset.model);
+    assert.ok(resource);
+  }
+  process.env.FRACTO_ENVIRONMENT_CATALOG_DIR = path.join(
+    tmpdir(),
+    "external-model-library",
+  );
+  assert.equal(
+    environment_catalog_directory(),
+    process.env.FRACTO_ENVIRONMENT_CATALOG_DIR,
+  );
+});
 
 async function fixture(t, registry = null) {
   const directory = await mkdtemp(path.join(tmpdir(), "fracto-env-catalog-"));
@@ -26,7 +60,7 @@ async function fixture(t, registry = null) {
   });
   const record = JSON.parse(
     await readFile(
-      new URL("../environments/grass-patch-001/asset.json", import.meta.url),
+      new URL("../models/grass-patch-001/asset.json", import.meta.url),
       "utf8",
     ),
   );

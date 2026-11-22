@@ -4,7 +4,7 @@ Environment model files, imports, Blender conversion, provenance catalogs and
 preview delivery are owned here. See [environment/README.md](environment/README.md)
 for the `/environment-catalog` API and storage/recovery contract. SQL and the
 database registry are owned by the data service and accessed through its internal
-API. The canonical library is `environments/`, with a configurable external root.
+API. The canonical library is `models/`, with a configurable external root.
 Run `npm run test:environment` for isolated import/catalog and cross-service tests.
 
 Express service for rendering Fracto tile data into JPEG images, embedding metadata, storing local image files, and publishing rendered assets to S3. It listens on port 3003 and depends on the root tile service and shared SDK.

@@ -16,7 +16,7 @@ import {
 export { CATALOG_FIELDS } from "@fracto/sdk/FractoEnvironmentCatalog.js";
 export const environment_catalog_directory = () =>
   process.env.FRACTO_ENVIRONMENT_CATALOG_DIR ||
-  path.resolve(import.meta.dirname, "../environments");
+  path.resolve(import.meta.dirname, "../models");
 const revision_of = (raw) => createHash("sha256").update(raw).digest("hex");
 const fail = (code, status = 400) => {
   throw Object.assign(new Error(code), { status });
