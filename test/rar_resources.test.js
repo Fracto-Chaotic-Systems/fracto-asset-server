@@ -1,3 +1,8 @@
+import express from "express";
+import { inspect_environment_import } from "../environment/prepare_import.js";
+import { create_environment_catalog_router } from "../environment/routes.js";
+import { readdir } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { mkdtemp, readFile, rm } from "node:fs/promises";
@@ -169,4 +174,139 @@ test("import extracts RAR resources and repair upgrades old records idempotently
   );
   assert.ok(live.runtime.files.includes("source/extracted/textures/leaf.png"));
   assert.equal(live.sources.length, 2);
+});
+
+test("RAR-only inspection discovers models without publication and importing preserves original archive checksums", async (t) => {
+  const directory = await mkdtemp(path.join(tmpdir(), "fracto-rar-fixture-"));
+  t.after(async () => {
+    assert.equal(path.dirname(directory), path.resolve(tmpdir()));
+    assert.ok(path.basename(directory).startsWith("fracto-rar-fixture-"));
+    await rm(directory, { recursive: true, force: true });
+  });
+  await writeFile(
+    path.join(directory, "catalog.json"),
+    JSON.stringify({ assets: [] }),
+  );
+  const archive = rar({
+    "Bush/model.obj": "v 0 0 0\nv 1 0 0\nv 0 1 0\nf 1 2 3\n",
+    "Bush/leaf.png": "image-data",
+    "license.txt": "Creator credit retained",
+  });
+  const upload = (manifest) =>
+    zipSync({
+      "manifest.json": strToU8(JSON.stringify(manifest)),
+      "files/bush.rar": archive,
+    });
+  const inspected = await inspect_environment_import(
+    upload({ model_category: "material" }),
+  );
+  assert.deepEqual(inspected, {
+    models: ["source/extracted/bush/Bush/model.obj"],
+  });
+  assert.deepEqual(await readdir(directory), ["catalog.json"]);
+  const result = await import_environment_asset(
+    directory,
+    upload({
+      name: "Bush",
+      model: inspected.models[0],
+      model_category: "material",
+    }),
+  );
+  const record = JSON.parse(
+    await readFile(
+      path.join(directory, "ingredients", result.id, "asset.json"),
+      "utf8",
+    ),
+  );
+  assert.equal(record.runtime.path, inspected.models[0]);
+  assert.equal(record.sources.length, 1);
+  assert.equal(
+    record.sources[0].sha256,
+    createHash("sha256").update(archive).digest("hex"),
+  );
+  assert.ok(
+    record.runtime.files.includes("source/extracted/bush/Bush/leaf.png"),
+  );
+  assert.equal(
+    record.attribution.license_file,
+    "source/extracted/bush/license.txt",
+  );
+  assert.equal(
+    (
+      await import_environment_asset(
+        directory,
+        upload({ name: "Another name", model: inspected.models[0] }),
+      )
+    ).duplicate,
+    true,
+  );
+});
+
+test("archive inspection authenticates before decoding and rejects foreign origins and malformed uploads", async (t) => {
+  let inspections = 0;
+  const app = express();
+  app.use(
+    "/environment-catalog",
+    create_environment_catalog_router({
+      store: {},
+      authorize: (req, res, next) =>
+        req.headers.authorization === "fixture"
+          ? next()
+          : res.status(401).json({ error: "unauthorized" }),
+      inspector: async (body) => {
+        inspections++;
+        return inspect_environment_import(body);
+      },
+    }),
+  );
+  const server = app.listen(0, "127.0.0.1");
+  await new Promise((resolve) => server.once("listening", resolve));
+  t.after(
+    () =>
+      new Promise((resolve) => {
+        server.closeAllConnections();
+        server.close(resolve);
+      }),
+  );
+  const origin =
+    process.env.FRACTO_UI_ORIGIN ||
+    `http://localhost:${process.env.FRACTO_UI_PORT || 3006}`;
+  const post = (body, headers = {}) =>
+    fetch(
+      `http://127.0.0.1:${server.address().port}/environment-catalog/import/inspect`,
+      {
+        method: "POST",
+        headers: {
+          Origin: origin,
+          "Content-Type": "application/zip",
+          ...headers,
+        },
+        body,
+      },
+    );
+  const upload = zipSync({
+    "manifest.json": strToU8("{}"),
+    "files/bush.rar": rar({ "bush.obj": "model" }),
+  });
+  assert.equal((await post(upload)).status, 401);
+  assert.equal(inspections, 0);
+  assert.equal(
+    (
+      await post(upload, {
+        Authorization: "fixture",
+        Origin: "https://foreign.invalid",
+      })
+    ).status,
+    403,
+  );
+  assert.equal(inspections, 0);
+  const response = await post(upload, { Authorization: "fixture" });
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {
+    models: ["source/extracted/bush/bush.obj"],
+  });
+  assert.equal(
+    (await post(new Uint8Array([1, 2]), { Authorization: "fixture" })).status,
+    400,
+  );
 });

@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "id": "hoewa-forsteriana",
+  "version": "1.0.0",
+  "name": "Hoewa_Forsteriana",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "178beaba1dd38c0cc253752f50f2c8ccfd81ee4ad27cbf6b56d630c51882405c",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/Hoewa_Forsteriana_BLEND.zip",
+      "format": "zip",
+      "sha256": "a69bc0e96f4f8552d3eb1cc6a773c47c847614bdefff885a8cd889fefd842e7e",
+      "bytes": 22121213
+    }
+  ],
+  "working_files": [
+    "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/hoewa_Forsteriana.blend",
+    "working/blender-export.json"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "runtime/model.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/Hoewa_Forsteriana_BLEND.zip",
+      "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/hoewa_Forsteriana.blend",
+      "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/hoewa_Forsteriana.blend1",
+      "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/maps/howea_f_leaf_1_diffuse.jpg",
+      "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/maps/howea_f_leaf_1_sss.jpg",
+      "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/maps/howea_f_leaf_2_specular.jpg",
+      "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/maps/howea_f_leaf_3_glossy.jpg",
+      "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/maps/howea_f_leaf_4_normal.jpg",
+      "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/maps/howea_f_stem_1_diffuse.jpg",
+      "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/maps/howea_f_stem_2_specular.jpg",
+      "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/maps/howea_f_stem_3_glossy.jpg",
+      "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/maps/howea_f_stem_4_normal.jpg",
+      "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/maps/rocky_ridge_4k.hdr",
+      "runtime/model.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "derive-runtime",
+      "description": "Exported the Blender source to a separate GLB for Inventory. Evaluated modifiers for the static preview; original .blend and texture files are unchanged. Review procedural materials and scale. "
+    },
+    {
+      "date": "2026-11-23",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
+    }
+  ],
+  "conversion": {
+    "source": "source/extracted/Hoewa_Forsteriana_BLEND/Hoewa_Forsteriana_BLEND/hoewa_Forsteriana.blend",
+    "path": "runtime/model.glb",
+    "format": "glb",
+    "report_file": "working/blender-export.json",
+    "report": {
+      "blender_version": "3.4.1",
+      "warnings": [],
+      "particles": {
+        "configured_particles": 0,
+        "evaluated_instances": 0,
+        "preview_instances": 0,
+        "triangle_budget": 500000
+      },
+      "mesh_objects": 2,
+      "materials": 4,
+      "source_unit_scale": 1,
+      "source_unit_system": "METRIC",
+      "export": "glb",
+      "original_saved": false
+    }
+  },
+  "folder_path": "plants/trees"
+}

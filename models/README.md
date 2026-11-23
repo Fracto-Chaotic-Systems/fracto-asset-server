@@ -41,7 +41,7 @@ configured path if the directory itself was moved.
 MySQL table `environment_assets` tracks each registered asset and its attribution,
 model references, original source checksums and modification history. Inventory
 metadata reads, imports and edits synchronize it automatically. JSON remains the
-portable editable authority; binaries remain here on disk. Apply migrations 019 and 020,
+portable editable authority; binaries remain here on disk. Apply all pending database migrations,
 then run `node servers/fracto-asset-server/scripts/register_environment_assets.js` to register an existing
 library. Re-running this command reconciles rows without changing files. Database
 failures are reported by Inventory; preserved file saves can be reconciled by the
@@ -75,13 +75,13 @@ an asset ID and version and store placement separately. Source SHA-256 hashes
 allow the validator to detect accidental changes to preserved downloads.
 
 The initial grass patch has no supplied creator or license. These are explicitly
-unresolved. Its GLB renders in Games → assets, where scale, lighting, texture
+unresolved. Its GLB renders in Games → models → materials, where scale, lighting, texture
 maps and topology can be inspected. Source scale and material tuning remain
 unconfirmed. The UI serves the registered runtime model and declared resources
 directly from this library through its catalog endpoint. Preview adjustments do
 not modify these catalog records.
 
-Games → assets displays live attribution and history below the model.
+Games → models → materials displays live attribution and history below the model.
 Edit catalog details and Save catalog details write directly to the asset's
 registered `asset.json`; no file picker or download is needed. Existing history,
 model files and source checksums are retained. Stale revisions are rejected so
@@ -91,7 +91,7 @@ exception in PROJECT_GUIDELINES.md. Docker Compose binds this directory into the
 asset service; native runs use this directory directly. Server deployments can
 set FRACTO_ENVIRONMENT_CATALOG_DIR to another canonical library root.
 
-Use Games → assets → Import folder to add assets from local downloads. Select
+Use Games → models → materials → Import folder to add assets from local downloads. Select
 a preview model and a name, then import. The list updates immediately and is read
 from `catalog.json` on later visits. Supported preview formats are GLB/glTF, FBX,
 OBJ/MTL and 3DS. ZIP downloads, textures and license/readme files are preserved;

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "tree-rigged",
+  "version": "1.0.0",
+  "name": "tree_rigged",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "f5a08d3202c7c9ad20cf5b845029966d6a34d00d5a5e10aa0d042b88e7746cec",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/rigged_animated_cinematic_quality_tree_4.glb",
+      "format": "glb",
+      "sha256": "cdb1cc1f6be6fd4d552c3ac5984ea39b8bf2f4080e83c18f587571261d4a186c",
+      "bytes": 74533968
+    }
+  ],
+  "working_files": [
+    "source/files/rigged_animated_cinematic_quality_tree_4.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/rigged_animated_cinematic_quality_tree_4.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/rigged_animated_cinematic_quality_tree_4.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "delete-model",
+      "description": "Removed the model from the inventory; files and provenance retained."
+    }
+  ],
+  "archived": true
+}

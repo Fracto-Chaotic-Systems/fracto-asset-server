@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "id": "monsterra-deliciosa",
+  "version": "1.0.0",
+  "name": "Monsterra_Deliciosa",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "94e4ce9f15333fc413ffb19e6fd91873245a5ff4d263a4faa8b71ec4487f9840",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/Monsterra_Deliciosa_BLEND.zip",
+      "format": "zip",
+      "sha256": "1a2f2523adb2fc60e10f2de41f967c3792adcbf838b95d596bef48f870d72d8d",
+      "bytes": 28095769
+    }
+  ],
+  "working_files": [
+    "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/monsterra.blend",
+    "working/blender-export.json"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "runtime/model.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/Monsterra_Deliciosa_BLEND.zip",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/maps/monsterra_deliciosa_bark_1.jpg",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/maps/monsterra_deliciosa_leaf_1_color_a.jpg",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/maps/monsterra_deliciosa_leaf_1_color_b.jpg",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/maps/monsterra_deliciosa_leaf_1_color_c.jpg",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/maps/monsterra_deliciosa_leaf_1_displace.jpg",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/maps/monsterra_deliciosa_leaf_1_glossy.jpg",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/maps/monsterra_deliciosa_leaf_1_mask_1.jpg",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/maps/monsterra_deliciosa_leaf_1_mask_2.jpg",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/maps/monsterra_deliciosa_leaf_1_normals.jpg",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/maps/monsterra_deliciosa_leaf_1_reflect.jpg",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/maps/rocky_ridge_4k.hdr",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/monsterra.blend",
+      "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/monsterra.blend1",
+      "runtime/model.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "derive-runtime",
+      "description": "Exported the Blender source to a separate GLB for Inventory. Evaluated modifiers for the static preview; original .blend and texture files are unchanged. Review procedural materials and scale. "
+    },
+    {
+      "date": "2026-11-23",
+      "action": "delete-model",
+      "description": "Removed the model from the inventory; files and provenance retained."
+    }
+  ],
+  "conversion": {
+    "source": "source/extracted/Monsterra_Deliciosa_BLEND/Monsterra_Deliciosa_BLEND/monsterra.blend",
+    "path": "runtime/model.glb",
+    "format": "glb",
+    "report_file": "working/blender-export.json",
+    "report": {
+      "blender_version": "3.4.1",
+      "warnings": [],
+      "particles": {
+        "configured_particles": 0,
+        "evaluated_instances": 0,
+        "preview_instances": 0,
+        "triangle_budget": 500000
+      },
+      "mesh_objects": 1,
+      "materials": 5,
+      "source_unit_scale": 1,
+      "source_unit_system": "METRIC",
+      "export": "glb",
+      "original_saved": false
+    }
+  },
+  "archived": true
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "animated-grass",
+  "version": "1.0.0",
+  "name": "animated_grass",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "075a75d59b7e4807b88e056c9430b0b09549101ac46d9d57b544136ae6fdec11",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/animated_grass_-_vegetation.glb",
+      "format": "glb",
+      "sha256": "376bf8ab7513f319f27b953eaa5159f646387841e4b3a5f1ab0b51588c9ed7de",
+      "bytes": 27031764
+    }
+  ],
+  "working_files": [
+    "source/files/animated_grass_-_vegetation.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/animated_grass_-_vegetation.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/animated_grass_-_vegetation.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
+    }
+  ],
+  "folder_path": "plants/grasses"
+}

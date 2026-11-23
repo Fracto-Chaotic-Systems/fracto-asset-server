@@ -46,3 +46,7 @@ mutations use disposable asset fixtures, never the grass library.
 rar_resources.test.js builds tiny stored RAR fixtures and checks real decoding,
 traversal/duplicate/encryption/size guards, importer resource publication and
 idempotent repair that preserves sources, attribution and preview selection.
+
+RAR tests also cover RAR-only model inspection without publication, model choice
+on import, original-archive hashes, extracted license/texture resources, duplicate
+imports, and authentication/origin/error behavior before archive decoding.

@@ -1,3 +1,4 @@
+import { inspect_environment_import } from "./prepare_import.js";
 import { create_model_management } from "./management.js";
 import express from "express";
 import {
@@ -14,6 +15,7 @@ export function create_environment_catalog_router({
     registry: create_environment_asset_registry(),
   }),
   authorize = require_enabled_user_if_configured,
+  inspector = inspect_environment_import,
   importer = (body) =>
     import_environment_asset(environment_catalog_directory(), body),
 } = {}) {
@@ -64,6 +66,15 @@ export function create_environment_catalog_router({
   router.get(
     "/",
     respond((req) => store.list(req.query.category)),
+  );
+  router.post(
+    "/import/inspect",
+    express.raw({ type: "application/zip", limit: "128mb" }),
+    respond((req) => {
+      if (!Buffer.isBuffer(req.body))
+        throw Object.assign(new Error("invalid_import"), { status: 400 });
+      return inspector(req.body);
+    }),
   );
   router.post(
     "/import",

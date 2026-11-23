@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "id": "yard-grass",
+  "version": "1.0.0",
+  "name": "yard_grass_motion",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "66ea44b7c8a4afbe98e4c91b294ac43c62c1dd3099269d53cdcc03d0a3477e3c",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/yard_grass.glb",
+      "format": "glb",
+      "sha256": "74377edd7f3522c65032843ddf7ddc16f3537c60ad3701eb31eda4665c3a0179",
+      "bytes": 18777264
+    }
+  ],
+  "working_files": [
+    "source/files/yard_grass.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/yard_grass.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/yard_grass.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "rename-model",
+      "description": "Updated the model display name."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
+    }
+  ],
+  "folder_path": "plants/grasses"
+}

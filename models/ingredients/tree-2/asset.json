@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "id": "tree-2",
+  "version": "1.0.0",
+  "name": "tree_2",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "422e28ba8e6ae6d1cbf09aaaec64970d3fed32f84afa75b7a89a76102961675e",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/Tree2_fbx.rar",
+      "format": "rar",
+      "sha256": "f5f9498409906015ce6379abb04631252893b26c0bb0deb25e391062ce0fd7f2",
+      "bytes": 5094627
+    }
+  ],
+  "working_files": [
+    "source/extracted/Tree2_fbx/Tree2_fbx/Tree2.fbx"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/extracted/Tree2_fbx/Tree2_fbx/Tree2.fbx",
+    "format": "fbx",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/Tree2_fbx.rar",
+      "source/extracted/Tree2_fbx/Tree2_fbx/291722_leave-png.png",
+      "source/extracted/Tree2_fbx/Tree2_fbx/ffWLH.jpg",
+      "source/extracted/Tree2_fbx/Tree2_fbx/Tree2.fbx"
+    ],
+    "units": "unverified",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    }
+  ]
+}

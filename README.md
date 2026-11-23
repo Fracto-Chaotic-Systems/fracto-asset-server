@@ -9,7 +9,7 @@ It contains `ingredients/` (simple forms), `composites/` (combined macro-scale
 objects), and `environments/` (complete play spaces). See `models/README.md`.
 Run `npm run test:environment` for isolated import/catalog and cross-service tests.
 
-Express service for rendering Fracto tile data into JPEG images, embedding metadata, storing local image files, and publishing rendered assets to S3. It listens on port 3003 and depends on the root tile service and shared SDK.
+Express service for rendering Fracto tile data into JPEG images, embedding metadata, storing local image files, and publishing rendered assets to S3. It listens on port 3003 and depends on the tile and data services and shared SDK.
 
 ## Repository layout
 

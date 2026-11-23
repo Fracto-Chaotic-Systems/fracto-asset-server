@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "flowers-1",
+  "version": "1.0.0",
+  "name": "flowers_1",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "b0e353f945ab24c8b95c2246b7877e2a4bdedda7d4a6450060fb89fa4b91b0ab",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/handpainted_flower_set1.glb",
+      "format": "glb",
+      "sha256": "32ac0a851df86b2b2ec55b407bab60c13f078afaba35f500bd0817d03e075da6",
+      "bytes": 4091572
+    }
+  ],
+  "working_files": [
+    "source/files/handpainted_flower_set1.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/handpainted_flower_set1.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/handpainted_flower_set1.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
+    }
+  ],
+  "folder_path": "plants/flowers"
+}

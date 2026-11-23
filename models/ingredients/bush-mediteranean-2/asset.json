@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "id": "bush-mediteranean-2",
+  "version": "1.0.0",
+  "name": "Bush_Mediteranean",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "252db41ad44fba80161fb894cc434d3640afeddf7e38a6f1273b73ac5105aa3e",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/Bush_Mediteranean.rar",
+      "format": "rar",
+      "sha256": "5a6007a4101c2f9a04e5593a4999a13744f4c5afdffa99896d43ac96d73f78ec",
+      "bytes": 24654538
+    }
+  ],
+  "working_files": [
+    "source/extracted/Bush_Mediteranean/Bush_Mediteranean/3D Object/Bush_Mediteranean.fbx"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/extracted/Bush_Mediteranean/Bush_Mediteranean/3D Object/Bush_Mediteranean.fbx",
+    "format": "fbx",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/Bush_Mediteranean.rar",
+      "source/extracted/Bush_Mediteranean/Bush_Mediteranean/3D Object/Bush_Mediteranean.fbx",
+      "source/extracted/Bush_Mediteranean/Bush_Mediteranean/3D Object/Bush_Mediteranean.obj",
+      "source/extracted/Bush_Mediteranean/Bush_Mediteranean/3D Object/Bush_Mediteranean.st",
+      "source/extracted/Bush_Mediteranean/Bush_Mediteranean/Textures/Bark_Color.png",
+      "source/extracted/Bush_Mediteranean/Bush_Mediteranean/Textures/Bark_Color.uasset",
+      "source/extracted/Bush_Mediteranean/Bush_Mediteranean/Textures/Bark_Frond_Mat.uasset",
+      "source/extracted/Bush_Mediteranean/Bush_Mediteranean/Textures/Bark_Normal.png",
+      "source/extracted/Bush_Mediteranean/Bush_Mediteranean/Textures/Bark_Normal.uasset",
+      "source/extracted/Bush_Mediteranean/Bush_Mediteranean/Textures/Bush_Mediteranean.uasset",
+      "source/extracted/Bush_Mediteranean/Bush_Mediteranean/Textures/Bush_Mediteranean_Color.png",
+      "source/extracted/Bush_Mediteranean/Bush_Mediteranean/Textures/Bush_Mediteranean_Normal.png",
+      "source/extracted/Bush_Mediteranean/Bush_Mediteranean/Textures/Bush_Mediteranean_Subsurface.png"
+    ],
+    "units": "unverified",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "delete-model",
+      "description": "Removed the model from the inventory; files and provenance retained."
+    }
+  ],
+  "archived": true
+}

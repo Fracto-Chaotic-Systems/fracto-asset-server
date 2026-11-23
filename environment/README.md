@@ -150,3 +150,24 @@ command extracts missing resources and atomically updates runtime.files and hist
 with an expected-file check. It preserves attribution, names, category, folder
 assignments, model files and original checksums, then synchronizes the registry.
 It is idempotent; conflicting files or concurrent catalog edits stop the repair.
+
+RAR-only folders now use the same extraction and publication path as RAR texture
+resources. prepare_import.js owns bounded envelope decoding, codec expansion and
+post-extraction model discovery for both inspection and publication. FBX, OBJ,
+GLB/glTF, 3DS and Blender files found inside a RAR become selectable preview models.
+The original RAR remains the source descriptor/checksum; unpacked models, textures
+and attribution files remain declared resources under source/extracted.
+
+Contract v1: POST /environment-catalog/import/inspect accepts application/zip,
+using the import envelope (manifest.json with optional model_category, files/*
+with selected relative filenames). It authenticates and checks trusted mutation
+origins before parsing the bounded body (128 MiB transport, 100 MiB combined
+original/expanded files, 2,000 files). It returns only {models:[relative paths]},
+ordered by shared format preference, at most 2,000 paths of at most 500 characters.
+Inspection is stateless and repeatable: it writes no files, takes no library lock
+and publishes no asset or database row. Invalid archives/paths, missing models
+and size/depth limits return the same bounded 400 error codes as import; transport
+oversize is 413, unavailable service is 503. Publication independently rechecks
+all bytes and selected model; model paths from inspection convey no authority.
+No attribution/configuration fields are returned by inspection. UI proxies relay
+this contract, and the browser keeps its original files until import is confirmed.

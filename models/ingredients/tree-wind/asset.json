@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "tree-wind",
+  "version": "1.0.0",
+  "name": "tree_wind",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "c5622240b6e23d28dbe828298f5d67874aa8aa2f9c6f96cd0dc1ab159d29986c",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/tree_wind_system.glb",
+      "format": "glb",
+      "sha256": "9ee502eecc8e9dee01f12a0607cc979325dccae842af2516904667637342c53c",
+      "bytes": 12432712
+    }
+  ],
+  "working_files": [
+    "source/files/tree_wind_system.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/tree_wind_system.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/tree_wind_system.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
+    }
+  ],
+  "folder_path": "plants/trees"
+}

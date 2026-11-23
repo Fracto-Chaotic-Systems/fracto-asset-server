@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "odd-trees",
+  "version": "1.0.0",
+  "name": "odd_trees",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "9148e6f8c81c6cc8c18406cf3511c1fec5f69b06f63331146617a8a477ba9720",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/trees.glb",
+      "format": "glb",
+      "sha256": "dae15236e3c60ab950521f3a67bcc182f84ab298ac6b8e6ca0d1ca0a90d7be8d",
+      "bytes": 7676460
+    }
+  ],
+  "working_files": [
+    "source/files/trees.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/trees.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/trees.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "delete-model",
+      "description": "Removed the model from the inventory; files and provenance retained."
+    }
+  ],
+  "archived": true
+}

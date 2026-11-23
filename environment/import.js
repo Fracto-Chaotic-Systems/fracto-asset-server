@@ -1,4 +1,4 @@
-import { expand_rar_resources } from "./rar_resources.js";
+import { prepare_environment_import } from "./prepare_import.js";
 import { createHash, randomUUID } from "node:crypto";
 import {
   mkdir,
@@ -12,7 +12,6 @@ import {
   access,
 } from "node:fs/promises";
 import path from "node:path";
-import { unzipSync } from "fflate";
 import { convert_blend_asset } from "./blender_conversion.js";
 import { model_directory } from "./library_paths.js";
 import {
@@ -23,8 +22,6 @@ import {
 import {
   asset_relative_path,
   asset_format,
-  bounded_unzip,
-  expand_asset_files,
 } from "@fracto/sdk/FractoAssetArchive.js";
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const fingerprint = (files) =>
@@ -45,32 +42,18 @@ const fail = (message, status = 400) => {
 export async function import_environment_asset(
   directory,
   upload,
-  {
-    convert_blend = convert_blend_asset,
-    expand_resources = expand_rar_resources,
-  } = {},
+  { convert_blend = convert_blend_asset, expand_resources } = {},
 ) {
-  const envelope = bounded_unzip(upload, unzipSync);
-  if (!envelope["manifest.json"] || envelope["manifest.json"].length > 4096)
-    fail("invalid_import");
-  const manifest = JSON.parse(
-    new TextDecoder().decode(envelope["manifest.json"]),
-  );
-  const category = validate_model_category(manifest.model_category);
+  const { manifest, category, entries, models } =
+    await prepare_environment_import(upload, expand_resources);
   if (
     typeof manifest.name !== "string" ||
     !manifest.name.trim() ||
     manifest.name.length > 120 ||
-    typeof manifest.model !== "string"
+    typeof manifest.model !== "string" ||
+    !models.includes(manifest.model)
   )
     fail("invalid_import");
-  const originals = Object.entries(envelope)
-    .filter(([name]) => name.startsWith("files/"))
-    .map(([name, data]) => ({ path: name.slice(6), data }));
-  const expanded = expand_asset_files(originals, unzipSync);
-  const entries = await expand_resources(expanded.entries),
-    models = expanded.models;
-  if (!models.includes(manifest.model)) fail("invalid_import");
   const sources = entries
     .filter((file) => file.original)
     .map((file) => ({
@@ -225,7 +208,7 @@ export async function import_environment_asset(
     );
     await writeFile(
       path.join(stage, "README.md"),
-      `# ${record.name}\n\nOriginal files are preserved in source/files. ZIP contents are in source/extracted.\nPreview model: ${manifest.model}. Attribution and scale require review.\nworking/ and runtime/ are reserved for editable sources and future derivatives.\n`,
+      `# ${record.name}\n\nOriginal files are preserved in source/files. ZIP/RAR contents are in source/extracted.\nPreview model: ${manifest.model}. Attribution and scale require review.\nworking/ and runtime/ are reserved for editable sources and future derivatives.\n`,
     );
     if ((await readFile(index_path, "utf8")) !== raw_index)
       fail("file_conflict", 409);
