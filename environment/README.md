@@ -57,3 +57,35 @@ Imports accept manifest `model_category`, default material for older clients.
 They publish under ingredients/composites/environments respectively, with global
 IDs but category-specific duplicate detection. Legacy records infer construction
 category from their indexed folder; existing grass imports are materials.
+
+
+Logical folder_path metadata is independent of physical library paths. The SDK
+projects it to catalog views and registry registrations; listing summaries use
+the database column. PATCH accepts an optional folder_path alongside the existing
+attribution/note payload and expected revision. A folder edit atomically updates
+asset.json, appends a move-folder history entry and synchronizes the database.
+Omitting folder_path preserves it; an explicit empty string moves the asset to
+its category root. Invalid paths fail with 400 invalid_folder. No model resources
+or directories move, and file-serving allowlists are unchanged.
+
+## Persistent logical folders
+
+The data service owns model_folders (migration 022), keyed by model_category and
+folder_path. Empty folders are independent of asset rows and survive moves and
+reloads. Asset folder assignments remain in environment_assets and asset.json;
+these logical paths never relocate model resources.
+
+Contract v1: authenticated internal GET /internal/environment-assets/folders
+requires category=material|component|area and returns {folders: [path, ...]}, up
+to 1,000 entries, including folders referenced by existing assets. POST to the
+same endpoint accepts only {category, folder_path}, with a nonempty SDK-normalized
+path (eight levels, 64 characters per level, 512 overall), and returns
+{folder_path}. Creation is idempotent; retries do not duplicate records. Invalid
+input is 400, unavailable persistence is 503; normal internal authentication
+applies before parsing. The asset service exposes matching GET/POST
+/environment-catalog/folders endpoints under its existing user/origin policy,
+and forwards via the registry client with a 15-second timeout. UI same-origin
+/api/environment-catalog/folders is a thin proxy. Folder names are case-sensitive.
+Move uses the existing revision-checked asset PATCH contract, preserving
+attribution and appending move-folder history. Conflicts return 409 and leave
+the editor's selection intact for review.

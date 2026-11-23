@@ -29,6 +29,7 @@ export function create_environment_catalog_router({
       const known = [
         "invalid_asset",
         "invalid_record",
+        "invalid_folder",
         "invalid_url",
         "file_conflict",
         "asset_not_found",
@@ -79,6 +80,23 @@ export function create_environment_catalog_router({
     }
   });
   router.use(express.json({ limit: "128kb", strict: true }));
+  router.get(
+    "/folders",
+    respond((req) => store.folders(req.query.category)),
+  );
+  router.post(
+    "/folders",
+    respond((req) => {
+      if (
+        !req.body ||
+        Object.keys(req.body).some(
+          (key) => !["category", "folder_path"].includes(key),
+        )
+      )
+        throw new Error("invalid_record");
+      return store.folders(req.body.category, req.body.folder_path ?? "");
+    }),
+  );
   router.get(
     "/:id",
     respond((req) => store.get(req.params.id)),

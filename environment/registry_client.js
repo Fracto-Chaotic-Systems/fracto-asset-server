@@ -1,6 +1,7 @@
 import {
   environment_registration,
   validate_model_category,
+  normalize_model_folder,
   validate_model_asset_page,
 } from "@fracto/sdk/FractoEnvironmentCatalog.js";
 import { internal_service_headers } from "@fracto/sdk/utils/ServiceAuthorization.js";
@@ -8,6 +9,43 @@ import { internal_service_headers } from "@fracto/sdk/utils/ServiceAuthorization
 // Database connections and SQL belong exclusively to the data service.
 export function create_environment_asset_registry({ request = fetch } = {}) {
   return {
+    async folders(category, folder_path) {
+      if (typeof category !== "string") throw new Error("invalid_record");
+      validate_model_category(category);
+      const creating = folder_path !== undefined;
+      if (creating && !normalize_model_folder(folder_path))
+        throw new Error("invalid_folder");
+      const response = await request(
+        `http://127.0.0.1:${Number(process.env.FRACTO_DATA_PORT || 3002)}/internal/environment-assets/folders?category=${encodeURIComponent(category)}`,
+        {
+          method: creating ? "POST" : "GET",
+          headers: internal_service_headers({
+            "Content-Type": "application/json",
+          }),
+          ...(creating
+            ? {
+                body: JSON.stringify({
+                  category,
+                  folder_path: normalize_model_folder(folder_path),
+                }),
+              }
+            : {}),
+          signal: AbortSignal.timeout(15000),
+        },
+      );
+      if (!response.ok) throw new Error("catalog_unavailable");
+      const result = await response.json();
+      if (creating) {
+        if (result.folder_path !== normalize_model_folder(folder_path))
+          throw new Error("catalog_unavailable");
+      } else if (
+        !Array.isArray(result.folders) ||
+        result.folders.length > 1000 ||
+        result.folders.some((path) => !normalize_model_folder(path))
+      )
+        throw new Error("catalog_unavailable");
+      return result;
+    },
     async list(category) {
       if (category !== undefined) validate_model_category(category);
       const assets = [];

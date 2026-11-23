@@ -34,3 +34,6 @@ Source-replacement regressions cover differing and invalid-UTF8 catalogs, corrup
 originals/indexes/audio, CRLF support notices, retained file backups, changed live
 snapshots, repair of corrupt staging, six real process-crash boundaries across
 legacy/replacement modes, restart receipts and zero-payload repeat exports.
+
+Folder endpoint tests exercise the asset HTTP facade and private data client;
+invalid paths never reach persistence. Catalog tests cover revision-safe moves.

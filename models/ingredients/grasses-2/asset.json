@@ -64,6 +64,11 @@
       "date": "2026-11-22",
       "action": "derive-runtime",
       "description": "Exported the Blender source to a separate GLB for Inventory. Evaluated modifiers for the static preview; original .blend and texture files are unchanged. Review procedural materials and scale. Particle preview density reduced from 5318 evaluated instances to 119 for interactive rendering. The original Blender particle systems are unchanged. Relinked one missing texture to the sole supplied image, grass2.jpg; review the material."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
     }
   ],
   "conversion": {
@@ -90,5 +95,7 @@
       "export": "glb",
       "original_saved": false
     }
-  }
+  },
+  "model_category": "material",
+  "folder_path": "plants"
 }

@@ -14,6 +14,7 @@ import {
   validate_catalog_edit,
   validate_model_category,
   model_category_from_path,
+  normalize_model_folder,
 } from "@fracto/sdk/FractoEnvironmentCatalog.js";
 export { CATALOG_FIELDS } from "@fracto/sdk/FractoEnvironmentCatalog.js";
 export const environment_catalog_directory = () =>
@@ -67,6 +68,14 @@ export function create_environment_catalog({
     revision: revision_of(raw),
   });
   return {
+    async folders(category, folder_path) {
+      if (typeof category !== "string") throw new Error("invalid_record");
+      validate_model_category(category);
+      if (folder_path !== undefined && !normalize_model_folder(folder_path))
+        fail("invalid_folder");
+      if (!registry) fail("catalog_unavailable", 503);
+      return registry.folders(category, folder_path);
+    },
     async list(category) {
       if (category !== undefined) validate_model_category(category);
       const root = await realpath(directory);
@@ -83,6 +92,7 @@ export function create_environment_catalog({
             id,
             name: record.name,
             category: record.model_category,
+            folder_path: normalize_model_folder(record.folder_path),
             model: record.runtime?.path || null,
             format: record.runtime?.format || null,
             resources:
@@ -132,7 +142,11 @@ export function create_environment_catalog({
             (key) =>
               (record.attribution?.[key] || null) !== changes.attribution[key],
           );
-          if (!changed && !changes.note) return result(original);
+          const folder_changed =
+            changes.folder_path !== undefined &&
+            changes.folder_path !== normalize_model_folder(record.folder_path);
+          if (!changed && !folder_changed && !changes.note)
+            return result(original);
           const day = now().toISOString().slice(0, 10);
           if (changed) {
             record.attribution = {
@@ -151,6 +165,14 @@ export function create_environment_catalog({
               date: day,
               action: "update-attribution",
               description: "Updated catalog attribution details.",
+            });
+          }
+          if (folder_changed) {
+            record.folder_path = changes.folder_path;
+            record.history.push({
+              date: day,
+              action: "move-folder",
+              description: "Updated the asset's logical folder.",
             });
           }
           if (changes.note)

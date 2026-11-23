@@ -346,3 +346,48 @@ test("category lists use database membership and names instead of repeating file
   assert.deepEqual((await store.list("area")).assets, []);
   await assert.rejects(store.list("unknown"), /invalid_record/);
 });
+
+test("logical folder edits persist without moving model files or changing attribution", async (t) => {
+  let synced;
+  const { store, record, file, directory } = await fixture(t, {
+    async sync(value) {
+      synced = value;
+    },
+  });
+  const before = await store.get(record.id);
+  const saved = await store.update(
+    record.id,
+    edit(before, { folder_path: " Vegetation / Grasses " }),
+  );
+  assert.equal(saved.record.folder_path, "Vegetation/Grasses");
+  assert.equal(synced.folder_path, "Vegetation/Grasses");
+  const disk = JSON.parse(await readFile(file, "utf8"));
+  assert.equal(disk.folder_path, "Vegetation/Grasses");
+  assert.equal(disk.history.at(-1).action, "move-folder");
+  assert.deepEqual(disk.attribution, record.attribution);
+  assert.deepEqual(disk.runtime, record.runtime);
+  assert.deepEqual(disk.sources, record.sources);
+  const reopened = create_environment_catalog({ directory });
+  assert.equal(
+    (await reopened.get(record.id)).record.folder_path,
+    "Vegetation/Grasses",
+  );
+  const legacySave = await store.update(
+    record.id,
+    edit(saved, { note: "Legacy editor preserves folders." }),
+  );
+  assert.equal(legacySave.record.folder_path, "Vegetation/Grasses");
+  await assert.rejects(
+    store.update(record.id, edit(legacySave, { folder_path: "../outside" })),
+    /invalid_folder/,
+  );
+  assert.equal(
+    JSON.parse(await readFile(file, "utf8")).folder_path,
+    "Vegetation/Grasses",
+  );
+  const root = await store.update(
+    record.id,
+    edit(legacySave, { folder_path: "" }),
+  );
+  assert.equal(root.record.folder_path, "");
+});

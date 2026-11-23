@@ -205,3 +205,66 @@ test("database list client follows category pages and rejects non-progressing cu
   });
   await assert.rejects(stalled.list("material"), /catalog_unavailable/);
 });
+
+test("folder API delegates to the data contract without touching model files", async (t) => {
+  const calls = [];
+  const registry = create_environment_asset_registry({
+    request: async (url, options) => {
+      calls.push({ url, options });
+      return Response.json(
+        options.method === "POST"
+          ? { folder_path: JSON.parse(options.body).folder_path }
+          : { folders: ["Empty/Nested"] },
+      );
+    },
+  });
+  const store = create_environment_catalog({
+    directory: "unused-model-directory",
+    registry,
+  });
+  const app = express();
+  app.use(
+    "/catalog",
+    create_environment_catalog_router({
+      store,
+      authorize: (req, res, next) => next(),
+    }),
+  );
+  const server = app.listen(0, "127.0.0.1");
+  await new Promise((resolve) => server.once("listening", resolve));
+  t.after(
+    () =>
+      new Promise((resolve) => {
+        server.closeAllConnections();
+        server.close(resolve);
+      }),
+  );
+  const url = `http://127.0.0.1:${server.address().port}/catalog/folders`;
+  assert.deepEqual(await (await fetch(url + "?category=area")).json(), {
+    folders: ["Empty/Nested"],
+  });
+  const post = (body) =>
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Origin:
+          process.env.FRACTO_UI_ORIGIN ||
+          `http://localhost:${process.env.FRACTO_UI_PORT || 3006}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+  assert.deepEqual(
+    await (await post({ category: "material", folder_path: "Empty" })).json(),
+    { folder_path: "Empty" },
+  );
+  assert.equal(calls[1].options.method, "POST");
+  assert.match(calls[1].url, /internal\/environment-assets\/folders/);
+  const count = calls.length;
+  assert.equal(
+    (await post({ category: "material", folder_path: "../escape" })).status,
+    400,
+  );
+  assert.equal((await post({ category: "material" })).status, 400);
+  assert.equal(calls.length, count);
+});
