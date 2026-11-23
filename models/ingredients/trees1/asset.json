@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "trees1",
+  "version": "1.0.0",
+  "name": "trees1",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "480262999c0900fe039ec38a5cead6d9eee3ae2ea5baa64019f3671f915babb5",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/oak_trees.glb",
+      "format": "glb",
+      "sha256": "6db83156173bdadf79a1f4275ed9a607dc9bc23ceffb6ce609a80f6db909be67",
+      "bytes": 9347356
+    }
+  ],
+  "working_files": [
+    "source/files/oak_trees.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/oak_trees.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/oak_trees.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
+    }
+  ],
+  "folder_path": "plants/trees"
+}

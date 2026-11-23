@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "id": "trees-animate",
+  "version": "1.0.0",
+  "name": "trees_animate",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "ab17a73bcdb7c48f96b9df34b83897f2cf45f22bd81e5bd6ec220e965ecf89d3",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/tree_animate.glb",
+      "format": "glb",
+      "sha256": "ee7d04f2884abc72e3fddcebeb12105d0ae164c503c178b61f4a59f7c4db36a2",
+      "bytes": 8912220
+    }
+  ],
+  "working_files": [
+    "source/files/tree_animate.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/tree_animate.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/tree_animate.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    }
+  ]
+}

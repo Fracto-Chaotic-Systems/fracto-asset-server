@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "grasses3",
   "version": "1.0.0",
-  "name": "grasses3",
+  "name": "grass panes 2",
   "description": "Imported environment asset.",
   "category": "environment",
   "tags": [],
@@ -82,8 +82,18 @@
       "date": "2026-11-23",
       "action": "move-folder",
       "description": "Updated the asset's logical folder."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "rename-model",
+      "description": "Updated the model display name."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
     }
   ],
   "model_category": "material",
-  "folder_path": "plants"
+  "folder_path": "plants/grasses"
 }

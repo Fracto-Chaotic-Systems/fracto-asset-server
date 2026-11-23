@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "id": "shrub1",
+  "version": "1.0.0",
+  "name": "shrub1",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "ba987fff0fbaf6ef008999691f7130537656686159a6cf7353f502de742bf1cc",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/freecutout_leaf_8.png",
+      "format": "png",
+      "sha256": "0c5d26205ede45cc30c7f572324df406a7910548c89528922be94dfd37e20592",
+      "bytes": 2942489
+    },
+    {
+      "path": "source/files/przyroda2.blend",
+      "format": "blend",
+      "sha256": "47b2a49dc7b446c9ab159869a83d5712807303f47302ddb0f7e061897808f7a3",
+      "bytes": 39476532
+    }
+  ],
+  "working_files": [
+    "source/files/przyroda2.blend",
+    "working/blender-export.json"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "runtime/model.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/freecutout_leaf_8.png",
+      "source/files/przyroda2.blend",
+      "runtime/model.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "derive-runtime",
+      "description": "Exported the Blender source to a separate GLB for Inventory. Evaluated modifiers for the static preview; original .blend and texture files are unchanged. Review procedural materials and scale. Particle preview density reduced from 1206 evaluated instances to 91 for interactive rendering. The original Blender particle systems are unchanged. Adapted a Diffuse material for glTF; original Blender file unchanged. A non-Principled material may require baking or manual adjustment. Adapted a Diffuse material for glTF; original Blender file unchanged. Adapted a Diffuse material for glTF; original Blender file unchanged."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "delete-model",
+      "description": "Removed the model from the inventory; files and provenance retained."
+    }
+  ],
+  "conversion": {
+    "source": "source/files/przyroda2.blend",
+    "path": "runtime/model.glb",
+    "format": "glb",
+    "report_file": "working/blender-export.json",
+    "report": {
+      "blender_version": "3.4.1",
+      "warnings": [
+        "Particle preview density reduced from 1206 evaluated instances to 91 for interactive rendering. The original Blender particle systems are unchanged.",
+        "Adapted a Diffuse material for glTF; original Blender file unchanged.",
+        "A non-Principled material may require baking or manual adjustment.",
+        "Adapted a Diffuse material for glTF; original Blender file unchanged.",
+        "Adapted a Diffuse material for glTF; original Blender file unchanged."
+      ],
+      "particles": {
+        "configured_particles": 1250,
+        "evaluated_instances": 1206,
+        "preview_instances": 91,
+        "triangle_budget": 500000
+      },
+      "mesh_objects": 96,
+      "materials": 30,
+      "source_unit_scale": 1,
+      "source_unit_system": "NONE",
+      "export": "glb",
+      "original_saved": false
+    }
+  },
+  "archived": true
+}

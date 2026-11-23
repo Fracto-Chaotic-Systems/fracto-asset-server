@@ -1,3 +1,4 @@
+import { validate_model_management } from "@fracto/sdk/FractoModelManagement.js";
 import {
   environment_registration,
   validate_model_category,
@@ -92,6 +93,34 @@ export function create_environment_asset_registry({ request = fetch } = {}) {
       const saved = await response.json();
       if (saved.id !== record.id || saved.revision !== revision)
         throw new Error("catalog_unavailable");
+    },
+    async manage_folder(body) {
+      const validated = validate_model_management(body);
+      const { target, ...request_body } = validated;
+      void target;
+      const response = await request(
+        `http://127.0.0.1:${Number(process.env.FRACTO_DATA_PORT || 3002)}/internal/environment-assets/folders/manage`,
+        {
+          method: "POST",
+          headers: internal_service_headers({
+            "Content-Type": "application/json",
+          }),
+          body: JSON.stringify(request_body),
+          signal: AbortSignal.timeout(15000),
+        },
+      );
+      const result = await response.json();
+      if (!response.ok)
+        throw new Error(
+          ["folder_not_empty", "folder_conflict", "folder_not_found"].includes(
+            result.error,
+          )
+            ? result.error
+            : "catalog_unavailable",
+        );
+      if (result.folder_path !== validated.folder_path)
+        throw new Error("catalog_unavailable");
+      return result;
     },
     async close() {},
   };

@@ -1,3 +1,4 @@
+import { expand_rar_resources } from "./rar_resources.js";
 import { createHash, randomUUID } from "node:crypto";
 import {
   mkdir,
@@ -44,7 +45,10 @@ const fail = (message, status = 400) => {
 export async function import_environment_asset(
   directory,
   upload,
-  { convert_blend = convert_blend_asset } = {},
+  {
+    convert_blend = convert_blend_asset,
+    expand_resources = expand_rar_resources,
+  } = {},
 ) {
   const envelope = bounded_unzip(upload, unzipSync);
   if (!envelope["manifest.json"] || envelope["manifest.json"].length > 4096)
@@ -63,7 +67,9 @@ export async function import_environment_asset(
   const originals = Object.entries(envelope)
     .filter(([name]) => name.startsWith("files/"))
     .map(([name, data]) => ({ path: name.slice(6), data }));
-  const { entries, models } = expand_asset_files(originals, unzipSync);
+  const expanded = expand_asset_files(originals, unzipSync);
+  const entries = await expand_resources(expanded.entries),
+    models = expanded.models;
   if (!models.includes(manifest.model)) fail("invalid_import");
   const sources = entries
     .filter((file) => file.original)
@@ -96,6 +102,7 @@ export async function import_environment_asset(
       if (path.relative(root, file).startsWith("..")) fail("unsafe_path");
       const record = JSON.parse(await readFile(file, "utf8"));
       if (
+        !record.archived &&
         (record.import_fingerprint || fingerprint(record.sources)) ===
           signature &&
         (record.model_category ?? model_category_from_path(entry.record)) ===
@@ -198,7 +205,7 @@ export async function import_environment_asset(
           date: day,
           action: "import",
           description:
-            "Preserved selected folder files and extracted ZIP resources; registered a preview model. Attribution requires review.",
+            "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review.",
         },
       ],
     };

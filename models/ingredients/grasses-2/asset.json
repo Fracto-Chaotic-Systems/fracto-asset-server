@@ -69,6 +69,11 @@
       "date": "2026-11-23",
       "action": "move-folder",
       "description": "Updated the asset's logical folder."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "delete-model",
+      "description": "Removed the model from the inventory; files and provenance retained."
     }
   ],
   "conversion": {
@@ -97,5 +102,6 @@
     }
   },
   "model_category": "material",
-  "folder_path": "plants"
+  "folder_path": "plants",
+  "archived": true
 }

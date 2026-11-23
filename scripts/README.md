@@ -15,3 +15,8 @@ Blender and NumPy are supplied by the combined Docker image or a native install.
 
 `instruments.js` maintains and verifies the instrument library.
 `probe_instruments_http.js` checks registered instrument HTTP resources.
+
+repair_environment_archives.js <asset-id> repairs imported RAR resource lists.
+Run via npm run environment:repair-archives -- <asset-id>, or inside the running
+asset service container. This command owns catalog/filesystem changes; it uses
+the private registry endpoint for database synchronization.

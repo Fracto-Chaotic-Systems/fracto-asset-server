@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "id": "fern-plant",
+  "version": "1.0.0",
+  "name": "fern_plant",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "f88b95393c829579086004da08e452f42746a70c6351f29e5ea2417666b29917",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/Fern_Plant_Preview_FREE_Model.fbx",
+      "format": "fbx",
+      "sha256": "aaa4358e4249647b66ea4c06d6b15180c26b4b27290cd5e58fc24d78d7ce610c",
+      "bytes": 114930
+    },
+    {
+      "path": "source/files/Fern_Plant_Preview__FREE_Model.mb",
+      "format": "mb",
+      "sha256": "cfee462592d263f0757fde40738003c3c04ee79bc037ee35d19bf84dce9b749f",
+      "bytes": 74484
+    },
+    {
+      "path": "source/files/Fern_Plant_Preview__FREE_Model.obj",
+      "format": "obj",
+      "sha256": "f4bcb281a6094588375130d8f4fee0d5798fbb24f2333ac799b0bc55e84e0134",
+      "bytes": 28938
+    },
+    {
+      "path": "source/files/Fern_Plant_Preview__FREE_Model_TEXTURES.rar",
+      "format": "rar",
+      "sha256": "f5f9ece44cc32bde6ea5d1066a28f8f5abb597de4d711ee5cd7a3d83eb8c5ed0",
+      "bytes": 642412
+    }
+  ],
+  "working_files": [
+    "source/files/Fern_Plant_Preview_FREE_Model.fbx"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/Fern_Plant_Preview_FREE_Model.fbx",
+    "format": "fbx",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/Fern_Plant_Preview_FREE_Model.fbx",
+      "source/files/Fern_Plant_Preview__FREE_Model.mb",
+      "source/files/Fern_Plant_Preview__FREE_Model.obj",
+      "source/files/Fern_Plant_Preview__FREE_Model_TEXTURES.rar",
+      "source/extracted/Fern_Plant_Preview__FREE_Model_TEXTURES/Fern_Plant_Preview_FREE_Model_ROUGHTNESS_MAP.png",
+      "source/extracted/Fern_Plant_Preview__FREE_Model_TEXTURES/Fern_Plant_Preview_FREE_Model_BASE_COLOR_(Albedo)_MAP.png",
+      "source/extracted/Fern_Plant_Preview__FREE_Model_TEXTURES/Fern_Plant_Preview_FREE_Model_METALLIC_MAP.png",
+      "source/extracted/Fern_Plant_Preview__FREE_Model_TEXTURES/Fern_Plant_Preview_FREE_Model_NORMAL_MAP.png",
+      "source/extracted/Fern_Plant_Preview__FREE_Model_TEXTURES/Fern_Plant_Preview_FREE_Model_OPACITY_MAP.png"
+    ],
+    "units": "unverified",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "extract-archive",
+      "description": "Extracted preserved RAR resources for the preview; original model, archive and attribution unchanged."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "delete-model",
+      "description": "Removed the model from the inventory; files and provenance retained."
+    }
+  ],
+  "archived": true
+}

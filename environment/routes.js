@@ -1,3 +1,4 @@
+import { create_model_management } from "./management.js";
 import express from "express";
 import {
   create_environment_catalog,
@@ -17,6 +18,7 @@ export function create_environment_catalog_router({
     import_environment_asset(environment_catalog_directory(), body),
 } = {}) {
   const router = express.Router();
+  const manage = create_model_management(store);
   router.use((req, res, next) => {
     res.set("Cache-Control", "no-store");
     if (!trusted_mutation_origin(req, res)) return;
@@ -27,6 +29,9 @@ export function create_environment_catalog_router({
       res.json(await operation(req));
     } catch (error) {
       const known = [
+        "folder_not_empty",
+        "folder_not_found",
+        "folder_conflict",
         "invalid_asset",
         "invalid_record",
         "invalid_folder",
@@ -40,6 +45,7 @@ export function create_environment_catalog_router({
         "archive_depth",
         "no_model",
         "invalid_import",
+        "invalid_archive",
         "import_busy",
         "blender_unavailable",
         "blender_missing_textures",
@@ -80,6 +86,10 @@ export function create_environment_catalog_router({
     }
   });
   router.use(express.json({ limit: "128kb", strict: true }));
+  router.post(
+    "/manage",
+    respond((req) => manage(req.body)),
+  );
   router.get(
     "/folders",
     respond((req) => store.folders(req.query.category)),

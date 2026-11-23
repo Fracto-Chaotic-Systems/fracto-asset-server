@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "shrub2",
+  "version": "1.0.0",
+  "name": "shrub2",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "97b7834df07216a0c02366f560fa4fb222e6cf003dca7d09aca598cb3f71d38a",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/gameready_bush.glb",
+      "format": "glb",
+      "sha256": "70e355248836780fda2cc46019a0d71b232f381a7d513b0bf3f361ec2a4a2ebf",
+      "bytes": 8158292
+    }
+  ],
+  "working_files": [
+    "source/files/gameready_bush.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/gameready_bush.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/gameready_bush.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
+    }
+  ],
+  "folder_path": "plants/shrubs"
+}

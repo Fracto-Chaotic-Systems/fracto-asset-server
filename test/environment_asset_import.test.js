@@ -331,3 +331,22 @@ test("imports preserve selected categories and publish each tier independently",
   }
   assert.equal(new Set(ids).size, 3);
 });
+
+test("reimporting archived sources preserves the archived identity and creates a new active model", async (t) => {
+  const root = await fixture(t);
+  const archive = pack({ "prop.obj": triangle });
+  const first = await import_environment_asset(root, archive);
+  const file = path.join(root, "ingredients", first.id, "asset.json");
+  const record = JSON.parse(await readFile(file, "utf8"));
+  record.archived = true;
+  await writeFile(file, JSON.stringify(record));
+  const second = await import_environment_asset(root, archive);
+  assert.equal(second.duplicate, false);
+  assert.notEqual(second.id, first.id);
+  assert.equal(JSON.parse(await readFile(file, "utf8")).archived, true);
+  const store = create_environment_catalog({ directory: root });
+  assert.deepEqual(
+    (await store.list("material")).assets.map((asset) => asset.id),
+    [second.id],
+  );
+});

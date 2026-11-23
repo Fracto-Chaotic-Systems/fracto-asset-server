@@ -51,7 +51,7 @@ export function create_environment_catalog({
     if (path.basename(file) !== "asset.json") fail("catalog_path", 403);
     return file;
   };
-  const read = async (id, sync = true) => {
+  const read = async (id, sync = true, include_archived = false) => {
     const file = await locate(id);
     const raw = await readFile(file, "utf8"),
       record = JSON.parse(raw);
@@ -61,6 +61,7 @@ export function create_environment_catalog({
         model_category_from_path(path.relative(directory, file)),
     );
     if (registry && sync) await registry.sync(record, revision_of(raw));
+    if (record.archived && !include_archived) fail("asset_not_found", 404);
     return { file, raw, record };
   };
   const result = ({ record, raw }) => ({
@@ -68,6 +69,10 @@ export function create_environment_catalog({
     revision: revision_of(raw),
   });
   return {
+    async manage_folder(body) {
+      if (!registry) fail("catalog_unavailable", 503);
+      return registry.manage_folder(body);
+    },
     async folders(category, folder_path) {
       if (typeof category !== "string") throw new Error("invalid_record");
       validate_model_category(category);
@@ -87,8 +92,9 @@ export function create_environment_catalog({
       );
       const registered = await Promise.all(
         catalog.assets.map(async ({ id }) => {
-          const { record } = await read(id);
+          const { record } = await read(id, true, true);
           return {
+            archived: record.archived === true,
             id,
             name: record.name,
             category: record.model_category,
@@ -105,7 +111,8 @@ export function create_environment_catalog({
       const assets = registry
         ? await registry.list(category)
         : registered.filter(
-            (asset) => !category || asset.category === category,
+            (asset) =>
+              !asset.archived && (!category || asset.category === category),
           );
       return {
         assets: assets.map((asset) => ({
@@ -128,13 +135,13 @@ export function create_environment_catalog({
     async get(id) {
       return result(await read(id));
     },
-    async update(id, body) {
+    async update(id, body, { sync_read = true } = {}) {
       const changes = validate_catalog_edit(body);
       const previous = queues.get(id) || Promise.resolve();
       const task = previous
         .catch(() => {})
         .then(async () => {
-          const original = await read(id);
+          const original = await read(id, sync_read);
           if (revision_of(original.raw) !== body.revision)
             fail("file_conflict", 409);
           const record = structuredClone(original.record);
@@ -145,9 +152,37 @@ export function create_environment_catalog({
           const folder_changed =
             changes.folder_path !== undefined &&
             changes.folder_path !== normalize_model_folder(record.folder_path);
-          if (!changed && !folder_changed && !changes.note)
+          const renamed =
+            changes.name !== undefined && changes.name !== record.name;
+          const archived =
+            changes.archived !== undefined &&
+            changes.archived !== !!record.archived;
+          if (
+            !changed &&
+            !folder_changed &&
+            !renamed &&
+            !archived &&
+            !changes.note
+          )
             return result(original);
           const day = now().toISOString().slice(0, 10);
+          if (renamed) {
+            record.name = changes.name;
+            record.history.push({
+              date: day,
+              action: "rename-model",
+              description: "Updated the model display name.",
+            });
+          }
+          if (archived) {
+            record.archived = changes.archived;
+            record.history.push({
+              date: day,
+              action: "delete-model",
+              description:
+                "Removed the model from the inventory; files and provenance retained.",
+            });
+          }
           if (changed) {
             record.attribution = {
               ...record.attribution,
@@ -198,7 +233,14 @@ export function create_environment_catalog({
           } finally {
             await unlink(temporary).catch(() => {});
           }
-          if (registry) await registry.sync(record, revision_of(raw));
+          if (registry) {
+            try {
+              await registry.sync(record, revision_of(raw));
+            } catch (error) {
+              error.published = result({ record, raw });
+              throw error;
+            }
+          }
           return result({ record, raw });
         });
       queues.set(id, task);

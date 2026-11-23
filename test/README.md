@@ -37,3 +37,12 @@ legacy/replacement modes, restart receipts and zero-payload repeat exports.
 
 Folder endpoint tests exercise the asset HTTP facade and private data client;
 invalid paths never reach persistence. Catalog tests cover revision-safe moves.
+
+Tree management regressions cover model rename/archive provenance retention,
+recursive category-scoped folder renames, empty-only deletion, HTTP authorization,
+stale revisions and compensation after a post-publication registry failure. All
+mutations use disposable asset fixtures, never the grass library.
+
+rar_resources.test.js builds tiny stored RAR fixtures and checks real decoding,
+traversal/duplicate/encryption/size guards, importer resource publication and
+idempotent repair that preserves sources, attribution and preview selection.

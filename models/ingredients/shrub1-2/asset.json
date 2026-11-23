@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "id": "shrub1-2",
+  "version": "1.0.0",
+  "name": "shrub1",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "16a4ed1e3d6c98ebacb92acbdded0c1a454030dd05650deef4c0ba459d532846",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/cliff_shrub_for_terrain.glb",
+      "format": "glb",
+      "sha256": "76c1190a9b032ec50bd415a53bf663ae7d99e48798343e656821a2fba1e9b335",
+      "bytes": 6019900
+    }
+  ],
+  "working_files": [
+    "source/files/cliff_shrub_for_terrain.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/cliff_shrub_for_terrain.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/cliff_shrub_for_terrain.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
+    }
+  ],
+  "folder_path": "plants/shrubs"
+}

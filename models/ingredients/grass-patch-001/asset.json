@@ -2,7 +2,7 @@
   "schema_version": 1,
   "id": "grass-patch-001",
   "version": "1.0.0",
-  "name": "Crossed-plane grass patch",
+  "name": "grass panes 1",
   "description": "Four crossed textured grass planes; original asset named Grass_Plane_001.",
   "category": "vegetation/grass",
   "tags": [
@@ -104,8 +104,23 @@
       "date": "2026-11-23",
       "action": "move-folder",
       "description": "Updated the asset's logical folder."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "rename-model",
+      "description": "Updated the model display name."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "rename-model",
+      "description": "Updated the model display name."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
     }
   ],
   "model_category": "material",
-  "folder_path": "plants"
+  "folder_path": "plants/grasses"
 }

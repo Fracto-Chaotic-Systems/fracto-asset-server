@@ -41,7 +41,18 @@ test("the default models library is readable and an external library override is
   );
   assert.deepEqual(
     assets.map((asset) => asset.id),
-    index.assets.map((asset) => asset.id),
+    (
+      await Promise.all(
+        index.assets.map(async (asset) => ({
+          ...asset,
+          archived: JSON.parse(
+            await readFile(path.join(expected, asset.record), "utf8"),
+          ).archived,
+        })),
+      )
+    )
+      .filter((asset) => !asset.archived)
+      .map((asset) => asset.id),
   );
   for (const asset of assets) {
     const resource = await store.file(asset.id, asset.model);
@@ -390,4 +401,246 @@ test("logical folder edits persist without moving model files or changing attrib
     edit(legacySave, { folder_path: "" }),
   );
   assert.equal(root.record.folder_path, "");
+});
+
+test("model tree rename and delete preserve identities, attribution, sources and history", async (t) => {
+  const { create_model_management } =
+    await import("../environment/management.js");
+  const { file, record, store } = await fixture(t);
+  const manage = create_model_management(store);
+  const before = await store.get(record.id);
+  await manage({
+    action: "rename-model",
+    id: record.id,
+    revision: before.revision,
+    name: "New grass name",
+  });
+  const renamed = await store.get(record.id);
+  assert.equal(renamed.record.name, "New grass name");
+  assert.equal(renamed.record.id, record.id);
+  assert.deepEqual(renamed.record.attribution, before.record.attribution);
+  await assert.rejects(
+    manage({
+      action: "delete-model",
+      id: record.id,
+      revision: before.revision,
+    }),
+    /file_conflict/,
+  );
+  await manage({
+    action: "delete-model",
+    id: record.id,
+    revision: renamed.revision,
+  });
+  assert.deepEqual((await store.list("material")).assets, []);
+  await assert.rejects(store.get(record.id), /asset_not_found/);
+  const saved = JSON.parse(await readFile(file, "utf8"));
+  assert.equal(saved.archived, true);
+  assert.deepEqual(saved.sources, record.sources);
+  assert.deepEqual(saved.runtime, record.runtime);
+  assert.deepEqual(saved.attribution, record.attribution);
+  assert.equal(saved.history.at(-1).action, "delete-model");
+});
+
+test("folder rename cascades through active model catalogs, preserves other categories and blocks nonempty deletion", async (t) => {
+  const { create_model_management } =
+    await import("../environment/management.js");
+  const rows = new Map(),
+    definitions = new Set(["plants", "plants/herbs"]);
+  const registry = {
+    async sync(record, revision) {
+      rows.set(record.id, { ...record, revision });
+    },
+    async list(category) {
+      return [...rows.values()]
+        .filter((row) => !row.archived && row.model_category === category)
+        .map((row) => ({
+          id: row.id,
+          name: row.name,
+          category: row.model_category,
+          folder_path: row.folder_path,
+          model: row.runtime.path,
+          format: row.runtime.format,
+        }));
+    },
+    async folders(category, path) {
+      if (path !== undefined) definitions.add(path);
+      return { folders: [...definitions] };
+    },
+    async manage_folder(body) {
+      const { validate_model_management } =
+        await import("@fracto/sdk/FractoModelManagement.js");
+      const command = validate_model_management(body);
+      if (command.action === "rename-folder") {
+        for (const path of [...definitions])
+          if (
+            path === body.folder_path ||
+            path.startsWith(body.folder_path + "/")
+          ) {
+            definitions.delete(path);
+            definitions.add(
+              command.target + path.slice(body.folder_path.length),
+            );
+          }
+      } else definitions.delete(body.folder_path);
+      return { folder_path: body.folder_path };
+    },
+  };
+  const { store, directory, file, record } = await fixture(t, registry);
+  record.folder_path = "plants/herbs";
+  await writeFile(file, JSON.stringify(record));
+  const area = { ...record, id: "test-area", model_category: "area" };
+  await mkdir(path.join(directory, area.id));
+  await writeFile(
+    path.join(directory, area.id, "asset.json"),
+    JSON.stringify(area),
+  );
+  await writeFile(
+    path.join(directory, "catalog.json"),
+    JSON.stringify({
+      assets: [
+        { id: record.id, record: record.id + "/asset.json" },
+        { id: area.id, record: area.id + "/asset.json" },
+      ],
+    }),
+  );
+  const manage = create_model_management(store);
+  await assert.rejects(
+    manage({
+      action: "delete-folder",
+      category: "material",
+      folder_path: "plants",
+    }),
+    /folder_not_empty/,
+  );
+  await manage({
+    action: "rename-folder",
+    category: "material",
+    folder_path: "plants",
+    name: "greenery",
+  });
+  assert.equal(
+    (await store.get(record.id)).record.folder_path,
+    "greenery/herbs",
+  );
+  assert.equal((await store.get(area.id)).record.folder_path, "plants/herbs");
+  assert.deepEqual([...definitions].sort(), ["greenery", "greenery/herbs"]);
+  definitions.add("flowers");
+  await assert.rejects(
+    manage({
+      action: "rename-folder",
+      category: "material",
+      folder_path: "greenery",
+      name: "flowers",
+    }),
+    /folder_conflict/,
+  );
+  await manage({
+    action: "delete-folder",
+    category: "material",
+    folder_path: "flowers",
+  });
+  assert.equal(definitions.has("flowers"), false);
+});
+
+test("a failed folder definition rename compensates completed catalog moves", async (t) => {
+  const { create_model_management } =
+    await import("../environment/management.js");
+  const { store, record } = await fixture(t);
+  const initial = await store.get(record.id);
+  await store.update(record.id, edit(initial, { folder_path: "plants" }));
+  store.folders = async () => ({ folders: ["plants"] });
+  store.manage_folder = async () => {
+    throw Error("folder_conflict");
+  };
+  const manage = create_model_management(store);
+  await assert.rejects(
+    manage({
+      action: "rename-folder",
+      category: "material",
+      folder_path: "plants",
+      name: "greenery",
+    }),
+    /folder_conflict/,
+  );
+  assert.equal((await store.get(record.id)).record.folder_path, "plants");
+});
+
+test("tree management HTTP mutations require trusted origin and honor revision conflicts", async (t) => {
+  const { store, record } = await fixture(t);
+  const catalog = await store.get(record.id);
+  const app = express();
+  app.use(
+    "/catalog",
+    create_environment_catalog_router({
+      store,
+      authorize: (req, res, next) => next(),
+    }),
+  );
+  const server = app.listen(0, "127.0.0.1");
+  await new Promise((resolve) => server.once("listening", resolve));
+  t.after(
+    () =>
+      new Promise((resolve) => {
+        server.closeAllConnections();
+        server.close(resolve);
+      }),
+  );
+  const url = `http://127.0.0.1:${server.address().port}/catalog/manage`;
+  const body = {
+    action: "rename-model",
+    id: record.id,
+    revision: catalog.revision,
+    name: "New name",
+  };
+  const post = (origin, value = body) =>
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(origin ? { Origin: origin } : {}),
+      },
+      body: JSON.stringify(value),
+    });
+  assert.equal((await post(null)).status, 403);
+  const origin =
+    process.env.FRACTO_UI_ORIGIN ||
+    `http://localhost:${process.env.FRACTO_UI_PORT || 3006}`;
+  assert.equal((await post(origin)).status, 200);
+  assert.equal((await post(origin)).status, 409);
+  assert.equal((await post(origin, { ...body, unexpected: true })).status, 400);
+});
+
+test("folder rename compensates a file publication even when its registry synchronization fails", async (t) => {
+  const { create_model_management } =
+    await import("../environment/management.js");
+  let remaining = Infinity;
+  const registry = {
+    async sync() {
+      if (remaining-- <= 0) throw Error("catalog_unavailable");
+    },
+  };
+  const { store, record, file } = await fixture(t, registry);
+  const before = await store.get(record.id);
+  await store.update(record.id, edit(before, { folder_path: "plants" }));
+  store.list = async () => ({
+    assets: [{ id: record.id, folder_path: "plants" }],
+  });
+  store.folders = async () => ({ folders: ["plants"] });
+  const get = store.get.bind(store);
+  store.get = async (id) => {
+    const result = await get(id);
+    remaining = 1;
+    return result;
+  };
+  await assert.rejects(
+    create_model_management(store)({
+      action: "rename-folder",
+      category: "material",
+      folder_path: "plants",
+      name: "greenery",
+    }),
+    /catalog_unavailable/,
+  );
+  assert.equal(JSON.parse(await readFile(file, "utf8")).folder_path, "plants");
 });
