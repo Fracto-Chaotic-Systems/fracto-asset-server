@@ -18,3 +18,6 @@ models/**/source/** -text -diff
 models/**/asset.json text eol=lf
 models/catalog.json text eol=lf
 models/**/working/*.json text eol=lf
+
+# Published releases are content-addressed; preserve every byte on checkout.
+components/published/*/*/** -text -diff
