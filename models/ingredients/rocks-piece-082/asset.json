@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "id": "rocks-piece-082",
+  "version": "1.0.0",
+  "name": "rocks-piece-082",
+  "description": "Unique extracted rock 82/84 from rocks, source mesh 81 (rock003_lod4_rock003_LOD4_0). Geometry and textures preserved; hierarchy normalized to 1m maximum XZ extent, centered and grounded. Physical pebble size is authored by the component. Source revision 66ca8209def0dd483e5a9b329e6c310f575f2084078d4f259d29144dfa5efa49.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [
+    "rock",
+    "stone",
+    "pebble",
+    "terrain",
+    "extracted-rock"
+  ],
+  "parent_id": null,
+  "imported_on": "2026-11-24",
+  "import_fingerprint": "e47ac53867fc537d702dc94d92547b84ed05a91667ff10ecb92fc11638da1770",
+  "attribution": {
+    "status": "recorded-unverified",
+    "creator_name": "Loïc Norgeot",
+    "creator_profile_url": "https://sketchfab.com/norgeotloic",
+    "source_url": "https://sketchfab.com/3d-models/lowpoly-rocks-free-download-c5da5675001f4bec9ecfbc8343453417",
+    "license_name": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+    "license_file": null,
+    "credit_text": "Loïc Norgeot (https://sketchfab.com/norgeotloic)\nLowpoly Rocks - Free Download\nhttps://sketchfab.com/3d-models/lowpoly-rocks-free-download-c5da5675001f4bec9ecfbc8343453417\nCC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)\nModification: isolated original mesh 81 (rock003_lod4_rock003_LOD4_0); centered/grounded and normalized to a one-metre horizontal extent for calibrated component placement. Original geometry, UVs, normal maps and image bytes retained.",
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Creator and license copied from original embedded glTF asset metadata; original source array preserved."
+  },
+  "sources": [
+    {
+      "path": "source/files/rock.glb",
+      "format": "glb",
+      "sha256": "754637ebc9bccc4c278e799d793198ee7106fb6448843afc36b3e229223f7360",
+      "bytes": 140108
+    },
+    {
+      "path": "source/files/credits.txt",
+      "format": "txt",
+      "sha256": "638429ea261382aa96f6f6d23585faea65a418c5038cc1502b658baaa3857893",
+      "bytes": 464
+    }
+  ],
+  "working_files": [
+    "source/files/rock.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/rock.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/rock.glb",
+      "source/files/credits.txt"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-24",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-24",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
+    },
+    {
+      "date": "2026-11-24",
+      "action": "update-attribution",
+      "description": "Updated catalog attribution details."
+    },
+    {
+      "date": "2026-11-24",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
+    }
+  ],
+  "construction": {
+    "schema_version": 1,
+    "kind": "model",
+    "source_units": "m",
+    "meters_per_unit": 1,
+    "dimensions_m": [
+      1,
+      0.7893752907869919,
+      0.6686550227835709
+    ],
+    "up_axis": "y",
+    "forward_axis": "z",
+    "ground_anchor_m": [
+      0,
+      0,
+      0
+    ],
+    "footprint_m": [
+      1,
+      0.6686550227835709
+    ],
+    "texture_size_m": null,
+    "placement": "ground"
+  },
+  "folder_path": "terrain/rocks/individual-rocks"
+}

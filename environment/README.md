@@ -66,7 +66,6 @@ They publish under ingredients/composites/environments respectively, with global
 IDs but category-specific duplicate detection. Legacy records infer construction
 category from their indexed folder; existing grass imports are materials.
 
-
 Logical folder_path metadata is independent of physical library paths. The SDK
 projects it to catalog views and registry registrations; listing summaries use
 the database column. PATCH accepts an optional folder_path alongside the existing
@@ -179,3 +178,30 @@ oversize is 413, unavailable service is 503. Publication independently rechecks
 all bytes and selected model; model paths from inspection convey no authority.
 No attribution/configuration fields are returned by inspection. UI proxies relay
 this contract, and the browser keeps its original files until import is confirmed.
+
+## Separating the 84-rock array
+
+`environment/split_glb_meshes.js` isolates one original static mesh per GLB,
+retaining its ancestor transforms, material, UV/normal/tangent data and embedded
+image bytes. A new root centres XZ, grounds minimum Y and normalizes the maximum
+XZ extent to one metre. Calibration describes this derived coordinate frame;
+component scale supplies the intended pebble size. The original array is intact.
+Animated, skinned, compressed and repeated-instance collections are rejected.
+
+`node scripts/extract_rocks.js` prepares the registered `rocks` array at its pinned
+revision in `runtime/rock-extraction/`. `--publish` publishes its 84 distinct pieces
+through the existing import/catalog APIs, under `terrain/rocks/individual-rocks`,
+with construction facts and original embedded creator/license credits. The source
+array revision is checked before and after; each source mesh is extracted once.
+Stable binary fingerprints let the importer reuse existing pieces on a rerun.
+The script records a manifest of source identities, calibration, hashes and pins.
+`test/split_glb_meshes.test.js` covers transforms, unique extraction and preserved
+image/material references, plus rejection of unsupported inputs.
+
+Catalog listing reconciles portable records in batches of four and shares that
+work across simultaneous category-list requests. This avoids overflowing the data
+service's bounded provenance pool when large collections are imported. Only
+in-flight work is shared: each later listing rechecks records, so edits and
+archives remain visible. Database failures still fail closed rather than serving
+an offline or partial catalog. The 108-record concurrent-list regression covers
+completeness, concurrency, resources and a fresh subsequent rename.

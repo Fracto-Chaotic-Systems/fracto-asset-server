@@ -644,3 +644,115 @@ test("folder rename compensates a file publication even when its registry synchr
   );
   assert.equal(JSON.parse(await readFile(file, "utf8")).folder_path, "plants");
 });
+
+test("large concurrent catalog lists share bounded reconciliation and remain complete and fresh", async (t) => {
+  const directory = await mkdtemp(
+    path.join(tmpdir(), "fracto-env-list-bound-"),
+  );
+  t.after(async () => {
+    assert.equal(path.dirname(directory), path.resolve(tmpdir()));
+    assert.ok(path.basename(directory).startsWith("fracto-env-list-bound-"));
+    await rm(directory, { recursive: true, force: true });
+  });
+  const template = JSON.parse(
+      await readFile(
+        new URL(
+          "../models/ingredients/grass-patch-001/asset.json",
+          import.meta.url,
+        ),
+        "utf8",
+      ),
+    ),
+    records = [],
+    index = [];
+  for (let i = 0; i < 108; i++) {
+    const id = "list-test-" + String(i).padStart(3, "0"),
+      record = {
+        ...structuredClone(template),
+        id,
+        name: id,
+        model_category: ["material", "component", "area"][i % 3],
+        archived: i % 25 === 0,
+      };
+    records.push(record);
+    await mkdir(path.join(directory, id));
+    await writeFile(
+      path.join(directory, id, "asset.json"),
+      JSON.stringify(record),
+    );
+    index.push({ id, record: id + "/asset.json" });
+  }
+  await writeFile(
+    path.join(directory, "catalog.json"),
+    JSON.stringify({ assets: index }),
+  );
+  let active = 0,
+    peak = 0,
+    syncs = 0,
+    unavailable = false;
+  const rows = new Map();
+  const registry = {
+    async sync(record) {
+      active++;
+      peak = Math.max(peak, active);
+      syncs++;
+      try {
+        if (unavailable || active > 18) throw Error("catalog_unavailable");
+        await new Promise((r) => setTimeout(r, 2));
+        rows.set(record.id, structuredClone(record));
+      } finally {
+        active--;
+      }
+    },
+    async list(category) {
+      return [...rows.values()]
+        .filter((r) => !r.archived && r.model_category === category)
+        .map((r) => ({
+          id: r.id,
+          name: r.name,
+          category: r.model_category,
+          folder_path: r.folder_path,
+          model: r.runtime.path,
+          format: r.runtime.format,
+        }));
+    },
+  };
+  const store = create_environment_catalog({ directory, registry });
+  const categories = ["material", "component", "area"],
+    pages = await Promise.all(categories.map((c) => store.list(c)));
+  assert.equal(syncs, 108);
+  assert.ok(peak <= 4);
+  pages.forEach((page, i) => {
+    assert.equal(
+      page.assets.length,
+      records.filter((r) => !r.archived && r.model_category === categories[i])
+        .length,
+    );
+    assert.ok(page.assets.every((a) => a.resources.includes(a.model)));
+  });
+  records[3].name = "Renamed after first list";
+  await writeFile(
+    path.join(directory, records[3].id, "asset.json"),
+    JSON.stringify(records[3]),
+  );
+  const fresh = await store.list("material");
+  assert.equal(syncs, 216);
+  assert.equal(
+    fresh.assets.find((a) => a.id === records[3].id).name,
+    records[3].name,
+  );
+  unavailable = true;
+  const failures = await Promise.allSettled([
+    store.list("material"),
+    store.list("area"),
+  ]);
+  assert.ok(
+    failures.every(
+      (r) =>
+        r.status === "rejected" && r.reason.message === "catalog_unavailable",
+    ),
+  );
+  unavailable = false;
+  const recovered = await store.list("material");
+  assert.deepEqual(recovered, fresh);
+});

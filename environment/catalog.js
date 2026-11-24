@@ -75,6 +75,46 @@ export function create_environment_catalog({
     record: catalog_view(record),
     revision: revision_of(raw),
   });
+  let pending_listing = null;
+  const registered_catalog = () => {
+    // Listing reconciles every category, but must not flood the data service's
+    // bounded connection pool. Share only in-flight work, never stale snapshots.
+    if (!pending_listing)
+      pending_listing = (async () => {
+        const root = await realpath(directory);
+        const catalog = JSON.parse(
+          await readFile(
+            inside(root, await realpath(path.join(root, "catalog.json"))),
+            "utf8",
+          ),
+        );
+        const registered = [];
+        for (let offset = 0; offset < catalog.assets.length; offset += 4)
+          registered.push(
+            ...(await Promise.all(
+              catalog.assets.slice(offset, offset + 4).map(async ({ id }) => {
+                const { record } = await read(id, true, true);
+                return {
+                  archived: record.archived === true,
+                  id,
+                  name: record.name,
+                  category: record.model_category,
+                  folder_path: normalize_model_folder(record.folder_path),
+                  model: record.runtime?.path || null,
+                  format: record.runtime?.format || null,
+                  resources:
+                    record.runtime?.files ||
+                    [record.runtime?.path].filter(Boolean),
+                };
+              }),
+            )),
+          );
+        return registered;
+      })().finally(() => {
+        pending_listing = null;
+      });
+    return pending_listing;
+  };
   const store = {
     search: create_material_search({
       index: async () => {
@@ -153,29 +193,7 @@ export function create_environment_catalog({
     },
     async list(category) {
       if (category !== undefined) validate_model_category(category);
-      const root = await realpath(directory);
-      const catalog = JSON.parse(
-        await readFile(
-          inside(root, await realpath(path.join(root, "catalog.json"))),
-          "utf8",
-        ),
-      );
-      const registered = await Promise.all(
-        catalog.assets.map(async ({ id }) => {
-          const { record } = await read(id, true, true);
-          return {
-            archived: record.archived === true,
-            id,
-            name: record.name,
-            category: record.model_category,
-            folder_path: normalize_model_folder(record.folder_path),
-            model: record.runtime?.path || null,
-            format: record.runtime?.format || null,
-            resources:
-              record.runtime?.files || [record.runtime?.path].filter(Boolean),
-          };
-        }),
-      );
+      const registered = await registered_catalog();
       // Membership, names and category filtering come from the one database table.
       // Filesystem records supply only the registered preview resource allowlist.
       const assets = registry
