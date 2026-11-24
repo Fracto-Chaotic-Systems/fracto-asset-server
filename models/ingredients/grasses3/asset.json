@@ -3,9 +3,14 @@
   "id": "grasses3",
   "version": "1.0.0",
   "name": "grass panes 2",
-  "description": "Imported environment asset.",
+  "description": "Default-pose geometry measured with the actual Three.js stage loaders and checked against Blender; Y-up, +Z forward, centered XZ/min-Y ground anchor, conservative full-mesh footprint. FBX declares centimeters; conversion is 0.01 meters per source unit. Animation motion envelopes are not included; stage placement uses the static default pose.",
   "category": "environment",
-  "tags": [],
+  "tags": [
+    "grass",
+    "vegetation",
+    "ground",
+    "construction-material"
+  ],
   "parent_id": null,
   "imported_on": "2026-11-22",
   "import_fingerprint": "e307dc4538b732080f1663cd38a563986b0e7bf51cb88c8e8d8f00e349935094",
@@ -92,8 +97,42 @@
       "date": "2026-11-23",
       "action": "move-folder",
       "description": "Updated the asset's logical folder."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
     }
   ],
   "model_category": "material",
-  "folder_path": "plants/grasses"
+  "folder_path": "plants/grasses",
+  "construction": {
+    "schema_version": 1,
+    "kind": "model",
+    "source_units": "cm",
+    "meters_per_unit": 0.01,
+    "dimensions_m": [
+      3.8602248,
+      0.4673999,
+      4.2696408
+    ],
+    "up_axis": "y",
+    "forward_axis": "z",
+    "ground_anchor_m": [
+      -0.0190631,
+      0.0026499,
+      -0.0716168
+    ],
+    "footprint_m": [
+      3.8602248,
+      4.2696408
+    ],
+    "texture_size_m": null,
+    "placement": "ground"
+  }
 }

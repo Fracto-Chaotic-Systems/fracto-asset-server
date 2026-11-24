@@ -36,6 +36,10 @@ export function create_environment_catalog_router({
         "folder_conflict",
         "invalid_asset",
         "invalid_record",
+        "invalid_material_metadata",
+        "invalid_material_query",
+        "material_search_changed",
+        "material_revision_changed",
         "invalid_folder",
         "invalid_url",
         "file_conflict",
@@ -67,6 +71,25 @@ export function create_environment_catalog_router({
     "/",
     respond((req) => store.list(req.query.category)),
   );
+  router.get(
+    "/materials/search",
+    respond((req) => store.search(req.query)),
+  );
+  router.get(
+    "/:id/construction",
+    respond((req) => store.get_construction(req.params.id)),
+  );
+  router.get(
+    "/:id/construction/runtime",
+    respond((req) => {
+      if (
+        Object.keys(req.query).length !== 1 ||
+        typeof req.query.revision !== "string"
+      )
+        throw Object.assign(new Error("invalid_record"), { status: 400 });
+      return store.get_construction_runtime(req.params.id, req.query.revision);
+    }),
+  );
   router.post(
     "/import/inspect",
     express.raw({ type: "application/zip", limit: "128mb" }),
@@ -97,6 +120,10 @@ export function create_environment_catalog_router({
     }
   });
   router.use(express.json({ limit: "128kb", strict: true }));
+  router.patch(
+    "/:id/construction",
+    respond((req) => store.update_construction(req.params.id, req.body)),
+  );
   router.post(
     "/manage",
     respond((req) => manage(req.body)),

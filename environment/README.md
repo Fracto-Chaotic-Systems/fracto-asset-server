@@ -1,5 +1,13 @@
 # Environment asset ownership
 
+Material search and manually curated placement facts are described in
+[MATERIAL_SEARCH.md](MATERIAL_SEARCH.md). `material_search.js` owns bounded
+snapshot loading; SDK contracts validate metadata/queries and rank results.
+The existing catalog writer persists construction edits with revision checks.
+The completed [vegetation and dirt calibration](CALIBRATION.md) documents measured
+stage bounds, explicit game units, the extracted floor color image and a
+source-preserving normalized tree runtime.
+
 The asset service owns the environment library, folder import, Blender conversion,
 catalog edits and registered preview delivery at `/environment-catalog`.
 `routes.js` applies authentication, trusted UI mutation origins, bounded parsers

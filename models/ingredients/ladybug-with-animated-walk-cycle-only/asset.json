@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "id": "ladybug-with-animated-walk-cycle-only",
+  "version": "1.0.0",
+  "name": "ladybug_with_animated_walk_cycle_only",
+  "description": "Animated ladybug with an authored walk cycle. Runtime rest-pose geometry calibrated Y-up, head toward +Z, grounded feet. A curated game-unit interpretation of the imported GLB; original source units are unknown.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [
+    "insect",
+    "ladybug",
+    "walking",
+    "animated"
+  ],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "d18aceb5820734da0a58a7724479f7c6734e66da97484a129e56438f9e3574f2",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/ladybug_with_animated_walk_cycle_only.glb",
+      "format": "glb",
+      "sha256": "8cd22415d44347c430bb4dcaeaab0036e13190f180e57305c1aae95b84d65fe2",
+      "bytes": 2752776
+    }
+  ],
+  "working_files": [
+    "source/files/ladybug_with_animated_walk_cycle_only.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/ladybug_with_animated_walk_cycle_only.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/ladybug_with_animated_walk_cycle_only.glb"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-24",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
+    },
+    {
+      "date": "2026-11-24",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
+    }
+  ],
+  "folder_path": "insects",
+  "construction": {
+    "schema_version": 1,
+    "kind": "model",
+    "source_units": null,
+    "meters_per_unit": 1,
+    "dimensions_m": [
+      0.008467181066,
+      0.004409502087,
+      0.008892276109
+    ],
+    "up_axis": "y",
+    "forward_axis": "z",
+    "ground_anchor_m": [
+      -0.000321890492,
+      -0.000277111329,
+      -0.000089401519
+    ],
+    "footprint_m": [
+      0.008467181066,
+      0.008892276109
+    ],
+    "texture_size_m": null,
+    "placement": "ground"
+  }
+}

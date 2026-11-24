@@ -11,9 +11,32 @@ from blend_preview_scene import prepare_scene
 def convert(source, output, report_path, asset_root):
     report = {"blender_version": bpy.app.version_string, "warnings": []}
     try:
-        bpy.ops.wm.open_mainfile(filepath=str(source), load_ui=False, use_scripts=False)
+        if source.suffix.lower() == '.fbx':
+            bpy.ops.wm.read_factory_settings(use_empty=True)
+            bpy.ops.import_scene.fbx(filepath=str(source), use_anim=False)
+        else:
+            bpy.ops.wm.open_mainfile(filepath=str(source), load_ui=False, use_scripts=False)
         meshes = prepare_scene(bpy, report)
         used_materials = {material for obj in meshes for material in obj.data.materials if material}
+        # Optional operator-reviewed bindings repair FBX exporters that dropped a
+        # diffuse/cutout connection. This is data, never executable model code.
+        bindings_file = asset_root / 'working/construction-material-bindings.json'
+        if source.suffix.lower() == '.fbx' and bindings_file.is_file():
+            bindings = json.loads(bindings_file.read_text(encoding='utf-8'))
+            for name, relative in bindings.items():
+                material = next((item for item in used_materials if item.name == name), None)
+                image_file = (asset_root / relative).resolve()
+                if material is None or not image_file.is_relative_to(asset_root / 'source') or image_file.suffix.lower() not in ('.png', '.jpg', '.jpeg'):
+                    raise RuntimeError('invalid_material_binding')
+                principled = next(node for node in material.node_tree.nodes if node.type == 'BSDF_PRINCIPLED')
+                texture = material.node_tree.nodes.new('ShaderNodeTexImage')
+                texture.image = bpy.data.images.load(str(image_file), check_existing=True)
+                material.node_tree.links.new(texture.outputs['Color'], principled.inputs['Base Color'])
+                if texture.image.channels == 4:
+                    material.node_tree.links.new(texture.outputs['Alpha'], principled.inputs['Alpha'])
+                    material.blend_method = 'CLIP'
+                    material.alpha_threshold = 0.5
+                report['warnings'].append('Applied reviewed source color/cutout binding for ' + name)
         used_images = {node.image for material in used_materials if material.use_nodes
             for node in material.node_tree.nodes if node.type == 'TEX_IMAGE' and node.image}
         files = [file for file in (asset_root / 'source').rglob('*') if file.is_file()]

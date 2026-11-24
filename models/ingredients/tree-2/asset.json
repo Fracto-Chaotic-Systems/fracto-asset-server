@@ -3,10 +3,16 @@
   "id": "tree-2",
   "version": "1.0.0",
   "name": "tree_2",
-  "description": "Imported environment asset.",
+  "description": "Single broad-canopy tree. Normalized meter-scale GLB with original bark and alpha-cutout leaves. Default-pose geometry measured with the actual Three.js stage loaders and checked against Blender; Y-up, +Z forward, centered XZ/min-Y ground anchor, conservative full-mesh footprint. Original FBX declares centimeters; runtime is a separate normalized meter-scale GLB. Animation motion envelopes are not included; stage placement uses the static default pose.",
   "category": "environment",
   "model_category": "material",
-  "tags": [],
+  "tags": [
+    "tree",
+    "vegetation",
+    "ground",
+    "construction-material",
+    "single-tree"
+  ],
   "parent_id": null,
   "imported_on": "2026-11-23",
   "import_fingerprint": "422e28ba8e6ae6d1cbf09aaaec64970d3fed32f84afa75b7a89a76102961675e",
@@ -35,14 +41,18 @@
   ],
   "preview": null,
   "runtime": {
-    "path": "source/extracted/Tree2_fbx/Tree2_fbx/Tree2.fbx",
-    "format": "fbx",
+    "path": "runtime/model-calibrated.glb",
+    "format": "glb",
     "status": "imported-awaiting-review",
     "files": [
       "source/files/Tree2_fbx.rar",
       "source/extracted/Tree2_fbx/Tree2_fbx/291722_leave-png.png",
       "source/extracted/Tree2_fbx/Tree2_fbx/ffWLH.jpg",
-      "source/extracted/Tree2_fbx/Tree2_fbx/Tree2.fbx"
+      "source/extracted/Tree2_fbx/Tree2_fbx/Tree2.fbx",
+      "runtime/model.glb",
+      "working/blender-export.json",
+      "runtime/model-calibrated.glb",
+      "working/calibrated-export.json"
     ],
     "units": "unverified",
     "source_scale": 1,
@@ -54,6 +64,65 @@
       "date": "2026-11-23",
       "action": "import",
       "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "normalize-fbx-runtime",
+      "description": "Generated a meter-scale GLB through Blender for consistent stage transforms; source FBX, textures and attribution preserved."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "normalize-fbx-runtime",
+      "description": "Generated a meter-scale GLB through Blender for consistent stage transforms; source FBX, textures and attribution preserved."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
     }
-  ]
+  ],
+  "construction": {
+    "schema_version": 1,
+    "kind": "model",
+    "source_units": "m",
+    "meters_per_unit": 1,
+    "dimensions_m": [
+      11.1046023,
+      9.3918304,
+      11.5146241
+    ],
+    "up_axis": "y",
+    "forward_axis": "z",
+    "ground_anchor_m": [
+      0.1936476,
+      0,
+      0.3465979
+    ],
+    "footprint_m": [
+      11.1046023,
+      11.5146241
+    ],
+    "texture_size_m": null,
+    "placement": "ground"
+  }
 }

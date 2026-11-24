@@ -3,14 +3,16 @@
   "id": "grass-patch-001",
   "version": "1.0.0",
   "name": "grass panes 1",
-  "description": "Four crossed textured grass planes; original asset named Grass_Plane_001.",
+  "description": "Four crossed textured grass planes; original asset named Grass_Plane_001.\n\nDefault-pose geometry measured with the actual Three.js stage loaders and checked against Blender; Y-up, +Z forward, centered XZ/min-Y ground anchor, conservative full-mesh footprint. glTF meter units retained. Animation motion envelopes are not included; stage placement uses the static default pose.",
   "category": "vegetation/grass",
   "tags": [
     "grass",
     "vegetation",
     "foliage",
     "ground-cover",
-    "crossed-planes"
+    "crossed-planes",
+    "ground",
+    "construction-material"
   ],
   "parent_id": null,
   "imported_on": "2026-11-22",
@@ -119,8 +121,42 @@
       "date": "2026-11-23",
       "action": "move-folder",
       "description": "Updated the asset's logical folder."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
     }
   ],
   "model_category": "material",
-  "folder_path": "plants/grasses"
+  "folder_path": "plants/grasses",
+  "construction": {
+    "schema_version": 1,
+    "kind": "model",
+    "source_units": "m",
+    "meters_per_unit": 1,
+    "dimensions_m": [
+      1,
+      1,
+      1
+    ],
+    "up_axis": "y",
+    "forward_axis": "z",
+    "ground_anchor_m": [
+      0,
+      0,
+      0
+    ],
+    "footprint_m": [
+      1,
+      1
+    ],
+    "texture_size_m": null,
+    "placement": "ground"
+  }
 }

@@ -3,10 +3,15 @@
   "id": "animated-grass",
   "version": "1.0.0",
   "name": "animated_grass",
-  "description": "Imported environment asset.",
+  "description": "Default-pose geometry measured with the actual Three.js stage loaders and checked against Blender; Y-up, +Z forward, centered XZ/min-Y ground anchor, conservative full-mesh footprint. glTF meter units retained. Animation motion envelopes are not included; stage placement uses the static default pose.",
   "category": "environment",
   "model_category": "material",
-  "tags": [],
+  "tags": [
+    "grass",
+    "vegetation",
+    "ground",
+    "construction-material"
+  ],
   "parent_id": null,
   "imported_on": "2026-11-23",
   "import_fingerprint": "075a75d59b7e4807b88e056c9430b0b09549101ac46d9d57b544136ae6fdec11",
@@ -56,7 +61,41 @@
       "date": "2026-11-23",
       "action": "move-folder",
       "description": "Updated the asset's logical folder."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
     }
   ],
-  "folder_path": "plants/grasses"
+  "folder_path": "plants/grasses",
+  "construction": {
+    "schema_version": 1,
+    "kind": "model",
+    "source_units": "m",
+    "meters_per_unit": 1,
+    "dimensions_m": [
+      3.4674518,
+      1.2169935,
+      3.9124897
+    ],
+    "up_axis": "y",
+    "forward_axis": "z",
+    "ground_anchor_m": [
+      -0.1333994,
+      -0.0890255,
+      -0.0571738
+    ],
+    "footprint_m": [
+      3.4674518,
+      3.9124897
+    ],
+    "texture_size_m": null,
+    "placement": "ground"
+  }
 }

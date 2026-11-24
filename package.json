@@ -21,9 +21,11 @@
     "instruments:verify": "node scripts/instruments.js verify",
     "test:instruments": "node --test test/instruments.test.js test/pitch_index.test.js test/note_sample_index.test.js test/playback_assets.test.js test/instruments_http.test.js test/drum_catalog.test.js test/instrument_transfer.test.js test/instrument_transfer_stream.test.js test/instrument_publication.test.js",
     "instruments:probe-http": "node scripts/probe_instruments_http.js",
-    "test:environment": "node --test test/environment_catalog.test.js test/environment_asset_import.test.js test/blender_asset_conversion.test.js test/environment_services.test.js test/rar_resources.test.js",
+    "test:environment": "node --test test/environment_catalog.test.js test/environment_asset_import.test.js test/blender_asset_conversion.test.js test/environment_services.test.js test/rar_resources.test.js test/material_search.test.js test/construction_resources.test.js",
     "environment:register": "node scripts/register_environment_assets.js",
-    "environment:repair-archives": "node scripts/repair_environment_archives.js"
+    "environment:repair-archives": "node scripts/repair_environment_archives.js",
+    "environment:extract-surface": "node scripts/extract_surface.js",
+    "environment:normalize-fbx": "node scripts/normalize_fbx_runtime.js"
   },
   "dependencies": {
     "@fracto/sdk": "file:../../sdk",

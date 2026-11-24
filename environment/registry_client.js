@@ -47,7 +47,7 @@ export function create_environment_asset_registry({ request = fetch } = {}) {
         throw new Error("catalog_unavailable");
       return result;
     },
-    async list(category) {
+    async list(category, { max_assets = Infinity, signal } = {}) {
       if (category !== undefined) validate_model_category(category);
       const assets = [];
       let after = "";
@@ -59,7 +59,9 @@ export function create_environment_asset_registry({ request = fetch } = {}) {
           `http://127.0.0.1:${Number(process.env.FRACTO_DATA_PORT || 3002)}/internal/environment-assets?${query}`,
           {
             headers: internal_service_headers(),
-            signal: AbortSignal.timeout(15000),
+            signal: signal
+              ? AbortSignal.any([signal, AbortSignal.timeout(15000)])
+              : AbortSignal.timeout(15000),
           },
         );
         if (!response.ok) throw new Error("catalog_unavailable");
@@ -72,11 +74,12 @@ export function create_environment_asset_registry({ request = fetch } = {}) {
         )
           throw new Error("catalog_unavailable");
         assets.push(...page.assets);
+        if (assets.length > max_assets) throw new Error("catalog_unavailable");
         after = page.next_cursor;
       } while (after);
       return assets;
     },
-    async sync(record, revision) {
+    async sync(record, revision, { signal } = {}) {
       const port = Number(process.env.FRACTO_DATA_PORT || 3002);
       const response = await request(
         `http://127.0.0.1:${port}/internal/environment-assets/${encodeURIComponent(record.id)}`,
@@ -86,7 +89,9 @@ export function create_environment_asset_registry({ request = fetch } = {}) {
             "Content-Type": "application/json",
           }),
           body: JSON.stringify(environment_registration(record, revision)),
-          signal: AbortSignal.timeout(15000),
+          signal: signal
+            ? AbortSignal.any([signal, AbortSignal.timeout(15000)])
+            : AbortSignal.timeout(15000),
         },
       );
       if (!response.ok) throw new Error("catalog_unavailable");

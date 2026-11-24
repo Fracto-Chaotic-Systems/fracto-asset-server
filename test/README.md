@@ -1,5 +1,11 @@
 # Asset service tests
 
+`material_search.test.js` uses disposable portable catalogs to test material-only
+membership, edits/reopening, unchanged resources, stale revision/snapshot rejection,
+bounded coalesced scans and authenticated HTTP search/edit contracts. It does not
+write application library records. Root `npm run test:materials` includes SDK and
+UI form contracts as well.
+
 `npm run test:environment` covers folder/ZIP/Blender preservation, catalog file
 saves, revision conflicts and the asset-to-data HTTP registration contract.
 The service suite uses temporary libraries and an HTTP data-service contract double;
@@ -50,3 +56,9 @@ idempotent repair that preserves sources, attribution and preview selection.
 RAR tests also cover RAR-only model inspection without publication, model choice
 on import, original-archive hashes, extracted license/texture resources, duplicate
 imports, and authentication/origin/error behavior before archive decoding.
+
+`construction_resources.test.js` verifies embedded base-color selection rather
+than normal-map selection, registered resource publication, idempotence, malformed
+GLB rejection and source/attribution preservation. FBX normalization tests verify
+new runtime registration and invalidation of stale calibration. Real stage-loader
+calibration is an opt-in UI-owned test; see environment/CALIBRATION.md.

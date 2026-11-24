@@ -12,3 +12,9 @@ instruments/fluidr3-percussion/upstream/* -text -whitespace
 
 # Environment originals retain exact download bytes and source checksums.
 models/**/source/** -text -diff
+
+# Construction pins hash the exact asset-record bytes; keep them stable across
+# Windows/Linux checkouts, including reviewed conversion JSON sidecars.
+models/**/asset.json text eol=lf
+models/catalog.json text eol=lf
+models/**/working/*.json text eol=lf

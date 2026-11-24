@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "id": "dry-dirt",
+  "version": "1.0.0",
+  "name": "dry_dirt",
+  "description": "Dry dirt ground surface. Original embedded base-color image registered for construction floors. Curated game UV tile: 1 by 1 meter; physical scan coverage is unknown.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [
+    "dirt",
+    "dry-dirt",
+    "ground",
+    "surface",
+    "ground-texture"
+  ],
+  "parent_id": null,
+  "imported_on": "2026-11-23",
+  "import_fingerprint": "49a59538fe181441d578129ba523b34bf7bb4f0800fe000eaa7c9cf31f09e625",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/dry_dirt.glb",
+      "format": "glb",
+      "sha256": "7e45b824430c7309b9c8dfccf2a0d3348c716c6f72744a0cd1de426bba5a10c5",
+      "bytes": 26846912
+    }
+  ],
+  "working_files": [
+    "source/files/dry_dirt.glb"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/files/dry_dirt.glb",
+    "format": "glb",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/dry_dirt.glb",
+      "runtime/surface-base-color-6f30180943ade5c3.png"
+    ],
+    "units": "meters",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-23",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "extract-surface-color",
+      "description": "Extracted embedded base color for construction floors; source GLB and attribution preserved."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
+    }
+  ],
+  "folder_path": "terrain",
+  "construction": {
+    "schema_version": 1,
+    "kind": "surface",
+    "source_units": null,
+    "meters_per_unit": null,
+    "dimensions_m": null,
+    "up_axis": null,
+    "forward_axis": null,
+    "ground_anchor_m": null,
+    "footprint_m": null,
+    "texture_size_m": [
+      1,
+      1
+    ],
+    "placement": "floor"
+  }
+}

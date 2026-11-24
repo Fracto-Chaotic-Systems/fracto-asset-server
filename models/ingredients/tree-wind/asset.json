@@ -3,10 +3,16 @@
   "id": "tree-wind",
   "version": "1.0.0",
   "name": "tree_wind",
-  "description": "Imported environment asset.",
+  "description": "Multi-tree demo group: each placed instance is the whole group, not one tree. Default-pose geometry measured with the actual Three.js stage loaders and checked against Blender; Y-up, +Z forward, centered XZ/min-Y ground anchor, conservative full-mesh footprint. Curated game scale: 0.1 meters per GLB unit; this is an authored normalization, not measured real-world size. Animation motion envelopes are not included; stage placement uses the static default pose.",
   "category": "environment",
   "model_category": "material",
-  "tags": [],
+  "tags": [
+    "tree",
+    "vegetation",
+    "ground",
+    "group",
+    "multi-specimen"
+  ],
   "parent_id": null,
   "imported_on": "2026-11-23",
   "import_fingerprint": "c5622240b6e23d28dbe828298f5d67874aa8aa2f9c6f96cd0dc1ab159d29986c",
@@ -56,7 +62,46 @@
       "date": "2026-11-23",
       "action": "move-folder",
       "description": "Updated the asset's logical folder."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
+    },
+    {
+      "date": "2026-11-23",
+      "action": "update-construction-metadata",
+      "description": "Updated material search and construction metadata."
     }
   ],
-  "folder_path": "plants/trees"
+  "folder_path": "plants/trees",
+  "construction": {
+    "schema_version": 1,
+    "kind": "model",
+    "source_units": null,
+    "meters_per_unit": 0.1,
+    "dimensions_m": [
+      21.6099978,
+      7.5567058,
+      8.670874
+    ],
+    "up_axis": "y",
+    "forward_axis": "z",
+    "ground_anchor_m": [
+      -1.0868072,
+      -0.064148,
+      0.028405
+    ],
+    "footprint_m": [
+      21.6099978,
+      8.670874
+    ],
+    "texture_size_m": null,
+    "placement": "ground"
+  }
 }

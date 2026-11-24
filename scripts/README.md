@@ -20,3 +20,20 @@ repair_environment_archives.js <asset-id> repairs imported RAR resource lists.
 Run via npm run environment:repair-archives -- <asset-id>, or inside the running
 asset service container. This command owns catalog/filesystem changes; it uses
 the private registry endpoint for database synchronization.
+
+`extract_surface.js <id>` extracts a GLB's unambiguous embedded base-color image
+and registers it as a derived construction-floor resource. It preserves the GLB,
+attribution and source checksums; repeated extraction preserves the revision.
+`normalize_fbx_runtime.js <id>` creates a separate meter-scale GLB through Blender,
+retains the FBX/resources and invalidates calibration until reviewed. It refuses
+to replace existing derived output. A previously normalized asset may publish
+one separate calibrated runtime after reviewed material-binding repairs.
+`working/construction-material-bindings.json` optionally maps exact FBX material
+names to reviewed source image paths; the converter restores color and PNG alpha
+cutouts and records that decision in its report. It never executes model scripts.
+
+`inspect_construction_models.py` measures default-pose mesh bounds, declared FBX
+unit conversion and GLB color-image references using Blender with auto-execution
+disabled. It writes only an explicit report, never source models or calibration
+metadata. Use the actual stage-loader verification to account for importer pose
+differences. See environment/CALIBRATION.md for commands and measured evidence.

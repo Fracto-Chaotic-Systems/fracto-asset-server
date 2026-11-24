@@ -7,6 +7,12 @@ import {
   unlink,
 } from "node:fs/promises";
 import path from "node:path";
+import {
+  material_view,
+  validate_material_edit,
+} from "@fracto/sdk/FractoMaterialMetadata.js";
+import { create_material_search } from "./material_search.js";
+import { asset_relative_path } from "@fracto/sdk/FractoAssetArchive.js";
 
 import {
   CATALOG_FIELDS,
@@ -51,7 +57,7 @@ export function create_environment_catalog({
     if (path.basename(file) !== "asset.json") fail("catalog_path", 403);
     return file;
   };
-  const read = async (id, sync = true, include_archived = false) => {
+  const read = async (id, sync = true, include_archived = false, signal) => {
     const file = await locate(id);
     const raw = await readFile(file, "utf8"),
       record = JSON.parse(raw);
@@ -60,7 +66,8 @@ export function create_environment_catalog({
       record.model_category ??
         model_category_from_path(path.relative(directory, file)),
     );
-    if (registry && sync) await registry.sync(record, revision_of(raw));
+    if (registry && sync)
+      await registry.sync(record, revision_of(raw), { signal });
     if (record.archived && !include_archived) fail("asset_not_found", 404);
     return { file, raw, record };
   };
@@ -68,7 +75,70 @@ export function create_environment_catalog({
     record: catalog_view(record),
     revision: revision_of(raw),
   });
-  return {
+  const store = {
+    search: create_material_search({
+      index: async () => {
+        const root = await realpath(directory);
+        return JSON.parse(
+          await readFile(
+            inside(root, await realpath(path.join(root, "catalog.json"))),
+            "utf8",
+          ),
+        ).assets;
+      },
+      read,
+      registry,
+    }),
+    async get_construction(id) {
+      const { record, raw } = await read(id);
+      if (record.model_category !== "material") fail("asset_not_found", 404);
+      return { material: material_view(record, revision_of(raw)) };
+    },
+    async get_construction_runtime(id, revision) {
+      if (typeof revision !== "string" || !/^[a-f0-9]{64}$/.test(revision))
+        fail("invalid_record");
+      const { record, raw } = await read(id);
+      if (record.model_category !== "material") fail("asset_not_found", 404);
+      if (revision_of(raw) !== revision) fail("material_revision_changed", 409);
+      const files =
+        record.runtime?.files || [record.runtime?.path].filter(Boolean);
+      if (
+        !Array.isArray(files) ||
+        files.length > 2000 ||
+        files.some(
+          (file) =>
+            typeof file !== "string" || asset_relative_path(file) !== file,
+        )
+      )
+        fail("invalid_record");
+      const model = record.runtime?.path || null;
+      if (model && !files.includes(model)) fail("invalid_record");
+      return {
+        material: material_view(record, revision),
+        runtime: {
+          id,
+          model,
+          format: record.runtime?.format || null,
+          resources: [...new Set(files)],
+        },
+      };
+    },
+    async update_construction(id, body) {
+      const changes = validate_material_edit(body);
+      const { record } = await read(id, false);
+      if (record.model_category !== "material") fail("asset_not_found", 404);
+      await store.update(id, {
+        ...changes,
+        attribution: Object.fromEntries(
+          CATALOG_FIELDS.map((key) => [
+            key,
+            catalog_view(record).attribution[key],
+          ]),
+        ),
+        note: "",
+      });
+      return store.get_construction(id);
+    },
     async manage_folder(body) {
       if (!registry) fail("catalog_unavailable", 503);
       return registry.manage_folder(body);
@@ -157,15 +227,30 @@ export function create_environment_catalog({
           const archived =
             changes.archived !== undefined &&
             changes.archived !== !!record.archived;
+          const metadata_changed = ["description", "tags", "construction"].some(
+            (key) =>
+              Object.hasOwn(changes, key) &&
+              JSON.stringify(changes[key]) !== JSON.stringify(record[key]),
+          );
           if (
             !changed &&
             !folder_changed &&
             !renamed &&
             !archived &&
+            !metadata_changed &&
             !changes.note
           )
             return result(original);
           const day = now().toISOString().slice(0, 10);
+          if (metadata_changed) {
+            for (const key of ["description", "tags", "construction"])
+              if (Object.hasOwn(changes, key)) record[key] = changes[key];
+            record.history.push({
+              date: day,
+              action: "update-construction-metadata",
+              description: "Updated material search and construction metadata.",
+            });
+          }
           if (renamed) {
             record.name = changes.name;
             record.history.push({
@@ -251,4 +336,5 @@ export function create_environment_catalog({
       }
     },
   };
+  return store;
 }

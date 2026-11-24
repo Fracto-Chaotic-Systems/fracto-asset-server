@@ -2,6 +2,7 @@ import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
+import { asset_relative_path } from "@fracto/sdk/FractoAssetArchive.js";
 const run = promisify(execFile);
 const failure = (code) => Object.assign(new Error(code), { status: 422 });
 
@@ -10,9 +11,15 @@ export async function convert_blend_asset({
   source,
   execute = run,
   binary = process.env.FRACTO_BLENDER_BIN || "blender",
+  runtime_path = "runtime/model.glb",
+  report_file = "working/blender-export.json",
 }) {
-  const runtime = "runtime/model.glb",
-    report_file = "working/blender-export.json";
+  const runtime = asset_relative_path(runtime_path);
+  if (
+    !runtime.startsWith("runtime/") ||
+    !asset_relative_path(report_file).startsWith("working/")
+  )
+    throw failure("blender_conversion_failed");
   const output = path.join(root, runtime),
     report_path = path.join(root, report_file);
   const args = [
