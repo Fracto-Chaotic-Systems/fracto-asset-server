@@ -1,5 +1,9 @@
 # fracto-asset-server
 
+Published game components are owned by `components/`. Its immutable file-only
+`/component-runtime` router is independent of the live environment registry and
+component database. See [publication and playback](components/README.md).
+
 Environment model files, imports, Blender conversion, provenance catalogs and
 preview delivery are owned here. See [environment/README.md](environment/README.md)
 for the `/environment-catalog` API and storage/recovery contract. SQL and the
@@ -255,7 +259,6 @@ Common failures:
 The service retains its configurable CORS policy and uses enabled-user or internal-service authorization when `FRACTO_AUTH_REQUIRED=true`. Image rendering still uses synchronous external commands and hardcoded publication settings.
 
 `tiles.csv` is a local runtime export and should not be committed.
-
 
 FluidR3 migration: the [pinned importer](instruments/fluidr3-gm/IMPORT.md) prepares
 128 disabled melodic instruments alongside the unchanged enabled legacy library.

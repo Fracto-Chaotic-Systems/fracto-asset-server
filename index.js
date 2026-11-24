@@ -25,6 +25,7 @@ import {
 
 import { asset_cors } from "./middleware/cors.js";
 import { create_environment_catalog_router } from "./environment/routes.js";
+import { create_component_runtime_router } from "./components/routes.js";
 import { create_instrument_router } from "./handlers/instruments.js";
 import { create_instrument_transfer_router } from "./handlers/instrument_transfer.js";
 import { initialize_instrument_storage } from "./instruments/transfer_storage_init.js";
@@ -33,6 +34,7 @@ await initialize_instrument_storage();
 const app = express();
 
 app.use(asset_cors);
+app.use('/component-runtime', create_component_runtime_router());
 // Owns folder imports, Blender conversion, catalog files and preview resources.
 app.use('/environment-catalog', create_environment_catalog_router());
 

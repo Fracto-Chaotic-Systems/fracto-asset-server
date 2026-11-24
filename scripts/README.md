@@ -1,5 +1,10 @@
 # Asset-service maintenance scripts
 
+`publish_component.js` captures an explicitly selected accepted component through
+authoring APIs into a validated immutable runtime release. It includes all pinned
+model/texture dependencies and notices. See `../components/README.md`; publication
+is separate from authoring saves and does not write component/database records.
+
 `environment_catalog.py list [query]` and `validate` search the service-owned
 `models` library across ingredients, composites and environments and check
 source hashes/file references. The root catalog supplies the tier-relative paths. Set
