@@ -7,6 +7,18 @@ atomically publishes an immutable directory named by the canonical manifest hash
 Failed publication removes only its staging directory; existing releases remain.
 No component records, material catalogs or source binaries are modified.
 
+`optimize_glb.js` applies lossless `EXT_meshopt_compression`, bitstream v0 and
+filter NONE, verifying every decoded buffer against its original bytes. It never
+quantizes vertices, simplifies geometry, changes animation samples or converts
+textures. `optimize_release.js` verifies a complete existing package and publishes
+a new hash with selected GLBs replaced and attribution retained. Component data,
+source revision and calibrated material pins stay identical; old releases remain.
+Run `node scripts/optimize_component.js --key grass-strip --release SHA256
+--materials animated-grass,yard-grass`. Only single-buffer, self-contained GLBs
+without preexisting extensions are accepted by this deliberately narrow tool.
+The browser must enable its bundled Three.js Meshopt decoder before selecting
+the new release. [Encoding contract](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Vendor/EXT_meshopt_compression).
+
 `serve_runtime.js` can serve the same releases as a standalone file-only process
 without the combined server's authoring/startup dependencies. Run
 `FRACTO_RUNTIME_PORT=3008 node components/serve_runtime.js` (set the environment

@@ -1,5 +1,10 @@
 # Asset service tests
 
+`optimize_glb.test.js` verifies byte-exact decoding, retained geometry/morph/clip
+metadata and image payloads, deterministic encoding, immutable derived packages,
+source preservation, and safe rejection of unsupported input. It uses temporary
+packages and changes no authoring library or database records.
+
 `material_search.test.js` uses disposable portable catalogs to test material-only
 membership, edits/reopening, unchanged resources, stale revision/snapshot rejection,
 bounded coalesced scans and authenticated HTTP search/edit contracts. It does not

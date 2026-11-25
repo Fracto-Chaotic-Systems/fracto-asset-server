@@ -42,3 +42,10 @@ unit conversion and GLB color-image references using Blender with auto-execution
 disabled. It writes only an explicit report, never source models or calibration
 metadata. Use the actual stage-loader verification to account for importer pose
 differences. See environment/CALIBRATION.md for commands and measured evidence.
+
+## Published grass optimization
+
+`optimize_component.js --key KEY --release SHA256 --materials ID,ID` derives a new
+immutable runtime release using verified lossless GLB buffer compression. It
+changes no authoring records, calibration or original files. The owning code and
+accepted input limits are documented in `components/README.md`.
