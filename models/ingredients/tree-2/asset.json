@@ -99,6 +99,11 @@
       "date": "2026-11-23",
       "action": "update-construction-metadata",
       "description": "Updated material search and construction metadata."
+    },
+    {
+      "date": "2026-11-26",
+      "action": "move-folder",
+      "description": "Updated the asset's logical folder."
     }
   ],
   "construction": {
@@ -124,5 +129,6 @@
     ],
     "texture_size_m": null,
     "placement": "ground"
-  }
+  },
+  "folder_path": "plants/trees"
 }
