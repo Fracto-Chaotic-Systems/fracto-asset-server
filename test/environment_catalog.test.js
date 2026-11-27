@@ -471,7 +471,7 @@ test("folder rename cascades through active model catalogs, preserves other cate
       const { validate_model_management } =
         await import("@fracto/sdk/FractoModelManagement.js");
       const command = validate_model_management(body);
-      if (command.action === "rename-folder") {
+      if (command.action !== "delete-folder") {
         for (const path of [...definitions])
           if (
             path === body.folder_path ||
@@ -541,6 +541,32 @@ test("folder rename cascades through active model catalogs, preserves other cate
     folder_path: "flowers",
   });
   assert.equal(definitions.has("flowers"), false);
+  // Moving a folder keeps its name under a new parent and carries its models.
+  definitions.add("terrain");
+  await manage({
+    action: "move-folder",
+    category: "material",
+    folder_path: "greenery",
+    parent: "terrain",
+  });
+  assert.equal(
+    (await store.get(record.id)).record.folder_path,
+    "terrain/greenery/herbs",
+  );
+  assert.deepEqual([...definitions].sort(), [
+    "terrain",
+    "terrain/greenery",
+    "terrain/greenery/herbs",
+  ]);
+  await assert.rejects(
+    manage({
+      action: "move-folder",
+      category: "material",
+      folder_path: "terrain",
+      parent: "terrain/greenery",
+    }),
+    /invalid_folder/,
+  );
 });
 
 test("a failed folder definition rename compensates completed catalog moves", async (t) => {

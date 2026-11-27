@@ -111,6 +111,11 @@ mutation-origin policy and 128 KiB JSON limit. The UI uses the thin same-origin
 - rename-folder: {action,category,folder_path,name}; name is one valid folder segment.
   All active descendants in that category receive the new prefix. Definition
   collisions and paths exceeding SDK depth/length bounds are rejected before writes.
+- move-folder: {action,category,folder_path,parent}; parent is an existing folder
+  path or "" (category root). The folder keeps its name under the new parent, and
+  everything under it moves with it, exactly like rename-folder. Moving a folder
+  into itself or one of its subfolders is rejected (invalid_folder); the same
+  parent is a no-op.
 - delete-folder: {action,category,folder_path}; only empty folders can be deleted,
   including no nested folder definitions. No contained model is implicitly deleted.
 
