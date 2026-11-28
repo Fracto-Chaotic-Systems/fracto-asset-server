@@ -78,6 +78,7 @@ test("search excludes non-material/archived records; metadata edits persist with
     model: "model.glb",
     format: "glb",
     resources: ["model.glb"],
+    effects: [],
   });
   assert.equal(runtime.material.revision, original.material.revision);
   await assert.rejects(
