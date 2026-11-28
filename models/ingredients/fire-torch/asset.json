@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "id": "fire-torch",
+  "version": "1.0.0",
+  "name": "fire_torch",
+  "description": "Imported environment asset.",
+  "category": "environment",
+  "model_category": "material",
+  "tags": [],
+  "parent_id": null,
+  "imported_on": "2026-11-28",
+  "import_fingerprint": "72c6055a0b2e14deecc385d6b35b92142a4cf39161931a2b5ce93363fe0ca5b5",
+  "attribution": {
+    "status": "unresolved",
+    "creator_name": null,
+    "creator_profile_url": null,
+    "source_url": null,
+    "license_name": null,
+    "license_file": null,
+    "credit_text": null,
+    "modification_conditions": null,
+    "redistribution_conditions": null,
+    "notes": "Imported from a selected local folder. Creator and license details need review."
+  },
+  "sources": [
+    {
+      "path": "source/files/max2010.rar",
+      "format": "rar",
+      "sha256": "9d5a445fe7909750d5f3677f4ebec461d54e08ae3be8942a12d21d52105f3983",
+      "bytes": 136625
+    },
+    {
+      "path": "source/files/max9.rar",
+      "format": "rar",
+      "sha256": "4c779173e6ce186a10356e4755838eeaffd4979dd3761ecf1777200c4f087cdf",
+      "bytes": 399207
+    },
+    {
+      "path": "source/files/obj9.rar",
+      "format": "rar",
+      "sha256": "dca8c7fdcee20060a3d2017b74c05acdb473efd6e28fc96181601e873028d02c",
+      "bytes": 462245
+    }
+  ],
+  "working_files": [
+    "source/extracted/obj9/fire_torch.obj"
+  ],
+  "preview": null,
+  "runtime": {
+    "path": "source/extracted/obj9/fire_torch.obj",
+    "format": "obj",
+    "status": "imported-awaiting-review",
+    "files": [
+      "source/files/max2010.rar",
+      "source/files/max9.rar",
+      "source/files/obj9.rar",
+      "source/extracted/max2010/max2010/torch_model.max",
+      "source/extracted/max9/fire_torch.max",
+      "source/extracted/max9/Map__0_Mix.tga",
+      "source/extracted/obj9/fire_torch.mtl",
+      "source/extracted/obj9/fire_torch.obj",
+      "source/extracted/obj9/Map__0_Mix.tga",
+      "working/textures/torch_body_bronze.png",
+      "working/textures/torch_cup_iron.png",
+      "working/textures/torch_bracket_iron.png"
+    ],
+    "units": "unverified",
+    "source_scale": 1,
+    "scale_verified": false,
+    "texture_roles_verified": false
+  },
+  "history": [
+    {
+      "date": "2026-11-28",
+      "action": "import",
+      "description": "Preserved selected folder files and extracted ZIP/RAR resources; registered a preview model. Attribution requires review."
+    },
+    {
+      "date": "2026-11-28",
+      "action": "edit",
+      "description": "Replaced the dark Map__0_Mix.tga look with generated metal textures (bronze body, iron cup, iron bracket) in the extracted fire_torch.mtl; textures and generator in working/, original MTL kept as working/fire_torch.original.mtl. Source archives unchanged."
+    },
+    {
+      "date": "2026-11-28",
+      "action": "edit",
+      "description": "Added a fire effect anchored in the crown (effects[0], orange). The supplied files contain no flame."
+    },
+    {
+      "date": "2026-11-28",
+      "action": "move-folder",
+      "description": "Added a fire effect anchored in the crown (effects[0], cardinality 1: the pattern-1 flame color). The supplied files contain no flame."
+    }
+  ],
+  "effects": [
+    {
+      "type": "fire",
+      "anchor": [
+        0.3,
+        85,
+        -14.5
+      ],
+      "size": 42,
+      "cardinality": 1,
+      "intensity": 1,
+      "speed": 1,
+      "light": true,
+      "sparks": true
+    }
+  ],
+  "folder_path": "objects"
+}

@@ -12,6 +12,7 @@ import {
   validate_material_edit,
 } from "@fracto/sdk/FractoMaterialMetadata.js";
 import { create_material_search } from "./material_search.js";
+import { material_effects_or_empty } from "@fracto/sdk/FractoMaterialEffects.js";
 import { asset_relative_path } from "@fracto/sdk/FractoAssetArchive.js";
 
 import {
@@ -105,6 +106,7 @@ export function create_environment_catalog({
                   resources:
                     record.runtime?.files ||
                     [record.runtime?.path].filter(Boolean),
+                  effects: material_effects_or_empty(record.effects),
                 };
               }),
             )),
@@ -160,6 +162,7 @@ export function create_environment_catalog({
           model,
           format: record.runtime?.format || null,
           resources: [...new Set(files)],
+          effects: material_effects_or_empty(record.effects),
         },
       };
     },
@@ -203,11 +206,14 @@ export function create_environment_catalog({
               !asset.archived && (!category || asset.category === category),
           );
       return {
-        assets: assets.map((asset) => ({
-          ...asset,
-          resources:
-            registered.find((entry) => entry.id === asset.id)?.resources || [],
-        })),
+        assets: assets.map((asset) => {
+          const entry = registered.find((item) => item.id === asset.id);
+          return {
+            ...asset,
+            resources: entry?.resources || [],
+            effects: entry?.effects || [],
+          };
+        }),
       };
     },
     async file(id, relative) {

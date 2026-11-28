@@ -782,3 +782,43 @@ test("large concurrent catalog lists share bounded reconciliation and remain com
   const recovered = await store.list("material");
   assert.deepEqual(recovered, fresh);
 });
+
+test("material effects are validated into listings and the construction runtime", async (t) => {
+  const { file, record, store } = await fixture(t);
+  assert.deepEqual((await store.list()).assets[0].effects, []);
+  await writeFile(
+    file,
+    JSON.stringify({
+      ...record,
+      effects: [
+        { type: "fire", anchor: [0, 1, 0], size: 0.4, cardinality: 5 },
+      ],
+    }),
+  );
+  const [listed] = (await store.list()).assets;
+  assert.deepEqual(listed.effects, [
+    {
+      type: "fire",
+      anchor: [0, 1, 0],
+      size: 0.4,
+      width: null,
+      cardinality: 5,
+      intensity: 1,
+      speed: 1,
+      light: true,
+      sparks: true,
+    },
+  ]);
+  const { material } = await store.get_construction(record.id);
+  const { runtime } = await store.get_construction_runtime(
+    record.id,
+    material.revision,
+  );
+  assert.deepEqual(runtime.effects, listed.effects);
+  // An invalid effect list never breaks the listing; it shows no effects.
+  await writeFile(
+    file,
+    JSON.stringify({ ...record, effects: [{ type: "smoke" }] }),
+  );
+  assert.deepEqual((await store.list()).assets[0].effects, []);
+});

@@ -210,3 +210,9 @@ in-flight work is shared: each later listing rechecks records, so edits and
 archives remain visible. Database failures still fail closed rather than serving
 an offline or partial catalog. The 108-record concurrent-list regression covers
 completeness, concurrency, resources and a fresh subsequent rename.
+
+## Material effects
+
+A record may carry `effects` (see `@fracto/sdk/FractoMaterialEffects.js`; v1 `fire`).
+Listings and the material construction runtime include the normalized list as
+`effects`; an invalid list is returned as `[]` so one bad record never breaks a listing.
