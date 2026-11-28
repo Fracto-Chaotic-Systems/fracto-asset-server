@@ -89,6 +89,21 @@
       "date": "2026-11-28",
       "action": "move-folder",
       "description": "Added a fire effect anchored in the crown (effects[0], cardinality 1: the pattern-1 flame color). The supplied files contain no flame."
+    },
+    {
+      "date": "2026-11-28",
+      "action": "update-construction-metadata",
+      "description": "Recorded construction metadata: centimetres (0.01 m/unit), about 1.0 m tall; front faces away from the wall (-z); anchor at the back of the bracket at foot height so a placement is the mounting point on the wall face."
+    },
+    {
+      "date": "2026-11-28",
+      "action": "edit",
+      "description": "Made the crown fire much taller and fuller (size 42 to 100, width 60) and set intensity 0.7 so the larger flame and its light do not overexpose."
+    },
+    {
+      "date": "2026-11-28",
+      "action": "edit",
+      "description": "Fire light now casts shadows (shadows: true) from 30 units up and 35 units out from the wall (light_offset), so the torch throws a moving shadow of its crown and handle onto the wall behind it."
     }
   ],
   "effects": [
@@ -99,13 +114,56 @@
         85,
         -14.5
       ],
-      "size": 42,
+      "size": 100,
       "cardinality": 1,
-      "intensity": 1,
+      "intensity": 0.7,
       "speed": 1,
       "light": true,
-      "sparks": true
+      "sparks": true,
+      "width": 60,
+      "shadows": true,
+      "light_offset": [
+        0,
+        30,
+        -35
+      ]
     }
   ],
-  "folder_path": "objects"
+  "folder_path": "objects",
+  "deployment_todo": [
+    {
+      "id": "attribution",
+      "added": "2026-11-28",
+      "item": "Resolve creator, source and license for the imported fire_torch pack (attribution status 'unresolved')."
+    },
+    {
+      "id": "scale-metadata",
+      "added": "2026-11-28",
+      "item": "Confirm the recorded scale (centimetres, 0.01 m/unit, about 1.0 m tall) against the original product; the pack does not state its units."
+    }
+  ],
+  "construction": {
+    "schema_version": 1,
+    "kind": "model",
+    "source_units": "cm",
+    "meters_per_unit": 0.01,
+    "dimensions_m": [
+      0.3903,
+      0.9962,
+      0.6852
+    ],
+    "up_axis": "y",
+    "forward_axis": "-z",
+    "ground_anchor_m": [
+      0,
+      0,
+      0.3333
+    ],
+    "footprint_m": [
+      0.3903,
+      0.6852
+    ],
+    "texture_size_m": null,
+    "placement": "wall"
+  }
 }

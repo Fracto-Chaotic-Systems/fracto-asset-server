@@ -49,3 +49,12 @@ differences. See environment/CALIBRATION.md for commands and measured evidence.
 immutable runtime release using verified lossless GLB buffer compression. It
 changes no authoring records, calibration or original files. The owning code and
 accepted input limits are documented in `components/README.md`.
+
+`generate_stone_materials.py [--only ID ...]` regenerates the original stone
+doorway materials (stone-pillar, stone-lintel, stone-wall-block-large/-medium/-small)
+into each asset's `runtime/`. NumPy + Pillow only; deterministic. Geometry is in
+meters (Y up, grounded, centred) with rounded, chipped edges. Two tileable JPEG sets
+(base color, normal, roughness): weathered granite for the wall blocks and a pale
+limestone for the pillar and lintel, so the doorway frame stands out (`STYLES`).
+Re-running rewrites the GLBs, so record a new version in each asset.json when the
+output changes.

@@ -807,6 +807,8 @@ test("material effects are validated into listings and the construction runtime"
       speed: 1,
       light: true,
       sparks: true,
+      shadows: true,
+      light_offset: null,
     },
   ]);
   const { material } = await store.get_construction(record.id);

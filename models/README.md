@@ -47,6 +47,12 @@ library. Re-running this command reconciles rows without changing files. Databas
 failures are reported by Inventory; preserved file saves can be reconciled by the
 next metadata read. See `../environment/README.md` for consistency and recovery details.
 
+An asset that must not ship as-is (placeholder texture, unresolved license,
+unconfirmed scale) lists the work in `asset.json` as
+`deployment_todo: [{ "id", "added", "item" }]`. Each item must also appear in the
+root `deploy/DEPLOYMENT_CHECKLIST.md` (checked by `npm run deploy:checklist`);
+remove it from the record when it is done.
+
 `catalog.json` indexes assets by permanent ID. Each asset directory contains
 `asset.json` (metadata), `source/` (unchanged downloads and extracted files),
 `working/` (editable files or reproducible conversion scripts), and `runtime/`

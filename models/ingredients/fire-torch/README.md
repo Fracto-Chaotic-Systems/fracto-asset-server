@@ -13,4 +13,5 @@ object `Tube02`). The textures are in `working/textures/`; regenerate them with
 `python3 working/make_metal_textures.py` (run from `working/`). The unedited
 MTL is kept as `working/fire_torch.original.mtl`; the source archives are unchanged.
 The pack contains no flame geometry or animation; the flame is an `effects` entry in
-`asset.json` (fire anchored in the crown at [0.3, 85, -14.5], 42 units tall).
+`asset.json` (fire anchored in the crown at [0.3, 85, -14.5], 100 units tall and 60 wide;
+its light sits 30 up and 35 out from the wall and casts the torch's shadow).
